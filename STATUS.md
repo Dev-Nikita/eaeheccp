@@ -1,4 +1,4 @@
-# HCA-DSE — статус (Gates 1-9 пройдены; осталcя testbed)
+# HCA-DSE — статус (Gates 1-10 пройдены)
 
 Target: Journal of Systems Architecture (Elsevier). Обновлено 2026-09-09.
 
@@ -71,13 +71,51 @@ telemetry — dominance-driven), что и нужно для Discussion.
 между режимами, а переносится **ранжирование**. Это и есть тезис для Discussion:
 для DSE достаточно корректного порядка архитектур.
 
+## Gate 10 — эмпирическая валидация (E9)
+
+Реализованы ДВА эквивалентных стенда с одним и тем же кодом сервисов (Go):
+1. `testbed/` + Docker Compose — по контейнеру на каждый edge/gateway/cloud узел,
+   1 CPU на контейнер, `tc netem` (задержка + полоса) по классу канала,
+   WAN до cloud 20 мс / 200 Мбит/с. Запуск на вашей машине: см. testbed/README.md.
+2. `testbed/run_local.py` — тот же стенд в network namespace без Docker
+   (prio-qdisc с двумя shaped-полосами, шейпинг только прямого направления,
+   по ядру на узел). Именно на нём получены числа ниже.
+
+Прогон: 34 архитектуры (Pareto / dominated / boundary) x 3 повтора = 102 запуска,
+900 запросов на запуск (150 warmup), Пуассоновский поток.
+
+| workload | n | MAPE | median AE | Spearman rho | Kendall tau |
+|---|--:|--:|--:|--:|--:|
+| control | 12 | 11.4 % | 1.9 мс | 0.751 | 0.615 |
+| telemetry | 12 | 20.3 % | 4.6 мс | 0.636 | 0.545 |
+| sensing | 10 | 42.6 % | 63.7 мс | 0.583 | 0.460 |
+| **все** | **34** | **23.7 %** | **5.0 мс** | **0.889** | **0.752** |
+
+Найдено и исправлено в ходе валидации (важно для Threats to Validity):
+- модель использовала M/M/1, а вычисление стадий детерминированное. Переход на
+  M/D/1 (Pollaczek-Khinchine) снизил MAPE с 28.9 % до 23.7 % на тех же измерениях.
+  Любопытно: ранговая корреляция при M/M/1 была даже выше (0.918 против 0.889),
+  то есть точность и ранжирование улучшаются не синхронно — это отдельный
+  честный пункт для Discussion.
+- аналитический DES-evaluator (Level B) тоже переведён на детерминированное
+  обслуживание; после этого он даёт Spearman 0.92-0.96 против analytical model.
+- недооценка задержки для sensing (крупные payload) — TCP-эффекты на шейпленном
+  канале модель не описывает; это заявляется как ограничение.
+
+Ограничения эмпирической части: только конфигурации, помещающиеся на одну машину
+(<= 2 edge + 1 gateway + 1 cloud в namespace-варианте, <= 4+2+1 в Docker-варианте);
+шейпинг применяется в прямом направлении каждого перехода.
+
 ## Что осталось до manuscript v0.1
-1. Docker/Go testbed (Gate 10) — 30-60 архитектур, p50/p95, MAPE, Spearman.
-2. Literature review по multi-objective branch-and-bound DSE / safe Pareto pruning
-   в HW/SW co-design (JSA, TECS, TCAD, DATE, DAC) — зафиксировать реальную новизну.
-3. Формальные Proposition 1, Proposition 2, Theorem 1 (Pareto preservation) с proofs.
+1. Прогнать Docker-вариант стенда на вашей машине (>= 4 edge узлов, больше ядер) —
+   `python3 testbed/run_testbed.py --repeats 3`, затем
+   `python3 testbed/analyze.py --input results/e9_testbed.csv --designs testbed/specs/designs.json --tag docker`.
+2. Literature review: multi-objective branch-and-bound DSE, safe Pareto pruning в
+   HW/SW co-design (JSA, ACM TECS, IEEE TCAD, DATE, DAC) — зафиксировать новизну.
+3. Формальные Proposition 1, Proposition 2, Theorem 1 с доказательствами.
 
 ## Файлы
-`results/e1_pruning.csv, e2_costsweep.csv, e3_baselines.csv, e4_ablation.csv,
-e5_scalability.csv, e6_simvalidation.csv, e7_calibration.csv, e8_stats.csv`
-`figures/fig1..fig6 .png`; тесты: `tests/test_core.py`, `tests/test_regression.py`.
+`results/`: e1_pruning, e2_costsweep, e3_baselines, e4_ablation, e5_scalability,
+e6_simvalidation, e7_calibration, e8_stats, e9_testbed_local (+ e9_summary_local,
+e9_per_design_local, e9_testbed_local_mm1 для сравнения моделей очередей).
+`figures/`: fig1..fig7. Тесты: `tests/test_core.py`, `tests/test_regression.py`.

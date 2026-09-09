@@ -79,7 +79,7 @@ def simulate(x: dict, wl, n_req: int = 4000, warmup: int = 400,
         else:
             B = lk.B if res == "access" else WAN_B
             mean = work * MB_TO_MB / B
-        return rng.expovariate(1.0 / mean) if mean > 0 else 0.0
+        return mean  # deterministic service, as in the containerised testbed
 
     def prop_delay(step) -> float:
         return lk.prop if step[1] == "access" else WAN_PROP

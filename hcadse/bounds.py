@@ -126,7 +126,7 @@ def _queue_bound(partial: dict, space: DesignSpace, wl) -> float:
         if rho >= 1.0:
             return INF
         for i in idx:
-            total += (wl.stages[i].w / cls.C) * rho / (1.0 - rho)
+            total += (wl.stages[i].w / cls.C) * rho / (2.0 * (1.0 - rho))
     return total
 
 

@@ -1,0 +1,9 @@
+MAPE,kendall,median_AE_ms,n,spearman,subset,workload
+11.4,0.615,1.94,12,0.751,all,control
+11.4,0.615,1.94,12,0.751,rho<=0.75,control
+42.6,0.46,63.65,10,0.583,all,sensing
+41.6,0.377,36.91,9,0.509,rho<=0.75,sensing
+20.3,0.545,4.58,12,0.636,all,telemetry
+25.7,0.619,6.87,7,0.714,rho<=0.75,telemetry
+23.7,0.752,5.03,34,0.889,all,ALL
+24.7,0.711,5.03,28,0.878,rho<=0.75,ALL

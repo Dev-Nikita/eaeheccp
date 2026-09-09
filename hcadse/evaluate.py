@@ -69,7 +69,10 @@ def evaluate(x: dict, wl: Workload) -> Result:
         s_time = st.w / per_node_C[t]
         L += s_time
         if rho[t] < 1.0:
-            L += s_time * rho[t] / (1.0 - rho[t])
+            # Pollaczek-Khinchine with deterministic service (M/D/1):
+            # W = s * rho / (2 (1 - rho)). Stage execution times are
+            # deterministic, so M/M/1 would overestimate waiting by 2x.
+            L += s_time * rho[t] / (2.0 * (1.0 - rho[t]))
         else:
             L = INF
     lk = x["link_cls"]
