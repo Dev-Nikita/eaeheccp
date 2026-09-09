@@ -31,9 +31,33 @@ for (w, i), rs in sorted(by.items()):
                                          min(float(r["p50"]) for r in rs)), 2),
                     rel_err=round((float(rs[0]["L_analytical"]) - med) / med, 3)))
 
+def pair_agreement(sub, thr):
+    """Share of design pairs whose measured order matches the model order,
+    among pairs the model separates by more than `thr` (relative)."""
+    ok = tot = 0
+    for i in range(len(sub)):
+        for j in range(i + 1, len(sub)):
+            a, b = sub[i], sub[j]
+            lo = min(a["L_analytical"], b["L_analytical"])
+            if abs(a["L_analytical"] - b["L_analytical"]) / lo < thr:
+                continue
+            tot += 1
+            if ((a["L_analytical"] < b["L_analytical"]) ==
+                    (a["p50_measured"] < b["p50_measured"])):
+                ok += 1
+    return (round(ok / tot, 3) if tot else float("nan")), tot
+
+
 def stats(sub, label):
     an = [r["L_analytical"] for r in sub]; me = [r["p50_measured"] for r in sub]
+    ag10, n10 = pair_agreement(sub, 0.10)
+    ag25, n25 = pair_agreement(sub, 0.25)
+    spread = (max(me) - min(me)) / min(me) if len(sub) > 1 else 0
     return dict(subset=label, n=len(sub),
+                agree_10pct=ag10, pairs_10pct=n10,
+                agree_25pct=ag25, pairs_25pct=n25,
+                measured_spread=round(spread, 2),
+                median_repeat_iqr_ms=round(statistics.median(r["iqr_ms"] for r in sub), 2),
                 MAPE=round(100 * statistics.mean(abs((x - y) / y) for x, y in zip(an, me)), 1),
                 median_AE_ms=round(1000 * statistics.median(abs(x - y) for x, y in zip(an, me)), 2),
                 spearman=round(float(spearmanr(an, me).correlation), 3),

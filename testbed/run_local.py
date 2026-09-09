@@ -25,31 +25,37 @@ def sh(c, check=False):
     return r
 
 
+ACCESS_PORTS = list(range(9001, 9009)) + list(range(9101, 9105))
+CLOUD_PORT = 9201
+
+
 def net_setup():
+    """One shaped band per node, so bandwidth is per link (as in the model)
+    rather than shared by all access traffic. All unclassified packets (ACKs,
+    responses to ephemeral ports) fall into the last, unshaped band."""
     sh("ip link set lo up", check=True)
     for ip in (ACCESS_IP, WAN_IP):
         sh(f"ip addr add {ip}/8 dev lo")
     sh("tc qdisc del dev lo root 2>/dev/null")
-    # 4 bands with a priomap that sends ALL unclassified traffic to band 1:4;
-    # only explicitly filtered forward-direction packets reach the shaped bands
-    # (a default priomap would silently push ACKs into the WAN band).
-    sh("tc qdisc add dev lo root handle 1: prio bands 4 priomap " + " ".join(["3"] * 16),
-       check=True)
-    sh("tc qdisc add dev lo parent 1:1 handle 10: netem delay 1ms rate 100mbit", check=True)
-    sh("tc qdisc add dev lo parent 1:2 handle 20: netem delay 20ms rate 200mbit", check=True)
-    # Shape only the forward direction of each hop: packets addressed to a node
-    # port. Responses (to ephemeral ports) stay unshaped, so each transfer is
-    # delayed exactly once, matching the one-way transfers in the model.
-    sh(f"tc filter add dev lo parent 1: protocol ip prio 1 u32 "
-       f"match ip dport 9201 0xffff flowid 1:2", check=True)          # WAN hop to cloud
-    for port in list(range(9001, 9009)) + list(range(9101, 9105)):
+    nb = len(ACCESS_PORTS) + 2                      # + WAN band + unshaped band
+    sh(f"tc qdisc add dev lo root handle 1: prio bands {nb} priomap "
+       + " ".join([str(nb - 1)] * 16), check=True)
+    for i, port in enumerate(ACCESS_PORTS):
+        sh(f"tc qdisc add dev lo parent 1:{i+1:x} handle {10+i}: netem delay 1ms rate 100mbit",
+           check=True)
         sh(f"tc filter add dev lo parent 1: protocol ip prio 2 u32 "
-           f"match ip dport {port} 0xffff flowid 1:1", check=True)     # access links
+           f"match ip dport {port} 0xffff flowid 1:{i+1:x}", check=True)
+    wan = len(ACCESS_PORTS) + 1
+    sh(f"tc qdisc add dev lo parent 1:{wan:x} handle 90: netem delay 20ms rate 200mbit",
+       check=True)
+    sh(f"tc filter add dev lo parent 1: protocol ip prio 1 u32 "
+       f"match ip dport {CLOUD_PORT} 0xffff flowid 1:{wan:x}", check=True)
 
 
 def set_access_link(delay_ms, rate_mbit):
-    sh(f"tc qdisc change dev lo parent 1:1 handle 10: netem "
-       f"delay {delay_ms:.3f}ms rate {rate_mbit:.0f}mbit", check=True)
+    for i in range(len(ACCESS_PORTS)):
+        sh(f"tc qdisc change dev lo parent 1:{i+1:x} handle {10+i}: netem "
+           f"delay {delay_ms:.3f}ms rate {rate_mbit:.0f}mbit", check=True)
 
 
 def hosts_for(d):
