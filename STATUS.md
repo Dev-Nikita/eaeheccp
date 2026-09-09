@@ -158,7 +158,39 @@ edge-cloud CPS contention-зависима; наш вклад — admissible bou
 валидация. Цитата из обзора Euromicro DSD 2022 ("efficient and scalable DSE
 technology for dCPS is more or less non-existing") — основа Introduction.
 
-## Что осталось до manuscript v0.1
+## Manuscript — сделано (v0.2 после hardening pass)
+
+`manuscript/` — полный LaTeX (elsarticle), 28 страниц, 8 рисунков, 11 таблиц,
+26 проверенных ссылок, собирается без ошибок. Все рисунки и числовые таблицы
+генерируются из CSV скриптом `experiments/make_paper_assets.py`.
+
+Что изменено в hardening pass:
+- floats: подключён `placeins` + `\FloatBarrier`, все таблицы теперь стоят по месту
+  (стр. 14-20), References — последний блок (стр. 27);
+- claim про 557x переписан: это **проекция** по измеренной стоимости DES-evaluator,
+  а не измеренное ускорение; в Abstract и в §6.3 формулировки согласованы;
+- break-even 1-3 мкс больше не подаётся как универсальный закон — это свойство
+  конкретной реализации, железа и геометрии пространства;
+- добавлено явное допущение про агрегированную M/D/1-станцию тира против M/D/c и
+  сказано, что стенд и DES реализуют per-node серверы, поэтому ошибка измеряется;
+- разграничены exact Pareto front **аналитической модели** и Pareto front реального
+  развёртывания (Discussion + Theorem scope);
+- pooled Spearman 0.97 больше не главный аргумент: вперёд вынесены per-workload
+  корреляции и согласие пар;
+- переход M/M/1 -> M/D/1 честно помечен как post-hoc коррекция на том же датасете
+  (Results + отдельный параграф в Threats);
+- добавлена Table 11 со статистикой (Mann-Whitney U + Cliff's delta), которая раньше
+  была заявлена в Methodology, но не показана;
+- Related Work: новый раздел про exact BILP-аллокацию (Kouloumpris et al. 2024, 2026)
+  и почему MILP-формулировка решала бы другую модель; Table 1 расширена до 12 строк с
+  колонками Year / Exact front / Partial-design pruning / Contention-aware;
+- энергия переведена в kWh за горизонт T=1 ч, стоимость явно объявлена нормированной;
+- Fig. 5 переверстан (две панели, свои colorbar), Fig. 6 — легенда вынесена наружу.
+
+Дополнительно: `HIGHLIGHTS.txt`, `COVER_LETTER.md`, `SUPPLEMENTARY.md`,
+`BIBLIOGRAPHY_AUDIT.md`.
+
+## Что осталось до сабмита
 1. Literature review: multi-objective branch-and-bound DSE, safe Pareto pruning в
    HW/SW co-design (JSA, ACM TECS, IEEE TCAD, DATE, DAC) — зафиксировать новизну.
 2. Формальные Proposition 1, Proposition 2, Theorem 1 с доказательствами.

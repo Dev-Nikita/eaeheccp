@@ -15,9 +15,19 @@ than a consequence of the constraints, and the exhaustive baseline uses the same
 predicate; this was discovered by the pruning-safety test and is stated explicitly rather
 than absorbed into the comparison.
 
+\paragraph{Post-hoc model correction}
+The replacement of the M/M/1 waiting term by the M/D/1 expression was motivated by the
+testbed measurements and evaluated on the same dataset. The correction is theoretically
+justified independently of the data --- stage execution is deterministic by construction
+--- but the reported improvement in MAPE is an in-sample consistency check, not an
+out-of-sample validation, and is labelled as such in Section~\ref{sec:results}.
+
 \paragraph{Construct validity}
-The analytical model abstracts a real deployment: M/D/1 waiting, no transport-protocol
-effects, a linear power model and normalised cost units. The testbed validation quantifies
+The analytical model abstracts a real deployment: a tier is modelled as one M/D/1 station
+with the aggregate capacity of its nodes rather than as an M/D/$c$ system, transport
+protocol effects are ignored, the power model is linear in utilisation, and costs are
+normalised units. The aggregation is optimistic by construction, and the testbed --- whose
+nodes are genuinely single-server containers --- is what quantifies its cost. The testbed validation quantifies
 the resulting gap and shows that it affects absolute prediction much more than ordering.
 The sensing workload exposes the main structural gap --- for large payloads over a shaped
 link the model does not capture transport-level effects and over-predicts systematically.
@@ -43,8 +53,13 @@ $\rho\ge0.75$.
 \paragraph{Limitations}
 The method assumes a static workload during one exploration, does not model runtime
 migration or autoscaling, and requires bounds to be derived per objective --- a manual
-step that must be repeated when the objective set changes. No comparison against an
-exact symbolic or mixed-integer formulation is provided: the queueing term is non-linear
-in the decision variables, so a mixed-integer program would require linearisation and
-would therefore optimise a different model, but this leaves the question of relative
-efficiency against solver-based exact exploration open.
+step that must be repeated when the objective set changes. No comparison against an exact symbolic or
+mixed-integer formulation is provided. Exact integer programming is demonstrably
+practical for allocation problems in this domain~\cite{kouloumpris2024optimization,
+kouloumpris2026reliability}, but those formulations are linear in the decision variables,
+whereas the waiting term $\rho_t/(2(1-\rho_t))$ of \eqref{eq:latency} is not: a
+mixed-integer formulation of our problem would require linearising it and would therefore
+solve a different model exactly rather than ours. The same holds for symbolic exploration
+under assignment monotonicity~\cite{neubauer2018exact}. The question of relative
+efficiency against a solver working on a linearised surrogate therefore remains open, and
+we consider it the most valuable single addition to this line of work.

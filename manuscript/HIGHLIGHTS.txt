@@ -1,0 +1,7 @@
+Highlights (Journal of Systems Architecture, max 85 characters per bullet)
+
+- Admissible objective bounds for contention-dependent edge-cloud CPS architectures
+- Hierarchical pruning discards infeasible and dominated regions before evaluation
+- Exact Pareto front proven preserved and verified exhaustively against enumeration
+- 26-61 full evaluations instead of up to 8.3e7 candidate architectures explored
+- Containerised testbed: model orders 98% of clearly separated architecture pairs

@@ -47,6 +47,26 @@ combined with contract refinement checking, pruning through subgraph isomorphism
 minimises a single objective (cost) subject to requirements rather than constructing a
 Pareto front, and its pruning is constraint-based rather than bound-based.
 
+\subsection{Exact allocation by integer programming}
+\label{sec:related:milp}
+A second exact family formulates allocation as an integer program and solves it to
+optimality. Kouloumpris et al.~\cite{kouloumpris2024optimization} allocate the tasks of
+an application over an edge/hub/cloud triple with binary integer linear programming,
+minimising latency or energy under computation, communication, memory and energy
+constraints, and validate on a UAV inspection use case with synthetic benchmarks of up to
+1000 tasks. Their follow-up~\cite{kouloumpris2026reliability} extends the formulation to
+a bi-objective reliability/latency problem, again solved exactly and offline.
+
+These works are exact in a different sense than the present paper, and the distinction
+matters for the choice of method. They solve one \emph{allocation} instance over a fixed
+infrastructure with a model that is linear in the decision variables, whereas we explore
+an \emph{architecture} space in which the number and class of nodes, the link class and
+the replication factor are themselves decisions, and in which the latency model contains
+a non-linear contention term. A linear formulation of our problem would require
+linearising $\rho_t/(2(1-\rho_t))$ and would therefore optimise a different model; this
+is the reason we prune with bounds instead of delegating to a solver, and it is also the
+reason we do not report an integer-programming baseline (Section~\ref{sec:threats}).
+
 \subsection{Design-time placement in the edge--cloud continuum}
 SPACE4AI-D~\cite{sedghani2024space4aid} is the closest work in terms of the problem
 setting: design-time selection of resources and component placement across edge, cloud
@@ -66,7 +86,8 @@ and their quality is a function of the evaluation budget. We use NSGA-II
 \cite{deb2002nsga2} as implemented in pymoo~\cite{blank2020pymoo} as the budget-matched
 representative of this family, and report hypervolume~\cite{zitzler1999hv},
 IGD$^{+}$~\cite{ishibuchi2015igdplus} and Pareto recall against the exhaustive ground
-truth. Our conclusion is not that such methods are inferior in general, but that when
+truth; the choice of indicators follows the guidance of
+Audet et al.~\cite{audet2021indicators}. Our conclusion is not that such methods are inferior in general, but that when
 admissible bounds are available exactness is achievable at a small fraction of their
 evaluation budget.
 
@@ -74,27 +95,44 @@ Table~\ref{tab:related} summarises the comparison.
 
 \begin{table*}[t]
 \centering
-\caption{Positioning with respect to the closest prior work.}
+\caption{Positioning with respect to the closest prior work. ``Partial-design pruning''
+denotes discarding incomplete designs before they are completed and evaluated;
+``contention-aware'' denotes objectives that depend on resource utilisation rather than
+being additive over decisions.}
 \label{tab:related}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}p{3.4cm}p{1.9cm}ccp{2.4cm}ccc@{}}
+\begin{tabular}{@{}p{2.5cm}c>{\raggedright\arraybackslash}p{1.95cm}>{\raggedright\arraybackslash}p{2.05cm}cccccc@{}}
 \toprule
-Work & System class & Obj. & Exact & Pruning mechanism & Cont.- & Exp. & Real \\
- & & & front & & dep. & eval. & meas. \\
+Work & Year & System class & Design variables & Obj. & Exact & Partial- & Cont.- &
+Exp. & Real \\
+ & & & & & front & design & aware & eval. & meas. \\
 \midrule
-Neubauer et al.~\cite{neubauer2018exact} & heterog.\ MPSoC & 3 & yes & symbolic conflict clauses on partial designs & no & no & no \\
-CompDSE~\cite{saadatmand2025compdse} & industrial dCPS & perf. & --- &
-  none (no search) & yes & --- & industrial traces \\
-ContrArc~\cite{xiao2024contrarc} & CPS architectures & 1 & --- &
-  MILP + subgraph isomorphism & no & no & no \\
-SPACE4AI-D~\cite{sedghani2024space4aid} & edge--cloud continuum & 1 & no &
-  heuristic search & partly & no & yes \\
-NSGA-II family~\cite{deb2002nsga2} & edge--cloud & 2--4 & no &
-  none & partly & no & rarely \\
-\textbf{HCA-DSE (this work)} & heterog.\ edge--cloud CPS & 4 & \textbf{yes} &
-  \textbf{hierarchical: struct.\ + feas.\ + dominance} &
-  \textbf{yes} & \textbf{yes} & \textbf{yes} \\
+Blickle et al.~\cite{blickle1998system} & 1998 & embedded synthesis &
+  allocation, binding & 2 & no & no & no & no & no \\
+Haubelt \& Teich~\cite{haubelt2003pareto} & 2003 & SoC & component selection & $n$ &
+  partly & front comp. & no & no & no \\
+Lukasiewycz et al.~\cite{lukasiewycz2008symbolic} & 2008 & embedded synthesis &
+  allocation, binding, routing & $n$ & no & SAT-based & no & no & no \\
+Neubauer et al.~\cite{neubauer2018exact} & 2018 & heterog.\ MPSoC &
+  allocation, binding, routing & 3 & \textbf{yes} & symbolic & no & no & no \\
+Herget et al.~\cite{herget2022dse} & 2022 & distributed CPS & survey & --- & --- &
+  --- & --- & --- & --- \\
+Kouloumpris et al.~\cite{kouloumpris2024optimization} & 2024 & edge/hub/cloud &
+  task allocation & 1 & \textbf{yes} (BILP) & solver & no & no & UAV case \\
+Xiao et al.~\cite{xiao2024contrarc} & 2024 & CPS architectures &
+  component selection & 1 & --- & isomorphism & no & no & no \\
+Sedghani et al.~\cite{sedghani2024space4aid} & 2024 & computing continuum &
+  resources, placement & 1 & no & no & partly & no & \textbf{yes} \\
+CompDSE~\cite{saadatmand2025compdse} & 2025 & industrial dCPS &
+  cores, hosts, frequency & perf. & --- & none & yes & --- & traces \\
+Kouloumpris et al.~\cite{kouloumpris2026reliability} & 2026 & edge/hub/cloud &
+  task allocation & 2 & \textbf{yes} (BILP) & solver & no & no & case study \\
+NSGA-II family~\cite{deb2002nsga2} & --- & edge--cloud & varies & 2--4 & no & no &
+  partly & no & rarely \\
+\textbf{HCA-DSE (this work)} & 2026 & heterog.\ edge--cloud CPS &
+  \textbf{counts, classes, links, placement, replication} & \textbf{4} &
+  \textbf{yes} & \textbf{bounds} & \textbf{yes} & \textbf{yes} & \textbf{yes} \\
 \bottomrule
 \end{tabular}
 \end{table*}

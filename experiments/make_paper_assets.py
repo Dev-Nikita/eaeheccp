@@ -91,8 +91,8 @@ for s in ("S1", "S2", "S3", "S4"):
                     + (r.get("recall") or "--") + r" \\")
 tab("funnel", "\n".join(rows).replace(",", r"\,"), colspec="llrrrrrrrrrr",
     header=(r"scale & workload & $|\mathcal{X}|$ & structural & feasibility & dominance & "
-            r"full & feasible & $|\mathcal{P}|$ & reduction & exhaustive & recall \\"
-            "\n" r" & & & pruned & pruned & pruned & evals & & & [\%] & evals & \\"),
+            r"full & feasible & $|\mathcal{P}|$ & full-eval & exhaustive & recall \\"
+            "\n" r" & & & pruned & pruned & pruned & evals & & & reduction [\%] & evals & \\"),
     pre="\\scriptsize\n\\setlength{\\tabcolsep}{3.5pt}\n")
 
 # ---------------------------------------------------------------- T7 baselines
@@ -179,6 +179,21 @@ tab("testbed", "\n".join(rows), colspec="lrrrrrrrr",
             "\n" r" & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & spread [ms] \\"),
     pre="\\scriptsize\n\\setlength{\\tabcolsep}{3pt}\n")
 
+# ---------------------------------------------------------------- T11 statistics
+d = [r for r in R("results/e8_stats.csv") if r["scale"] == "S3"]
+rows = []
+for w in WL:
+    for r in [q for q in d if q["workload"] == w]:
+        p_ = float(r["p_nsga2_gt_random"])
+        pstr = "$<$0.001" if p_ < 0.001 else f"{p_:.3f}"
+        rows.append(f"{w} & {r['budget']} & {r['nsga2_hv_med']} & {r['random_hv_med']} & "
+                    f"{pstr} & {r['cliffs_delta']} & {r['nsga2_recall_med']} & "
+                    f"{r['hca_n_eval']}" + r" \\")
+tab("stats", "\n".join(rows), colspec="lrrrrrrr",
+    header=(r"workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\"
+            "\n" r" & & HV med. & HV med. & & $\delta$ & recall & evals \\"),
+    pre="\\scriptsize\n\\setlength{\\tabcolsep}{3.5pt}\n")
+
 # ================================================================= FIGURES
 # F: funnel
 d = R("results/e1_pruning.csv")
@@ -216,7 +231,8 @@ ax.text(2.2e-2, 1.6, "measured DES\nevaluator", fontsize=5)
 ax.axhline(1, color="grey", lw=.5)
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlabel("evaluation cost $C_E$ [s]"); ax.set_ylabel("speed-up over exhaustive")
-ax.legend(fontsize=5, ncol=2)
+ax.legend(fontsize=5, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.30),
+          frameon=False, columnspacing=1.0, handlelength=1.6)
 fig("crossover", f)
 
 # F: scalability
@@ -270,15 +286,21 @@ fig("ablation", f)
 
 # F: Pareto front projections (S3, telemetry)
 front = hca_dse(make_space("S3"), WORKLOADS["telemetry"]).front
-L = [f_[0] * 1e3 for _, f_ in front]; E = [f_[1] / 3.6e6 for _, f_ in front]
-C = [f_[2] for _, f_ in front]; D = [f_[3] for _, f_ in front]
-f, axs = plt.subplots(1, 2, figsize=(5.4, 2.1))
-sc = axs[0].scatter(L, C, c=D, s=18, cmap="viridis")
-axs[0].set_xlabel("latency [ms]"); axs[0].set_ylabel("cost [units]")
-f.colorbar(sc, ax=axs[0], label="network volume [MB/s]")
-sc = axs[1].scatter(L, E, c=C, s=18, cmap="plasma")
-axs[1].set_xlabel("latency [ms]"); axs[1].set_ylabel("energy [kWh per hour-equivalent]")
-f.colorbar(sc, ax=axs[1], label="cost [units]")
+L = [f_[0] * 1e3 for _, f_ in front]
+E = [f_[1] / 3.6e6 for _, f_ in front]          # J over T=1h -> kWh
+C = [f_[2] for _, f_ in front]
+D = [f_[3] for _, f_ in front]
+f, axs = plt.subplots(1, 2, figsize=(5.6, 2.3), constrained_layout=True)
+sc0 = axs[0].scatter(L, C, c=D, s=20, cmap="viridis", edgecolors="none")
+axs[0].set_xlabel("latency [ms]"); axs[0].set_ylabel("cost [normalised units]")
+axs[0].set_title("(a) latency vs cost", fontsize=7)
+cb0 = f.colorbar(sc0, ax=axs[0], pad=0.02)
+cb0.set_label("network volume [MB/s]", fontsize=6); cb0.ax.tick_params(labelsize=5)
+sc1 = axs[1].scatter(L, E, c=C, s=20, cmap="plasma", edgecolors="none")
+axs[1].set_xlabel("latency [ms]"); axs[1].set_ylabel("energy over $T=1$ h [kWh]")
+axs[1].set_title("(b) latency vs energy", fontsize=7)
+cb1 = f.colorbar(sc1, ax=axs[1], pad=0.02)
+cb1.set_label("cost [units]", fontsize=6); cb1.ax.tick_params(labelsize=5)
 fig("pareto", f)
 
 # F: model vs measurement (Docker testbed)

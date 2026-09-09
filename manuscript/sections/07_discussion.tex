@@ -59,10 +59,15 @@ is the configuration in which our crossover analysis predicts the largest benefi
 The empirical validation supports a narrower claim than "the model is accurate". The
 model's absolute error is $16$--$50\%$ depending on the workload, which is in the same
 range as the $20\%$ execution-time deviation reported for a design-time placement tool
-validated on a real deployment~\cite{sedghani2024space4aid}. What the exploration actually
-requires, however, is that the model orders architectures correctly, and that claim is
-supported much more strongly: $98\%$ agreement on the pairs the model separates by more
-than $25\%$. The complement is equally informative --- within a single workload the
+validated on a real deployment~\cite{sedghani2024space4aid}. What the exploration requires is weaker: that the model
+order architectures correctly, and that claim is supported much more strongly --- $98\%$
+agreement on the pairs the model separates by more than $25\%$. The distinction must be
+stated precisely, because it bounds what Theorem~\ref{thm:exact} buys. The theorem
+guarantees that HCA-DSE returns the exact Pareto front \emph{of the analytical model};
+correct ordering makes that model a useful design-space surrogate, but it does not
+establish that its front coincides with the Pareto front of the deployed system. A
+design-time method can be exact with respect to its model and still inherit every error
+of that model, and no amount of pruning correctness repairs a misspecified objective. The complement is equally informative --- within a single workload the
 rank correlation is lower, because after the M/D/1 correction many designs of one workload
 differ by less than the measurement noise. A model that cannot separate near-equivalent
 architectures is not a defect of the exploration method but an argument for the two-level

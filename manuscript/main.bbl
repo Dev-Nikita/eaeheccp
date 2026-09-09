@@ -1,0 +1,77 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{saadatmand2025compdse}
+M.~Saadatmand, et~al., {CompDSE}: A methodology for design space exploration of computing subsystems within complex cyber-physical systems, IET Cyber-Physical Systems: Theory \& Applications (2025).
+\newblock \href {https://doi.org/10.1049/cps2.70019} {\path{doi:10.1049/cps2.70019}}.
+
+\bibitem{herget2022dse}
+M.~Herget, M.~Saadatmand, M.~Bor, I.~Gonz\'alez~Alonso, T.~Stefanov, B.~Akesson, A.~D. Pimentel, Design space exploration for distributed cyber-physical systems: State-of-the-art, challenges, and directions, in: 25th Euromicro Conference on Digital System Design (DSD), 2022.
+\newblock \href {https://doi.org/10.1109/DSD57027.2022.00068} {\path{doi:10.1109/DSD57027.2022.00068}}.
+
+\bibitem{deb2002nsga2}
+K.~Deb, A.~Pratap, S.~Agarwal, T.~Meyarivan, A fast and elitist multiobjective genetic algorithm: {NSGA-II}, IEEE Transactions on Evolutionary Computation 6~(2) (2002) 182--197.
+\newblock \href {https://doi.org/10.1109/4235.996017} {\path{doi:10.1109/4235.996017}}.
+
+\bibitem{neubauer2018exact}
+K.~Neubauer, P.~Wanko, T.~Schaub, C.~Haubelt, Exact multi-objective design space exploration using {ASPmT}, in: Design, Automation \& Test in Europe Conference (DATE), 2018, pp. 257--260.
+\newblock \href {https://doi.org/10.23919/DATE.2018.8342014} {\path{doi:10.23919/DATE.2018.8342014}}.
+
+\bibitem{haubelt2018asp}
+C.~Haubelt, K.~Neubauer, T.~Schaub, P.~Wanko, Design space exploration with answer set programming, KI - K\"unstliche Intelligenz 32 (2018) 205--206.
+\newblock \href {https://doi.org/10.1007/s13218-018-0530-3} {\path{doi:10.1007/s13218-018-0530-3}}.
+
+\bibitem{paretopruning2022}
+S.~Petchrompo, D.~W. Coit, A.~Brintrup, A.~Wannakrairot, A.~K. Parlikad, A review of {Pareto} pruning methods for multi-objective optimization, Computers \& Industrial Engineering 167 (2022) 108022.
+\newblock \href {https://doi.org/10.1016/j.cie.2022.108022} {\path{doi:10.1016/j.cie.2022.108022}}.
+
+\bibitem{mandow2010namoa}
+L.~Mandow, J.~L. P\'erez-de-la Cruz, Multiobjective {A*} search with consistent heuristics, Journal of the ACM 57~(5) (2010) 1--25.
+\newblock \href {https://doi.org/10.1145/1754399.1754400} {\path{doi:10.1145/1754399.1754400}}.
+
+\bibitem{stewart1991moa}
+B.~S. Stewart, C.~C. White, Multiobjective {A*}, Journal of the ACM 38~(4) (1991) 775--814.
+\newblock \href {https://doi.org/10.1145/115234.115368} {\path{doi:10.1145/115234.115368}}.
+
+\bibitem{kienhuis2002ychart}
+B.~Kienhuis, E.~F. Deprettere, P.~van~der Wolf, K.~Vissers, A methodology to design programmable embedded systems: The {Y}-chart approach, Embedded Processor Design Challenges (2002) 18--37\href {https://doi.org/10.1007/3-540-45874-3_2} {\path{doi:10.1007/3-540-45874-3_2}}.
+
+\bibitem{varga2008omnet}
+A.~Varga, R.~Hornig, An overview of the {OMNeT++} simulation environment, Simutools (2008).
+
+\bibitem{xiao2024contrarc}
+Y.~Xiao, C.~Oh, M.~Lora, P.~Nuzzo, {ContrArc}: Contract-based architecture exploration for cyber-physical systems, in: Design, Automation \& Test in Europe Conference (DATE), 2024.
+
+\bibitem{sedghani2024space4aid}
+H.~Sedghani, F.~Filippini, D.~Ardagna, {SPACE4AI-D}: A design-time tool for {AI} applications resource selection in computing continua, IEEE Transactions on Services Computing (2024).
+\newblock \href {https://doi.org/10.1109/TSC.2024.3479926} {\path{doi:10.1109/TSC.2024.3479926}}.
+
+\bibitem{blank2020pymoo}
+J.~Blank, K.~Deb, pymoo: Multi-objective optimization in {Python}, IEEE Access 8 (2020) 89497--89509.
+\newblock \href {https://doi.org/10.1109/ACCESS.2020.2990567} {\path{doi:10.1109/ACCESS.2020.2990567}}.
+
+\bibitem{zitzler1999hv}
+E.~Zitzler, L.~Thiele, Multiobjective evolutionary algorithms: a comparative case study and the strength {Pareto} approach, IEEE Transactions on Evolutionary Computation 3~(4) (1999) 257--271.
+\newblock \href {https://doi.org/10.1109/4235.797969} {\path{doi:10.1109/4235.797969}}.
+
+\bibitem{ishibuchi2015igdplus}
+H.~Ishibuchi, H.~Masuda, Y.~Tanigaki, Y.~Nojima, Modified distance calculation in generational distance and inverted generational distance, Evolutionary Multi-Criterion Optimization (EMO) (2015) 110--125\href {https://doi.org/10.1007/978-3-319-15892-1_8} {\path{doi:10.1007/978-3-319-15892-1_8}}.
+
+\bibitem{kleinrock1975queueing}
+L.~Kleinrock, Queueing systems, volume 1: Theory (1975).
+
+\bibitem{mann1947whitney}
+H.~B. Mann, D.~R. Whitney, On a test of whether one of two random variables is stochastically larger than the other, The Annals of Mathematical Statistics 18~(1) (1947) 50--60.
+
+\bibitem{cliff1993delta}
+N.~Cliff, Dominance statistics: Ordinal analyses to answer ordinal questions, Psychological Bulletin 114~(3) (1993) 494--509.
+\newblock \href {https://doi.org/10.1037/0033-2909.114.3.494} {\path{doi:10.1037/0033-2909.114.3.494}}.
+
+\bibitem{hemminger2005netem}
+S.~Hemminger, Network emulation with {NetEm}, Linux Conf Au (2005).
+
+\end{thebibliography}
