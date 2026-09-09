@@ -1,0 +1,50 @@
+\section{Threats to validity}
+\label{sec:threats}
+
+\paragraph{Internal validity}
+The correctness of the method rests on the admissibility of the bounds. We address this
+at three levels: proofs (Lemmas~\ref{lem:relax}--\ref{lem:exact},
+Propositions~\ref{prop:feas}--\ref{prop:struct}, Theorem~\ref{thm:exact}); an exhaustive
+machine check of $\LB_i(p)\le f_i(x)$ over all prefixes and all completions on S1 for the
+three workloads; and a direct check that, for every pruned prefix, no completion
+contradicts the claim of the corresponding rule. We deliberately separate \emph{theoretical}
+correctness from \emph{implementation} correctness and verify both, since an admissible
+bound that is implemented incorrectly is indistinguishable, in the output, from an
+inadmissible one. Structural pruning is part of the definition of the design space rather
+than a consequence of the constraints, and the exhaustive baseline uses the same
+predicate; this was discovered by the pruning-safety test and is stated explicitly rather
+than absorbed into the comparison.
+
+\paragraph{Construct validity}
+The analytical model abstracts a real deployment: M/D/1 waiting, no transport-protocol
+effects, a linear power model and normalised cost units. The testbed validation quantifies
+the resulting gap and shows that it affects absolute prediction much more than ordering.
+The sensing workload exposes the main structural gap --- for large payloads over a shaped
+link the model does not capture transport-level effects and over-predicts systematically.
+The energy and cost models are not validated against measurements at all; they are used
+for comparative exploration only, and no absolute energy or cost claim is made.
+
+\paragraph{External validity}
+The workloads are synthetic, although chosen to be qualitatively different rather than
+rescaled versions of one another, and the architecture template is fixed to four tiers
+with three stages. The empirical study is further restricted to configurations that fit on
+a single machine ($\le4$ edge nodes, $\le2$ gateways), and link shaping is applied in the
+forward direction of each hop, matching the one-way transfers counted by the model. Results
+on a geographically distributed deployment may differ, particularly for the WAN hop.
+
+\paragraph{Conclusion validity}
+Deterministic methods (exhaustive, HCA-DSE) require no statistical treatment. Stochastic
+baselines are run with 20 independent seeds and compared with non-parametric tests
+(Mann--Whitney $U$, Cliff's $\delta$). Testbed configurations are repeated three times and
+reported by their median; the four configurations whose repeats differ by more than a
+factor of $1.5$ are reported separately rather than discarded, and all four operate at
+$\rho\ge0.75$.
+
+\paragraph{Limitations}
+The method assumes a static workload during one exploration, does not model runtime
+migration or autoscaling, and requires bounds to be derived per objective --- a manual
+step that must be repeated when the objective set changes. No comparison against an
+exact symbolic or mixed-integer formulation is provided: the queueing term is non-linear
+in the decision variables, so a mixed-integer program would require linearisation and
+would therefore optimise a different model, but this leaves the question of relative
+efficiency against solver-based exact exploration open.

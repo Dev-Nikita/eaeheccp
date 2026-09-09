@@ -1,0 +1,87 @@
+\section{Introduction}
+\label{sec:intro}
+
+Distributed cyber-physical systems (dCPS) are increasingly deployed on a heterogeneous
+compute continuum that spans sensing devices, edge nodes, gateways and cloud
+infrastructure. Designing such a system is not a single decision but a joint one: how
+many edge nodes and gateways to deploy, which hardware class each of them should be,
+where each application stage is executed, how far the ingest stage is replicated, and
+which class of communication link connects the tiers. These decisions interact. Adding
+edge nodes reduces queueing delay but raises deployment cost and static energy; moving
+analytics to the cloud removes load from the edge tier but adds a wide-area transfer to
+every request; replication improves ingest throughput but multiplies both compute load
+and synchronisation traffic.
+
+Because the decisions are discrete and interacting, the number of candidate
+architectures grows as the product of the decision domains and quickly reaches $10^{5}$
+to $10^{7}$ even for a modest set of design variables. At the same time, evaluating a
+single candidate is expensive: a recent industrial dCPS exploration methodology reports
+that ``evaluating each design point takes under a minute'' with a discrete-event
+simulator, and its authors explicitly leave the integration of a search strategy out of
+scope~\cite{saadatmand2025compdse}. A survey of the field concludes that ``efficient and
+scalable DSE technology for dCPS is more or less non-existing and constitutes a largely
+unchartered research area'' and identifies the cost of a design-point evaluation as a
+defining difficulty of the distributed setting~\cite{herget2022dse}. The combination of
+a large space and an expensive evaluator is precisely the regime in which the number of
+\emph{full evaluations}, rather than the raw size of the space, determines whether
+design-space exploration (DSE) is practical at all.
+
+Two families of approaches dominate. Exhaustive or model-based enumeration evaluates
+every candidate and therefore yields the exact Pareto set, but its cost scales with the
+size of the space. Population-based metaheuristics such as NSGA-II~\cite{deb2002nsga2}
+operate under a fixed evaluation budget and return an approximation with no guarantee on
+which trade-offs have been missed; as we show in Section~\ref{sec:results}, a
+budget-matched NSGA-II run needs $10^{3}$ evaluations to recover half of the exact front
+on a space of $5\times10^{4}$ candidates. A third, smaller family performs \emph{exact}
+multi-objective exploration by pruning partial designs, either symbolically with
+constraint solvers~\cite{neubauer2018exact,haubelt2018asp} or through bound-based Pareto
+pruning in the broader optimisation literature~\cite{paretopruning2022,mandow2010namoa}.
+Methods in this family share one structural assumption: the objectives must be
+\emph{assignment monotonous}, i.e.\ each additional decision can only add to the
+objective, so that a partial design already carries a valid lower bound on all its
+completions.
+
+That assumption does not hold for the objective that matters most in a distributed CPS.
+End-to-end latency contains a waiting component that depends on the utilisation of a
+tier, and utilisation is a function of several decisions at once --- the number of nodes
+in the tier, their class, the replication factor and the placement policy. No individual
+assignment increases latency monotonically, so the standard ``cost so far plus optimistic
+remainder'' bound is unavailable. This is the gap the present paper addresses.
+
+\paragraph{Contributions}
+\begin{enumerate}
+\item A formal design-space model for heterogeneous edge--gateway--cloud CPS
+  architectures (Section~\ref{sec:model}) with analytical models of latency including
+  contention, energy, normalised deployment cost, network volume, and six classes of
+  feasibility constraints.
+\item \textbf{Admissible bounds for contention-dependent objectives}
+  (Section~\ref{sec:method}). We decompose each objective into non-negative terms,
+  bound every term independently over the still-reachable domains, and exploit a
+  decision ordering under which the determinants of tier utilisation are fixed early, so
+  that the waiting term becomes \emph{exactly} computable on a partial design rather
+  than being relaxed to zero. Lemmas~\ref{lem:relax} and~\ref{lem:exact} establish
+  admissibility.
+\item \textbf{HCA-DSE}, a hierarchical exploration method that combines structural
+  well-formedness, feasibility pruning and bound-based dominance pruning with a final
+  exact evaluation of the survivors, together with proofs
+  (Propositions~\ref{prop:feas}--\ref{prop:struct}, Theorem~\ref{thm:exact}) that the
+  exact Pareto front is preserved.
+\item \textbf{An evaluation-cost analysis} that answers when such pruning is worth its
+  own overhead, including a measured break-even evaluator cost and a crossover curve
+  (Section~\ref{sec:results}).
+\item \textbf{An empirical validation} on a containerised edge--gateway--cloud testbed
+  with per-node link shaping: 36 architectures, 108 measured runs, reported both as
+  prediction error and as the agreement between the architecture ordering produced by
+  the model and the ordering observed in the measurements.
+\item A reproducibility package in which every figure and every numeric table of this
+  paper is generated from the raw result files by a single script, and in which the
+  correctness claims are backed by exhaustive machine-checked tests.
+\end{enumerate}
+
+The remainder of the paper is organised as follows. Section~\ref{sec:related} positions
+the work. Section~\ref{sec:model} defines the design space and the evaluation model.
+Section~\ref{sec:method} presents HCA-DSE and its correctness.
+Section~\ref{sec:methodology} describes the experimental methodology,
+Section~\ref{sec:results} the results. Section~\ref{sec:discussion} discusses when the
+method pays off and when it does not, Section~\ref{sec:threats} the threats to validity,
+and Section~\ref{sec:conclusion} concludes.

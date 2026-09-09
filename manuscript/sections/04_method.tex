@@ -1,0 +1,251 @@
+\section{HCA-DSE}
+\label{sec:method}
+
+\subsection{Partial architectures}
+The exploration traverses a prefix tree over the decision vector \eqref{eq:decision}
+under a fixed variable order $v_1,\dots,v_k$.
+
+\begin{definition}[Partial architecture]
+A partial architecture of depth $d$ is a prefix of assignments
+$p=(a_1,\dots,a_d)$, $a_i\in D_i$. Its completions are
+$\C(p)=\{x\in\X: x_i=a_i,\ i\le d\}$, with $|\C(p)|=\prod_{i>d}|D_i|$.
+\end{definition}
+
+Let $\sigma:\X\to\{0,1\}$ be the well-formedness predicate of the template: the number of
+gateways does not exceed the number of edge nodes, the replication factor does not exceed
+the number of edge nodes, and replication is undefined for policies that do not place the
+ingest stage on the edge tier. The working space is $\X_\sigma=\{x:\sigma(x)=1\}$ and all
+statements below refer to $\F_\sigma=\F\cap\X_\sigma$; the exhaustive baseline against
+which we compare uses the same predicate. The Pareto front is
+\begin{equation}
+\PS=\{F(x)\ :\ x\in\F_\sigma,\ \nexists\,y\in\F_\sigma:\ F(y)\preceq F(x)\},
+\end{equation}
+where $u\preceq v$ denotes $u_i\le v_i$ for all $i$ and $u_j<v_j$ for at least one $j$.
+
+\subsection{Admissible bounds}
+
+\begin{definition}[Admissibility]
+$\LB_i$ is admissible for objective $f_i$ if
+$\LB_i(p)\le f_i(x)$ for every partial architecture $p$ and every $x\in\C(p)$.
+\end{definition}
+
+Exact exploration methods that prune partial solutions assume that the objectives are
+\emph{assignment monotonous}, i.e.\ that every assignment can only increase the objective,
+so that the partial cost is itself a bound~\cite{neubauer2018exact}. The waiting term of
+\eqref{eq:latency} violates this assumption: it depends on $\rho_t$, which by
+\eqref{eq:rho} is jointly determined by $n_t$, the class of the tier, $r$ and $\pi$, and
+which \emph{decreases} when nodes are added. We therefore construct the bounds in two
+steps.
+
+\begin{lemma}[Term-wise relaxation]
+\label{lem:relax}
+Let $f_i(x)=\sum_{t\in T_i}\varphi_t(x)$ with $\varphi_t\ge0$, and let
+\begin{equation*}
+\underline{\varphi}_t(p)=\min_{x\in\C(p)}\varphi_t(x).
+\end{equation*}
+Then $\LB_i(p)=\sum_{t\in T_i}\underline{\varphi}_t(p)$ is admissible.
+\end{lemma}
+\begin{proof}
+For every $x\in\C(p)$ and every $t$, $\underline{\varphi}_t(p)\le\varphi_t(x)$ by
+definition of the minimum. Summing over $t\in T_i$ yields $\LB_i(p)\le f_i(x)$.
+\end{proof}
+
+The minima are taken \emph{independently per term}, so the combination of values that
+realises them need not correspond to any single completion; the bound is therefore
+optimistic but valid. Every term of \eqref{eq:latency}--\eqref{eq:netvol} is monotone in
+each of its free variables --- service time decreases in $C$, transfer time decreases in
+$B$, static energy and cost increase in the node count, network volume increases in $r$
+--- so each $\underline{\varphi}_t(p)$ is attained at a domain endpoint and is obtained
+from a table of precomputed domain extrema in $O(1)$ time rather than by search.
+
+\begin{lemma}[Exactness on determined terms]
+\label{lem:exact}
+Let $\mathrm{supp}(\varphi_t)$ be the set of variables $\varphi_t$ depends on. If
+$\mathrm{supp}(\varphi_t)\subseteq\{v_1,\dots,v_d\}$ then $\varphi_t$ is constant on
+$\C(p)$, and substituting its exact value for $\underline{\varphi}_t(p)$ preserves
+admissibility while tightening the bound.
+\end{lemma}
+\begin{proof}
+Constancy is immediate, and a constant equals its own minimum over $\C(p)$, so
+Lemma~\ref{lem:relax} applies unchanged.
+\end{proof}
+
+\begin{remark}[Why the variable order matters]
+\label{rem:order}
+The order $v_1,\dots,v_k$ places the determinants of tier utilisation --- node counts,
+node classes, replication factor and policy --- before the remaining variables. As soon
+as they are assigned, the waiting term
+\begin{equation*}
+W_t=\frac{w_i}{C_t}\cdot\frac{\rho_t}{2\,(1-\rho_t)}
+\end{equation*}
+is constant on $\C(p)$ and enters the bound
+\emph{exactly} by Lemma~\ref{lem:exact}, instead of being relaxed to its trivial bound
+$0$. This is what makes a contention-dependent objective usable for safe pruning without
+assignment monotonicity. If the determinants are fixed and $\rho_t\ge1$, no completion has
+finite latency and $\LB_L(p)=\infty$, which is admissible.
+\end{remark}
+
+\subsection{Pruning rules}
+
+\begin{proposition}[Safe feasibility pruning]
+\label{prop:feas}
+Let $\LB_{g_j}$ be admissible for constraint function $g_j$. If
+$\LB_{g_j}(p)>g_j^{\max}$ then $\C(p)\cap\F=\varnothing$.
+\end{proposition}
+\begin{proof}
+For any $x\in\C(p)$, $g_j(x)\ge \LB_{g_j}(p)>g_j^{\max}$, hence $x\notin\F$.
+\end{proof}
+
+\begin{proposition}[Safe dominance pruning]
+\label{prop:dom}
+Let $y\in\F_\sigma$ be a fully evaluated feasible architecture with
+$F(y)\preceq \LB(p)=\big(\LB_1(p),\dots,\LB_n(p)\big)$. Then $F(x)\notin\PS$ for every
+$x\in\C(p)$.
+\end{proposition}
+\begin{proof}
+Let $x\in\C(p)$. By admissibility $f_i(x)\ge \LB_i(p)\ge F_i(y)$ for all $i$, and by
+assumption there is a $j$ with $F_j(y)<\LB_j(p)\le f_j(x)$. Hence $y$ strictly dominates
+$x$ and $F(x)$ is not on the Pareto front.
+\end{proof}
+
+\begin{proposition}[Closure of the well-formedness predicate]
+\label{prop:struct}
+Each invariant of $\sigma$ depends only on assigned variables and, under the chosen
+order, all variables of an invariant are assigned before it is first checked. Since
+assignments are never revised, $\neg\sigma(p)$ implies $\sigma(x)=0$ for every
+$x\in\C(p)$, i.e.\ $\C(p)\cap\X_\sigma=\varnothing$.
+\end{proposition}
+
+\begin{remark}
+Structural invariants define what counts as an architecture rather than following from
+the constraints of the problem: the evaluator can formally compute objectives for, say, a
+replicated deployment under a policy that does not place the ingest stage on the edge
+tier, although such a configuration is meaningless. Structural pruning is therefore part
+of the definition of the search space, and the exhaustive baseline applies the same
+predicate. This distinction was found by the test described in
+Section~\ref{sec:methodology}, which initially --- and incorrectly --- verified structural
+pruning as a feasibility argument.
+\end{remark}
+
+\subsection{Algorithm}
+Algorithm~\ref{alg:hca} traverses the prefix tree depth-first. At every node the three
+rules are applied in increasing order of cost: structural validity, then feasibility
+bounds, then dominance against an archive of non-dominated evaluated points. A leaf that
+survives is evaluated in full; feasible leaves update the archive. Fig.~\ref{fig:tree}
+illustrates the two bound-based rules.
+
+\begin{algorithm}[t]
+\caption{HCA-DSE}
+\label{alg:hca}
+\begin{algorithmic}[1]
+\Require design space $\X$ with order $v_1..v_k$, workload $w$, evaluator $F$
+\Ensure Pareto front $\mathcal{P}$
+\State $A\gets\varnothing$ \Comment{archive of non-dominated evaluated vectors}
+\State $S\gets\varnothing$ \Comment{evaluated feasible architectures}
+\Procedure{Explore}{$p$, $d$}
+  \If{$d=k$}
+    \State $(F(p),\textit{feasible})\gets\textsc{Evaluate}(p,w)$
+      \Comment{the expensive step}
+    \If{\textit{feasible}} $S\gets S\cup\{p\}$; \textsc{ArchiveInsert}$(A,F(p))$ \EndIf
+    \State \Return
+  \EndIf
+  \ForAll{$a\in D_{d+1}$}
+    \State $q\gets p\cup\{v_{d+1}\!\mapsto\!a\}$
+    \If{$\neg\sigma(q)$} \textbf{continue} \Comment{Prop.~\ref{prop:struct}} \EndIf
+    \State $\LB\gets\textsc{Bounds}(q)$ \Comment{Lemmas~\ref{lem:relax},~\ref{lem:exact}}
+    \If{$\exists j:\LB_{g_j}(q)>g_j^{\max}$} \textbf{continue}
+      \Comment{Prop.~\ref{prop:feas}} \EndIf
+    \If{$\exists f\in A: f\preceq \LB$} \textbf{continue}
+      \Comment{Prop.~\ref{prop:dom}} \EndIf
+    \State \textsc{Explore}$(q,d+1)$
+  \EndFor
+\EndProcedure
+\State \textsc{Explore}$(\varnothing,0)$
+\State \Return non-dominated subset of $\{F(x):x\in S\}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize, level distance=9mm,
+  every node/.style={inner sep=1.5pt},
+  n/.style={circle, draw, minimum size=3.4mm, inner sep=0pt},
+  pr/.style={rectangle, draw=red!70!black, fill=red!8, rounded corners=1pt},
+  ev/.style={rectangle, draw=edgec, fill=edgec!12, rounded corners=1pt},
+  level 1/.style={sibling distance=30mm},
+  level 2/.style={sibling distance=15mm},
+  level 3/.style={sibling distance=13mm}]
+\node[n] {}
+  child {node[n] {$n_e{=}2$}
+    child {node[pr] {$\LB_L>D$}
+      edge from parent node[left, xshift=-1mm] {edge-low}}
+    child {node[n] {}
+      child {node[ev] {evaluate} edge from parent node[right, xshift=1mm] {$r{=}1$}}
+      child {node[pr] {$F(y)\preceq \LB$} edge from parent node[right, xshift=2mm]
+             {$r{=}3$}}
+      edge from parent node[right, xshift=1mm] {edge-high}}}
+  child {node[n] {$n_e{=}8$}
+    child {node[pr] {$\LB_C>C^{\max}$} edge from parent node[left, xshift=-1mm]
+           {fast link}}
+    child {node[ev] {evaluate} edge from parent node[right, xshift=1mm] {std link}}};
+\end{tikzpicture}
+\caption{Pruning on the prefix tree. Sub-trees are discarded when the optimistic bound
+already violates a constraint (Proposition~\ref{prop:feas}) or is dominated by an
+evaluated feasible design (Proposition~\ref{prop:dom}); only surviving leaves reach the
+expensive evaluator.}
+\label{fig:tree}
+\end{figure}
+
+\subsection{Correctness}
+
+\begin{theorem}[Pareto-front preservation]
+\label{thm:exact}
+If all bounds are admissible, pruning is performed only by
+Propositions~\ref{prop:feas}--\ref{prop:struct}, and the archive contains only feasible
+fully evaluated architectures, then the set of non-dominated vectors returned by
+Algorithm~\ref{alg:hca} equals the true Pareto front:
+$\mathcal{P}^{\mathrm{HCA}}=\PS$.
+\end{theorem}
+\begin{proof}
+$(\subseteq)$ Every returned vector is $F(x)$ of an evaluated $x\in\F_\sigma$ and survives
+non-dominated filtering; a dominating architecture would itself have been evaluated or
+pruned only by Proposition~\ref{prop:dom}, which is excluded by that proposition.
+
+$(\supseteq)$ Let $u\in\PS$ and let $x\in\F_\sigma$ with $F(x)=u$. The traversal is a
+prefix tree, so $x$ is reached through the unique chain
+$p_0\subset p_1\subset\dots\subset p_k=x$. Suppose some $p_d$ were pruned. By
+Proposition~\ref{prop:struct} this implies $\sigma(x)=0$ and by
+Proposition~\ref{prop:feas} $x\notin\F$, both contradicting $x\in\F_\sigma$; by
+Proposition~\ref{prop:dom} it implies the existence of a feasible $y$ strictly dominating
+$x$, contradicting $u\in\PS$. Hence no $p_d$ is pruned, $x$ is evaluated, and $u$ survives
+the final filtering.
+\end{proof}
+
+\begin{remark}[Duplicates]
+The theorem is stated in objective space. If two distinct architectures share an
+objective vector, dominance pruning may remove one of them; the front is unaffected but
+the duplicate solution is lost. All experiments therefore compare sets of objective
+vectors.
+\end{remark}
+
+\begin{remark}[Order independence]
+Proposition~\ref{prop:dom} holds for any archive of evaluated feasible architectures, so
+the traversal order affects pruning efficiency but never correctness.
+\end{remark}
+
+\subsection{Complexity}
+Let $C_E$ be the cost of one full evaluation, $C_P$ the cost of computing the bounds at
+one tree node, $N$ the number of visited partial states, $N_E$ the number of full
+evaluations and $|A|$ the archive size. Then
+\begin{equation}
+T_{\mathrm{exh}}=O\big(|\X|\,C_E\big),\qquad
+T_{\mathrm{HCA}}=O\big(N(C_P+n|A|)+N_E\,C_E\big),
+\label{eq:complexity}
+\end{equation}
+and pruning is profitable when
+\begin{equation}
+C_E \;>\; \frac{N\,(C_P+n|A|)}{|\X|-N_E}.
+\label{eq:breakeven}
+\end{equation}
+Section~\ref{sec:results} measures the right-hand side and shows that it lies in the
+microsecond range, and that $N\ll|\X|$, so the Cartesian product is never materialised.

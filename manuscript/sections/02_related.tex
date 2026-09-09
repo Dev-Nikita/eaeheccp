@@ -1,0 +1,100 @@
+\section{Related work}
+\label{sec:related}
+
+\subsection{Exact multi-objective design-space exploration}
+The closest methodological relatives of this work perform exact multi-objective
+exploration by reasoning about partial designs. Neubauer et
+al.~\cite{neubauer2018exact} encode system-level synthesis in Answer Set Programming
+modulo Theories and attach theory propagators that check both constraints and Pareto
+dominance on \emph{incomplete} assignments, returning conflict clauses that remove
+infeasible and dominated regions early. Their formulation targets heterogeneous
+multiprocessors with routing, optimising latency, area and energy, and their pruning is
+sound for problems whose objectives are assignment monotonous. In the broader
+optimisation literature, bound-based Pareto pruning is a recognised
+family~\cite{paretopruning2022}, and multi-objective $A^{*}$ with admissible or
+consistent heuristics~\cite{stewart1991moa,mandow2010namoa} provides its theoretical
+foundation: a partial solution whose optimistic vector is dominated by a complete
+solution can be discarded without losing Pareto-optimal completions.
+
+HCA-DSE belongs to this family, and we do not claim safe pruning as such as a
+contribution. The difference is the class of objectives. In a distributed CPS the
+dominant latency term is contention-dependent: it is a function of tier utilisation,
+which no single assignment determines. We therefore construct bounds that are admissible
+without assignment monotonicity, by combining a term-wise relaxation with an explicit
+decision ordering that makes the contention term exactly computable as soon as its
+determinants are fixed (Section~\ref{sec:method}). A second difference is operational:
+symbolic approaches evaluate design points inside the solver and are consequently
+evaluated with cheap objective functions, whereas we explicitly target the regime of an
+expensive external evaluator and quantify the evaluator cost at which pruning becomes
+worthwhile.
+
+\subsection{Design-space exploration for distributed cyber-physical systems}
+Herget et al.~\cite{herget2022dse} survey DSE for dCPS and identify the two premises of
+this paper: design spaces that are far larger than in classical MPSoC exploration, and
+design-point evaluations that are considerably more expensive. CompDSE
+\cite{saadatmand2025compdse} follows the Y-chart philosophy~\cite{kienhuis2002ychart}
+and derives workload, platform and mapping models from execution traces of an industrial
+lithography machine, evaluating design points with OMNeT++~\cite{varga2008omnet}. It is
+an evaluator, not a search strategy: the authors report a manual exploration of three
+variations and state that integrating search algorithms is out of scope. The two
+approaches are therefore complementary --- CompDSE answers how a design point should be
+evaluated, HCA-DSE answers which design points need not be evaluated at all --- and the
+per-design-point cost reported there falls in the regime where our crossover analysis
+predicts speed-ups of two orders of magnitude.
+
+ContrArc~\cite{xiao2024contrarc} explores CPS architectures with a mixed-integer program
+combined with contract refinement checking, pruning through subgraph isomorphism. It
+minimises a single objective (cost) subject to requirements rather than constructing a
+Pareto front, and its pruning is constraint-based rather than bound-based.
+
+\subsection{Design-time placement in the edge--cloud continuum}
+SPACE4AI-D~\cite{sedghani2024space4aid} is the closest work in terms of the problem
+setting: design-time selection of resources and component placement across edge, cloud
+and function-as-a-service layers. The problem is formulated as a mixed-integer
+non-linear program with a single objective (deployment cost) under response-time
+constraints, and solved with randomised greedy, local search, tabu search, simulated
+annealing and genetic algorithms; no exactness guarantee is provided. Its validation on
+a real deployment reports deviations of $12\%$ in cost and $20\%$ in execution time,
+which is a useful reference point for the accuracy reported in
+Section~\ref{sec:results}.
+
+\subsection{Metaheuristic exploration of edge--cloud deployments}
+A large body of work applies evolutionary and swarm metaheuristics to task allocation,
+offloading and service placement in edge--cloud systems, typically optimising
+combinations of latency, energy and cost. These methods are approximate by construction
+and their quality is a function of the evaluation budget. We use NSGA-II
+\cite{deb2002nsga2} as implemented in pymoo~\cite{blank2020pymoo} as the budget-matched
+representative of this family, and report hypervolume~\cite{zitzler1999hv},
+IGD$^{+}$~\cite{ishibuchi2015igdplus} and Pareto recall against the exhaustive ground
+truth. Our conclusion is not that such methods are inferior in general, but that when
+admissible bounds are available exactness is achievable at a small fraction of their
+evaluation budget.
+
+Table~\ref{tab:related} summarises the comparison.
+
+\begin{table*}[t]
+\centering
+\caption{Positioning with respect to the closest prior work.}
+\label{tab:related}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{3.4cm}p{1.9cm}ccp{2.4cm}ccc@{}}
+\toprule
+Work & System class & Obj. & Exact & Pruning mechanism & Cont.- & Exp. & Real \\
+ & & & front & & dep. & eval. & meas. \\
+\midrule
+Neubauer et al.~\cite{neubauer2018exact} & heterog.\ MPSoC & 3 & yes & symbolic conflict clauses on partial designs & no & no & no \\
+CompDSE~\cite{saadatmand2025compdse} & industrial dCPS & perf. & --- &
+  none (no search) & yes & --- & industrial traces \\
+ContrArc~\cite{xiao2024contrarc} & CPS architectures & 1 & --- &
+  MILP + subgraph isomorphism & no & no & no \\
+SPACE4AI-D~\cite{sedghani2024space4aid} & edge--cloud continuum & 1 & no &
+  heuristic search & partly & no & yes \\
+NSGA-II family~\cite{deb2002nsga2} & edge--cloud & 2--4 & no &
+  none & partly & no & rarely \\
+\textbf{HCA-DSE (this work)} & heterog.\ edge--cloud CPS & 4 & \textbf{yes} &
+  \textbf{hierarchical: struct.\ + feas.\ + dominance} &
+  \textbf{yes} & \textbf{yes} & \textbf{yes} \\
+\bottomrule
+\end{tabular}
+\end{table*}

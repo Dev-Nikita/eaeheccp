@@ -1,0 +1,70 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Why hierarchical pruning works here}
+The results of Section~\ref{sec:results} are driven by a property of the design space
+rather than by a clever search order: in a heterogeneous edge--cloud CPS the vast
+majority of candidate architectures is either ill-formed, or violates a hard constraint
+that is already implied by a handful of early decisions, or is dominated by a design that
+is cheaper in every objective. On S3 only $34\,560$ of $51\,840$ candidates are even
+well-formed, of those a further $7\,000$ to $12\,700$ survive the feasibility bounds, and
+of those fewer than 60 need to be evaluated. Every candidate removed at those layers would
+otherwise consume a full simulation.
+
+The ablation makes the mechanism explicit. Dominance pruning is the stronger of the two
+bound-based layers, but it is only effective once an archive of good designs exists;
+feasibility pruning removes precisely the sub-trees in which no such design will ever be
+found, so it reduces the number of tree nodes at which the dominance test has to be
+evaluated. The combination is roughly an order of magnitude stronger than either layer
+alone.
+
+\subsection{When HCA-DSE is the right tool --- and when it is not}
+The method is advantageous when the design space is large, the constraints are tight, the
+evaluator is expensive, and admissible bounds can be constructed. The crossover analysis
+makes the third condition quantitative: with the analytical evaluator, whose cost is
+comparable to that of the bounds themselves, the wall-clock gain is only
+$1.3$--$3.3\times$ despite a $99.9\%$ reduction in evaluations, whereas with a
+discrete-event evaluator the same reduction turns into two orders of magnitude. Since
+industrial dCPS exploration reports evaluation costs of up to a
+minute per design point~\cite{saadatmand2025compdse}, the practically relevant regime is
+firmly on the favourable side of the crossover.
+
+Conversely, the method offers little when the space is small, the constraints are loose,
+the evaluation is nearly free, or --- most importantly --- when no admissible bound can be
+constructed for the objectives of interest. If a bound cannot be proven admissible it must
+not be used: the guarantee of Theorem~\ref{thm:exact} rests entirely on that property, and
+an inadmissible bound silently converts an exact method into an approximate one without
+any indication in the output.
+
+\subsection{Relation to symbolic exact exploration}
+Symbolic approaches~\cite{neubauer2018exact} prune partial designs with a constraint
+solver and are, in principle, more general than closed-form bounds: any constraint the
+solver can express can participate in the pruning. The price is that the objectives must
+be assignment monotonous for dominance checks on incomplete assignments to be sound. Our
+construction trades generality for applicability to contention-dependent objectives:
+Lemma~\ref{lem:exact} together with the decision ordering of Remark~\ref{rem:order}
+recovers exactness for a latency model with queueing, at the cost of bounds that must be
+derived per objective. The two directions are complementary, and combining a solver-based
+front end with contention-aware bounds is a natural next step.
+
+\subsection{Relation to evaluator-centric methodologies}
+CompDSE~\cite{saadatmand2025compdse} and HCA-DSE answer different questions. The former
+asks how a design point of an industrial dCPS can be modelled and evaluated faithfully;
+the latter asks which design points need not be evaluated at all. Their combination is
+straightforward in principle --- the analytical model of Section~\ref{sec:model} would
+serve as the bound generator and the trace-derived simulator as the evaluator --- and it
+is the configuration in which our crossover analysis predicts the largest benefit.
+
+\subsection{Accuracy versus ordering}
+The empirical validation supports a narrower claim than "the model is accurate". The
+model's absolute error is $16$--$50\%$ depending on the workload, which is in the same
+range as the $20\%$ execution-time deviation reported for a design-time placement tool
+validated on a real deployment~\cite{sedghani2024space4aid}. What the exploration actually
+requires, however, is that the model orders architectures correctly, and that claim is
+supported much more strongly: $98\%$ agreement on the pairs the model separates by more
+than $25\%$. The complement is equally informative --- within a single workload the
+rank correlation is lower, because after the M/D/1 correction many designs of one workload
+differ by less than the measurement noise. A model that cannot separate near-equivalent
+architectures is not a defect of the exploration method but an argument for the two-level
+scheme: analytical bounds remove the bulk of the space, and the surviving handful of
+candidates is where an expensive high-fidelity evaluator should be spent.

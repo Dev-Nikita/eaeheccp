@@ -1,0 +1,111 @@
+\section{Experimental methodology}
+\label{sec:methodology}
+
+\subsection{Research questions}
+\begin{description}
+\item[RQ1] By how much does HCA-DSE reduce the number of \emph{full design-point
+  evaluations}, and how is that reduction distributed over the pruning layers?
+\item[RQ2] Is the exact Pareto front preserved with respect to exhaustive enumeration?
+\item[RQ3] At which evaluator cost does the pruning overhead pay for itself?
+\item[RQ4] How does HCA-DSE compare with budget-matched stochastic exploration?
+\item[RQ5] How do the reduction and the runtime scale with the size of the design space?
+\item[RQ6] Do the architecture rankings produced by the analytical model transfer to a
+  real containerised edge--cloud deployment?
+\end{description}
+
+\subsection{Design of the experiments}
+Four design-space scales (S1--S4, Table~\ref{tab:variables}) are combined with the three
+workload classes of Table~\ref{tab:workloads}. Exhaustive ground truth is computed for
+S1--S3; S4 and the scalability study are explored by HCA-DSE only. Every configuration is
+deterministic except the stochastic baselines, which are run with 20 independent seeds.
+
+\paragraph{Baselines}
+Exhaustive enumeration provides the ground-truth Pareto front. Random search and
+NSGA-II~\cite{deb2002nsga2} (pymoo~\cite{blank2020pymoo}, population 40, SBX crossover,
+polynomial mutation, integer repair) are run under matched evaluation budgets of
+$100$, $250$, $500$ and $1000$ full evaluations, 20 seeds each. All methods use exactly
+the same evaluator and the same feasibility rules, so differences are attributable to the
+exploration strategy alone.
+
+\paragraph{Metrics}
+Pareto recall and precision are computed on sets of objective vectors against the
+exhaustive front. Hypervolume~\cite{zitzler1999hv} is normalised by the hypervolume of the
+exhaustive front (HV ratio); IGD$^{+}$~\cite{ishibuchi2015igdplus} uses the exhaustive
+front as reference. We additionally report the number of full evaluations $N_E$, the
+number of visited partial states $N$, and wall-clock time. Stochastic baselines are
+compared with the Mann--Whitney $U$ test~\cite{mann1947whitney} and Cliff's
+$\delta$~\cite{cliff1993delta}.
+
+\paragraph{Ablation}
+Four variants isolate the contribution of each layer: structural only; structural +
+feasibility bounds; structural + dominance bounds; and the full method.
+
+\subsection{Two-level evaluation and the cost model}
+The analytical evaluator of Section~\ref{sec:model} (level A) is used for pruning,
+ground truth and all exactness claims. A discrete-event simulator (level B) provides a
+higher-fidelity, and therefore more expensive, evaluator: multi-server queues with a
+finite number of servers per tier, explicit link contention, deterministic service times
+and Poisson arrivals. Its measured cost is $19.4$\,ms per design point against
+$\approx8\,\mu$s for the analytical evaluator, which allows the crossover analysis of
+RQ3 to be anchored at two measured points rather than assumed.
+
+\subsection{Testbed}
+\label{sec:testbed}
+The physical validation runs the architecture template as containers
+(Fig.~\ref{fig:testbed}). Each edge node, gateway and cloud instance is a separate
+container limited to one CPU, so that a node behaves as the single server assumed by the
+model. Services are implemented in Go and share one binary: a request carries a plan
+listing the remaining stages, and each node consumes CPU work equal to $w_i/C_t$ before
+forwarding the remainder together with the real payload to the next hop. Links are shaped
+per node with \texttt{tc netem}~\cite{hemminger2005netem} using the delay and rate of the
+link class of the design under test; the gateway-to-cloud hop uses the WAN profile.
+Replication is emulated faithfully: $r$ replicas execute stage $\tau_1$ in parallel and
+carry the synchronisation payload, while the remainder of the chain is executed once.
+A load generator produces Poisson arrivals at rate $\Lambda$, 900 requests per run of
+which the first 150 are discarded as warm-up, and reports the latency percentiles.
+
+Thirty-six architectures were selected across the three workloads --- Pareto-optimal,
+dominated and near-boundary designs --- restricted to those that fit on a single machine
+($\le4$ edge nodes, $\le2$ gateways, one cloud instance). Each was executed three times,
+giving 108 measured runs.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize, node distance=5mm and 7mm,
+  c/.style={draw, rounded corners=1.5pt, minimum height=6mm, minimum width=16mm,
+            align=center, inner sep=2pt},
+  arr/.style={-{Latex[length=1.8mm]}}]
+\node[c, fill=black!5] (lg) {load generator\\[-2pt]Poisson $\Lambda$};
+\node[c, right=of lg, fill=edgec!15, draw=edgec] (e1) {edge$_1$ \scriptsize 1 CPU};
+\node[c, below=3mm of e1, fill=edgec!15, draw=edgec] (e2) {edge$_n$ \scriptsize 1 CPU};
+\node[c, right=of e1, yshift=-4.5mm, fill=gwc!15, draw=gwc] (gw)
+     {gateway \scriptsize 1 CPU};
+\node[c, right=of gw, fill=cloudc!12, draw=cloudc] (cl) {cloud \scriptsize 1 CPU};
+\draw[arr] (lg) -- (e1); \draw[arr] (lg) -- (e2);
+\draw[arr] (e1) -- (gw); \draw[arr] (e2) -- (gw);
+\draw[arr] (gw) -- node[above, font=\tiny] {WAN} (cl);
+\node[font=\tiny, below=0.5mm of gw, text=black!60]
+  {\texttt{tc netem}: per-node delay and rate};
+\end{tikzpicture}
+\caption{Containerised testbed. Every tier node is a separate one-CPU container; access
+links carry the delay and bandwidth of the link class of the design, the cloud hop
+carries the WAN profile.}
+\label{fig:testbed}
+\end{figure}
+
+Because the analytical model is deliberately coarse, we report both the prediction error
+(MAPE, median absolute error) and, more importantly for exploration, the \emph{ordering}
+agreement: Spearman's $\rho$, Kendall's $\tau$, and the share of architecture pairs whose
+measured order agrees with the model order among the pairs that the model separates by
+more than $10\%$ and $25\%$.
+
+\subsection{Reproducibility}
+The implementation is in Python 3 with NumPy, SciPy and pymoo; the testbed services are
+in Go and run under Docker Compose. All figures and all numeric tables of this paper are
+generated from the raw result files by a single script, so no number is transcribed by
+hand. Correctness is machine-checked at three levels: (i) bound admissibility is verified
+\emph{exhaustively} on S1, i.e.\ for every prefix and every completion of that prefix
+across the three workloads; (ii) for every pruned prefix, all of its completions are
+enumerated and the claim of the corresponding proposition is verified directly, on S1 and
+S2; and (iii) the equality $\mathcal{P}^{\mathrm{HCA}}=\PS$ is re-checked on S1--S3 for
+every pruning variant as a regression test.
