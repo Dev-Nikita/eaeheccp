@@ -72,7 +72,7 @@ def main():
     if sh("docker info").returncode != 0:
         sys.exit("Docker is not running. Start Docker Desktop and retry.")
     print("building image ...", flush=True)
-    b = sh(f"docker build -q -t {IMAGE} {TB}")
+    b = sh(f'docker build -q -t {IMAGE} "{TB}"')
     if b.returncode != 0:
         sys.exit(b.stderr[-2000:])
 
@@ -93,12 +93,12 @@ def main():
             open(os.path.join(RUN, "compose.yml"), "w").write(compose_for(d))
             json.dump(spec_for(d), open(os.path.join(RUN, "spec/spec.json"), "w"))
             t0 = time.time()
-            r = sh(f"docker compose -f {RUN}/compose.yml up --abort-on-container-exit "
-                   f"--exit-code-from loadgen --quiet-pull", cwd=RUN)
+            r = sh(f'docker compose -f "{RUN}/compose.yml" up --abort-on-container-exit '
+                   f'--exit-code-from loadgen --quiet-pull', cwd=RUN)
             res_path = os.path.join(RUN, "out/result.json")
             ok = os.path.exists(res_path)
             res = json.load(open(res_path)) if ok else {}
-            sh(f"docker compose -f {RUN}/compose.yml down -v --remove-orphans")
+            sh(f'docker compose -f "{RUN}/compose.yml" down -v --remove-orphans')
             row = dict(key=key, workload=d["workload"], kind=d["kind"], design_idx=i, repeat=rep,
                        n_e=d["n_e"], n_g=d["n_g"], policy=d["design"]["policy"],
                        rep_factor=d["rep"], edge_cls=d["design"]["edge_cls"],

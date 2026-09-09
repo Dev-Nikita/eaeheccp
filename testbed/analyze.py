@@ -29,6 +29,8 @@ for (w, i), rs in sorted(by.items()):
                     p95_measured=round(p95, 6), repeats=len(rs),
                     iqr_ms=round(1000 * (max(float(r["p50"]) for r in rs) -
                                          min(float(r["p50"]) for r in rs)), 2),
+                    spread=round(max(float(r["p50"]) for r in rs) /
+                                 min(float(r["p50"]) for r in rs), 2),
                     rel_err=round((float(rs[0]["L_analytical"]) - med) / med, 3)))
 
 def pair_agreement(sub, thr):
@@ -66,13 +68,15 @@ def stats(sub, label):
 summary = []
 for w in sorted({r["workload"] for r in out}):
     sub = [r for r in out if r["workload"] == w]
-    stable = [r for r in sub if r["max_rho"] <= 0.75]
     summary.append(dict(workload=w, **stats(sub, "all")))
-    if len(stable) >= 5:
-        summary.append(dict(workload=w, **stats(stable, "rho<=0.75")))
+    for lbl, sel in (("rho<=0.75", [r for r in sub if r["max_rho"] <= 0.75]),
+                     ("reproducible", [r for r in sub if r["spread"] < 1.5])):
+        if len(sel) >= 5 and len(sel) < len(sub):
+            summary.append(dict(workload=w, **stats(sel, lbl)))
 allr = out
 summary.append(dict(workload="ALL", **stats(allr, "all")))
 summary.append(dict(workload="ALL", **stats([r for r in allr if r["max_rho"] <= 0.75], "rho<=0.75")))
+summary.append(dict(workload="ALL", **stats([r for r in allr if r["spread"] < 1.5], "reproducible")))
 for s in summary:
     print(s)
 with open(f"results/e9_summary_{a.tag}.csv", "w", newline="") as f:
@@ -83,7 +87,7 @@ with open(f"results/e9_per_design_{a.tag}.csv", "w", newline="") as f:
 fig, ax = plt.subplots(figsize=(3.5, 3.2), dpi=200)
 for w, mk in zip(sorted({r["workload"] for r in out}), "osv"):
     sub = [r for r in out if r["workload"] == w]
-    hi = [r for r in sub if r["max_rho"] > 0.75]; lo = [r for r in sub if r["max_rho"] <= 0.75]
+    hi = [r for r in sub if r["spread"] >= 1.5]; lo = [r for r in sub if r["spread"] < 1.5]
     ax.scatter([r["p50_measured"] * 1e3 for r in lo], [r["L_analytical"] * 1e3 for r in lo],
                s=12, marker=mk, label=w)
     ax.scatter([r["p50_measured"] * 1e3 for r in hi], [r["L_analytical"] * 1e3 for r in hi],
@@ -91,7 +95,7 @@ for w, mk in zip(sorted({r["workload"] for r in out}), "osv"):
 lim = [3, 4000]; ax.plot(lim, lim, "k--", lw=0.8)
 ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlim(*lim); ax.set_ylim(*lim)
 ax.set_xlabel("measured p50 latency [ms]"); ax.set_ylabel("analytical latency [ms]")
-ax.set_title("open markers: $\\rho>0.75$", fontsize=6)
+ax.set_title("open markers: repeat spread $\\geq$ 1.5x", fontsize=6)
 ax.legend(fontsize=6); fig.savefig(f"figures/fig7_testbed_{a.tag}.png", bbox_inches="tight")
 print(f"written results/e9_summary_{a.tag}.csv, results/e9_per_design_{a.tag}.csv, "
       f"figures/fig7_testbed_{a.tag}.png")
