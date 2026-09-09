@@ -82,7 +82,7 @@ def exhaustive(space: DesignSpace, wl) -> SearchStats:
 
 
 def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
-            use_structural=True) -> SearchStats:
+            use_structural=True, record_pruned=None) -> SearchStats:
     """Hierarchical constraint-aware DFS over the prefix tree."""
     t0 = time.perf_counter()
     s = SearchStats("hca-dse", n_raw=space.size)
@@ -122,6 +122,8 @@ def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
             nxt = dict(partial); nxt[var] = val
             if use_structural and not structurally_valid(nxt):
                 s.pruned_structural += subtree_size(depth + 1)
+                if record_pruned is not None:
+                    record_pruned.append(("structural", dict(nxt)))
                 continue
             if use_bounds or use_dominance:
                 tb = time.perf_counter()
@@ -129,12 +131,16 @@ def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
                 s.t_bounds += time.perf_counter() - tb
                 if use_bounds and infeasible_by_bounds(lb, wl):
                     s.pruned_bound += subtree_size(depth + 1)
+                    if record_pruned is not None:
+                        record_pruned.append(("feasibility", dict(nxt)))
                     continue
                 td = time.perf_counter()
                 dom = use_dominance and dominated_by_bounds(lb, archive)
                 s.t_dominance += time.perf_counter() - td
                 if dom:
                     s.pruned_dominance += subtree_size(depth + 1)
+                    if record_pruned is not None:
+                        record_pruned.append(("dominance", dict(nxt)))
                     continue
             rec(depth + 1, nxt)
 
