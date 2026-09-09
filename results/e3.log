@@ -1,0 +1,6 @@
+S2/telemetry random B=100: recall med=0.037 HV med=0.539 IGD+ med=0.1880
+S2/telemetry nsga2 B=100: recall med=0.018 HV med=0.613 IGD+ med=0.1791
+S2/telemetry random B=250: recall med=0.037 HV med=0.732 IGD+ med=0.1187
+S2/telemetry nsga2 B=250: recall med=0.315 HV med=0.840 IGD+ med=0.0584
+S2/telemetry random B=500: recall med=0.111 HV med=0.864 IGD+ med=0.0736
+S2/telemetry nsga2 B=500: recall med=0.759 HV med=0.989 IGD+ med=0.0053

@@ -1,46 +1,83 @@
-# HCA-DSE — статус реализации (Gate 1-5 пройдены)
+# HCA-DSE — статус (Gates 1-9 пройдены; осталcя testbed)
 
-Дата: 2026-09-09. Target: Journal of Systems Architecture (Elsevier).
+Target: Journal of Systems Architecture (Elsevier). Обновлено 2026-09-09.
 
-## Что уже работает
-- `hcadse/model.py` — формальная модель: 3 tier (edge/gateway/cloud), классы узлов и
-  каналов, 3 workload (telemetry / control / sensing), 4 масштаба design space
-  S1=1 296, S2=5 832, S3=51 840, S4=345 600 кандидатов.
-- `hcadse/evaluate.py` — полная (дорогая) оценка design point: M/M/1-очереди,
-  latency по пути, энергия, стоимость, объём трафика + 6 типов constraints.
-- `hcadse/bounds.py` — admissible нижние оценки LB(partial) для L/E/C/D,
-  Proposition 1 (infeasibility pruning) и Proposition 2 (dominance pruning).
-- `hcadse/search.py` — exhaustive ground truth, HCA-DSE (DFS по префиксному дереву),
-  random baseline, Pareto extraction.
-- `hcadse/metrics.py` — recall / precision / hypervolume / IGD+ (pymoo).
-- `tests/test_core.py` — Gate 2 и Gate 5.
+## Терминология (важно для рукописи)
+Везде пишем **"reduction in full design-point evaluations"**, а НЕ "computational
+saving": экономия времени зависит от стоимости evaluation и отражена отдельно (E2).
 
-## Проверенные результаты (реальные прогоны, не оценки)
-Bound admissibility: LB_i(partial) <= f_i(x) проверено исчерпывающе для ВСЕХ
-префиксов и ВСЕХ 1 296 завершений на S1 x 3 workload — нарушений нет.
+## Gate 1-5 (зафиксировано тегом v0.1-exact-pruning)
+Модель, аналитический evaluator, admissible bounds, HCA-DSE, exhaustive ground truth.
+- Bound admissibility: LB_i(partial) <= f_i(x) проверено исчерпывающе (S1 x 3 workload,
+  все префиксы x все завершения) — 0 нарушений.
+- P_HCA = P_exhaustive на S1-S3 для всех workload и для всех вариантов pruning.
 
-Точное сохранение Парето-множества (P_HCA == P_exhaustive по векторам целей):
+## Gate 6 — профилирование и кэшированные bounds
+Профиль до оптимизации: bounds 74 % времени. Введён `hcadse/bounder.py` (мемоизация
+всех термов, зависящих только от достижимых классов). Регрессия
+`cached == reference` в тестах. Wall-clock speedup при дешёвом аналитическом
+evaluator вырос с 1.3x до **2.1-3.3x** (S3), exactness сохранена.
+Остаточный профиль S3: bounds ~50 %, dominance ~37 %, full evaluation < 1 %.
 
-| Scale | Workload  | \|X\|   | exhaustive evals | HCA evals | экономия |
-|-------|-----------|--------:|-----------------:|----------:|---------:|
-| S1    | telemetry |   1 296 |            1 080 |        31 |   97.1 % |
-| S1    | control   |   1 296 |            1 080 |        34 |   96.9 % |
-| S1    | sensing   |   1 296 |            1 080 |        18 |   98.3 % |
-| S2    | telemetry |   5 832 |            3 888 |        47 |   98.8 % |
-| S2    | control   |   5 832 |            3 888 |        49 |   98.7 % |
-| S2    | sensing   |   5 832 |            3 888 |        24 |   99.4 % |
-| S3    | telemetry |  51 840 |           34 560 |        53 |   99.85 %|
-| S3    | control   |  51 840 |           34 560 |        63 |   99.82 %|
-| S3    | sensing   |  51 840 |           34 560 |        41 |   99.88 %|
-| S4    | telemetry | 345 600 |     (не считался)|        58 |        — |
+## Gate 6b — когда pruning реально окупается (E2)
+T(C_E) = overhead + N_eval * C_E, overhead и N_eval измерены.
+- Break-even стоимость evaluation: **1-3 мкс** (то есть выигрыш есть практически
+  для любого нетривиального evaluator).
+- Реально измеренная стоимость discrete-event evaluator: **19.5 мс/design point**.
+  При ней на S1: T_exhaustive = 21.1 с против T_HCA = 0.6 с → **34x**;
+  на S3 отношение N_eval 34 560 / 53 даёт ~2 орядка.
 
-S3: совпадение с exhaustive Парето-фронтом = True для всех трёх workload.
+## Gate 7 — сравнение с baselines (E3, 20 seeds, S2 и S3)
+| Метод | Бюджет | Recall (медиана) | HV ratio | IGD+ |
+|---|---:|---:|---:|---:|
+| random | 1000 | 0.00-0.20 | 0.48-0.88 | 0.07-0.14 |
+| NSGA-II | 500 | 0.19-0.26 | 0.77-0.84 | 0.06-0.08 |
+| NSGA-II | 1000 | 0.64-0.96 | 0.94-0.999 | 0.0002-0.086 |
+| **HCA-DSE** | **24-64 оценок** | **1.00** | **1.00** | **0** |
+Статистика (E8): Mann-Whitney U + Cliff's delta для NSGA-II vs random по 20 seeds.
+Формулировка для статьи: NSGA-II даёт approximate front при фиксированном бюджете;
+HCA-DSE даёт exact front, когда admissible bounds доступны.
 
-## Главная проблема, которую надо закрыть до сабмита
-Экономия оценок ~99 %, но wall-clock speedup только 1.1-1.8x, потому что
-аналитическая evaluation сама по себе дешёвая, а вычисление bounds стоит дорого.
-Два действия:
-1. кэшировать доменные min/max в bounds (ожидаемо 5-10x по времени HCA);
-2. ввести модель стоимости оценки C_E (аналитика / discrete-event simulation /
-   измерение на стенде) и показывать speedup как функцию C_E — это и есть
-   реальный сценарий JSA (дорогая симуляция design point).
+## Gate 8 — ablation (E4, S3)
+| Вариант | full evaluations (telemetry) | exact |
+|---|---:|:--:|
+| structural only | 34 560 | да |
+| struct + feasibility bounds | 12 487 | да |
+| struct + dominance | 325 | да |
+| **HCA-full** | **53** | да |
+Вывод: основной вклад даёт dominance pruning, но feasibility bounds сокращают его
+работу ещё в 6 раз. Сигнатуры pruning различаются по workload (sensing — bound-driven,
+telemetry — dominance-driven), что и нужно для Discussion.
+
+## Gate 9 — масштабируемость (E5)
+Пространство никогда не материализуется.
+| raw \|X\| | посещено partial states | full evals | время | пик памяти |
+|---:|---:|---:|---:|---:|
+| 1 296 | 658 | 42 | 0.07 с | 86 KiB |
+| 51 840 | 7 290 | 59 | 0.94 с | 51 KiB |
+| 345 600 | 10 345 | 60 | 1.39 с | 55 KiB |
+| **82 944 000** | **16 847** | **58** | **1.9 с** | **80 KiB** |
+Доля посещённых состояний падает с 0.51 до 2.0e-4.
+
+## Внутренняя валидация модели (E6/E7)
+Аналитическая модель против discrete-event simulation (5 повторов, 35-40 архитектур):
+| workload | MAPE | Spearman rho |
+|---|---:|---:|
+| telemetry | 42.5 % | 0.923 |
+| control | 50.8 % | 0.962 |
+| sensing | 20.8 % | 0.951 |
+Линейная калибровка (holdout 50/50) помогает для telemetry (44 -> 17 %) и control
+(52 -> 9 %), но ухудшает sensing (15 -> 52 %) — то есть калибровка не переносится
+между режимами, а переносится **ранжирование**. Это и есть тезис для Discussion:
+для DSE достаточно корректного порядка архитектур.
+
+## Что осталось до manuscript v0.1
+1. Docker/Go testbed (Gate 10) — 30-60 архитектур, p50/p95, MAPE, Spearman.
+2. Literature review по multi-objective branch-and-bound DSE / safe Pareto pruning
+   в HW/SW co-design (JSA, TECS, TCAD, DATE, DAC) — зафиксировать реальную новизну.
+3. Формальные Proposition 1, Proposition 2, Theorem 1 (Pareto preservation) с proofs.
+
+## Файлы
+`results/e1_pruning.csv, e2_costsweep.csv, e3_baselines.csv, e4_ablation.csv,
+e5_scalability.csv, e6_simvalidation.csv, e7_calibration.csv, e8_stats.csv`
+`figures/fig1..fig6 .png`; тесты: `tests/test_core.py`, `tests/test_regression.py`.

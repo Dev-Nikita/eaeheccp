@@ -6,6 +6,7 @@ import random, time
 from .model import DesignSpace, VAR_ORDER
 from .evaluate import evaluate
 from .bounds import lower_bounds, infeasible_by_bounds, dominated_by_bounds
+from .bounder import Bounder
 
 
 # ---------------------------------------------------------------------------
@@ -49,6 +50,11 @@ class SearchStats:
     pruned_structural: int = 0
     pruned_bound: int = 0
     pruned_dominance: int = 0
+    n_nodes: int = 0          # partial states visited (never materialises |X|)
+    t_bounds: float = 0.0
+    t_eval: float = 0.0
+    t_dominance: float = 0.0
+    t_pareto: float = 0.0
     front: List[Tuple[dict, tuple]] = field(default_factory=list)
 
 
@@ -62,11 +68,15 @@ def exhaustive(space: DesignSpace, wl) -> SearchStats:
             continue
         s.n_structural += 1
         s.n_evaluated += 1
+        te = time.perf_counter()
         r = evaluate(x, wl)
+        s.t_eval += time.perf_counter() - te
         if r.feasible:
             s.n_feasible += 1
             pts.append((x, r.objectives))
+    tp = time.perf_counter()
     s.front = pareto_front(pts)
+    s.t_pareto = time.perf_counter() - tp
     s.runtime = time.perf_counter() - t0
     return s
 
@@ -76,8 +86,18 @@ def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
     """Hierarchical constraint-aware DFS over the prefix tree."""
     t0 = time.perf_counter()
     s = SearchStats("hca-dse", n_raw=space.size)
-    archive: List[tuple] = []          # objective vectors of evaluated feasible designs
+    archive: List[tuple] = []          # non-dominated evaluated objective vectors
     pts: List[Tuple[dict, tuple]] = []
+    bd = Bounder(space, wl)
+
+    def archive_add(f: tuple):
+        for g in archive:
+            if all(g[i] <= f[i] for i in range(4)) and any(g[i] < f[i] for i in range(4)):
+                return
+        archive[:] = [g for g in archive
+                      if not (all(f[i] <= g[i] for i in range(4)) and
+                              any(f[i] < g[i] for i in range(4)))]
+        archive.append(f)
 
     def subtree_size(depth: int) -> int:
         n = 1
@@ -86,13 +106,16 @@ def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
         return n
 
     def rec(depth: int, partial: dict):
+        s.n_nodes += 1
         if depth == len(VAR_ORDER):
             s.n_evaluated += 1
+            te = time.perf_counter()
             r = evaluate(partial, wl)
+            s.t_eval += time.perf_counter() - te
             if r.feasible:
                 s.n_feasible += 1
                 pts.append((dict(partial), r.objectives))
-                archive.append(r.objectives)
+                archive_add(r.objectives)
             return
         var = VAR_ORDER[depth]
         for val in space.domain(var):
@@ -101,17 +124,24 @@ def hca_dse(space: DesignSpace, wl, use_bounds=True, use_dominance=True,
                 s.pruned_structural += subtree_size(depth + 1)
                 continue
             if use_bounds or use_dominance:
-                lb = lower_bounds(nxt, space, wl)
+                tb = time.perf_counter()
+                lb = bd.bounds(nxt)
+                s.t_bounds += time.perf_counter() - tb
                 if use_bounds and infeasible_by_bounds(lb, wl):
                     s.pruned_bound += subtree_size(depth + 1)
                     continue
-                if use_dominance and dominated_by_bounds(lb, archive):
+                td = time.perf_counter()
+                dom = use_dominance and dominated_by_bounds(lb, archive)
+                s.t_dominance += time.perf_counter() - td
+                if dom:
                     s.pruned_dominance += subtree_size(depth + 1)
                     continue
             rec(depth + 1, nxt)
 
     rec(0, {})
+    tp = time.perf_counter()
     s.front = pareto_front(pts)
+    s.t_pareto = time.perf_counter() - tp
     s.runtime = time.perf_counter() - t0
     return s
 

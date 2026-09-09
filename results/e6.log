@@ -1,0 +1,4 @@
+telemetry: n=40 MAPE=42.5% Spearman rho=0.923
+control: n=40 MAPE=50.8% Spearman rho=0.962
+sensing: n=35 MAPE=20.8% Spearman rho=0.951
+written results/e6_simvalidation.csv

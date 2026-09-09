@@ -1,0 +1,4 @@
+MAPE_calibrated,MAPE_raw,a,b,n_test,spearman_test,workload
+9.2,51.8,0.536,0.001523,20,0.922,control
+52.4,15.4,2.3517,-0.081279,18,0.941,sensing
+16.7,44.4,0.7927,-0.001734,20,0.934,telemetry
