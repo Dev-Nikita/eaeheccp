@@ -1,0 +1,141 @@
+\section*{Methods}
+\label{sec:ce:methods}
+
+\subsection*{Architecture template and design space}
+The template has four tiers --- devices, edge nodes, gateways and cloud --- and three
+application stages per request. Pre-processing runs on the edge or gateway tier,
+aggregation always on the gateway tier, and analytics on the edge tier or in the cloud;
+which variant is instantiated is a design decision. A compute class is a tuple
+$(C,M,P^{\mathrm{idle}},P^{\mathrm{peak}},c)$ of capacity [MIPS], memory [MB], idle and
+peak power [W] and normalised cost; a link class is $(B,\tau^{\mathrm{prop}},e,c)$ of
+bandwidth [Mb/s], propagation delay, transfer energy [J/MB] and cost per attached node.
+The gateway-to-cloud connection is fixed infrastructure ($200$\,Mb/s, $20$\,ms) and is
+not a design variable. An architecture is
+\begin{equation}
+x=\big(n_e,\ \kappa_e,\ n_g,\ \kappa_g,\ \ell,\ \kappa_c,\ r,\ \pi\big),
+\label{eq:ce:decision}
+\end{equation}
+with node counts $n_e,n_g$, classes $\kappa_e,\kappa_g,\kappa_c$, link class $\ell$,
+replication factor $r$ of the ingest stage and placement policy $\pi$. The design space is
+the Cartesian product $\X=D_1\times\dots\times D_k$, $k=8$. Four scales
+(S1--S4) and three workload classes --- high-rate telemetry, deadline-dominated real-time
+control and payload-dominated sensing --- are used throughout; their domains and
+parameters are listed in Supplementary Tables~S8--S10.
+
+\subsection*{Evaluation model}
+With $t(i)$ the tier executing stage $i$, $N_t$ its node count and $C_t$ the per-node
+capacity of its class, the offered load and utilisation are
+$\Theta_t=\sum_{i:t(i)=t}\Lambda w_i\mu_i$ and $\rho_t=\Theta_t/(N_tC_t)$, where
+$\Lambda$ is the system arrival rate and $\mu_i=r$ for the ingest stage and $1$
+otherwise. A tier is modelled as one queueing station with the aggregate capacity of its
+nodes, deterministic service and Poisson arrivals, so that
+\begin{equation}
+L(x)=\sum_{i=1}^{3}\frac{w_i}{C_{t(i)}}
++\sum_{i=1}^{3}\frac{w_i}{C_{t(i)}}\cdot\frac{\rho_{t(i)}}{2\,(1-\rho_{t(i)})}
++\sum_{(s,\ell)\in\mathcal{H}(x)}\Big(\frac{8s}{B_\ell}+\tau^{\mathrm{prop}}_\ell\Big),
+\label{eq:ce:latency}
+\end{equation}
+where $\mathcal{H}(x)$ is the set of hops implied by the policy and the replication
+factor. The middle term is the contention-dependent one. The aggregation is an
+approximation --- a tier of $N_t$ single-server nodes is an M/D/$c$ system rather than an
+M/D/1 system with $c$-fold capacity, and the approximation is optimistic --- kept
+deliberately because it is the coarsest form that still makes latency depend on
+utilisation and remains monotone in the design variables. Both the discrete-event
+evaluator and the physical testbed implement per-node servers, so its cost is measured
+rather than assumed. Energy over a horizon $T=1$\,h combines idle and load-proportional
+compute power with transfer energy; cost sums node and link coefficients; network volume
+is the per-second byte flow. Feasibility requires $\rho_t\le0.85$ on every used tier,
+memory and bandwidth to fit, and the latency, cost and energy budgets to hold. Full
+expressions are in Supplementary Note~2.
+
+\subsection*{Admissible bounds}
+Write $\C(p)$ for the completions of a partial design $p$. A bound $\LB_i$ is admissible
+if $\LB_i(p)\le f_i(x)$ for all $x\in\C(p)$. Two constructions are used.
+
+\emph{Term-wise relaxation.} If $f_i(x)=\sum_{t\in T_i}\varphi_t(x)$ with
+$\varphi_t\ge0$ and $\underline{\varphi}_t(p)=\min_{x\in\C(p)}\varphi_t(x)$, then
+$\LB_i(p)=\sum_t\underline{\varphi}_t(p)$ is admissible, because each term is bounded
+below independently. The minima are taken per term, so the combination realising them
+need not correspond to any completion; the bound is optimistic but valid. Every term of
+the model is monotone in each free variable, so each minimum is attained at a domain
+endpoint and is read from a table of precomputed extrema in constant time.
+
+\emph{Exactness on determined terms.} If the variables a term depends on are already
+assigned, the term is constant on $\C(p)$ and its exact value may replace the relaxed
+one, which preserves admissibility and tightens the bound. The decision order places the
+determinants of tier utilisation --- node counts, classes, replication and policy ---
+before the remaining variables, so the waiting term of \eqref{eq:ce:latency} becomes
+exact early in the traversal instead of being relaxed to zero. This is what makes a
+contention-dependent objective usable without assignment monotonicity. If the
+determinants are fixed and $\rho_t\ge1$, no completion has finite latency and the bound
+is $\infty$, which is admissible.
+
+\subsection*{Pruning rules and exactness}
+Three rules are applied at each node of the prefix tree. \emph{Structural}: the
+well-formedness predicate $\sigma$ (gateways do not outnumber edge nodes, replication
+does not exceed the edge count, replication is undefined for policies that place ingest
+off the edge tier) depends only on assigned variables and cannot be repaired by later
+assignments, so a violation eliminates all completions. It defines the search space
+rather than following from the constraints, and the exhaustive baseline applies the same
+predicate. \emph{Feasibility}: if an admissible bound on a constrained quantity exceeds
+its limit, no completion is feasible. \emph{Dominance}: if an evaluated feasible
+architecture $y$ satisfies $F(y)\preceq \LB(p)$, then every completion of $p$ is
+dominated by $y$ and none can be Pareto-optimal. Together with admissibility these give
+front preservation: the non-dominated set returned equals the exact Pareto front of the
+model in objective space. Proofs are in Supplementary Note~1. Two consequences are used
+in the experiments: the guarantee is order-independent, so traversal order affects
+efficiency only; and it is stated in objective space, so architectures sharing an
+objective vector may be represented once.
+
+\subsection*{Verification of correctness}
+Theoretical correctness and implementation correctness are checked separately. Bound
+admissibility is verified exhaustively on the smallest scale --- every partial design
+against every completion, for all three workloads. For every partial design that the
+implementation prunes, all of its completions are enumerated and checked against the
+claim of the rule that discarded it. Equality with the exhaustive front is re-checked on
+S1--S3 for every pruning variant as a regression test.
+
+\subsection*{Baselines}
+Exhaustive enumeration provides ground truth on S1--S3. Random search and
+NSGA-II\cite{deb2002nsga2} (pymoo\cite{blank2020pymoo}, population $40$, SBX crossover,
+polynomial mutation, integer repair) run at matched budgets of $100$, $250$, $500$ and
+$1000$ full evaluations with $20$ seeds each; budgets are charged to actual evaluator
+calls, including infeasible ones. An independent exact baseline encodes the finite
+evaluated relation and solves for the non-dominated set with an SMT
+solver\cite{demoura2008z3}; it requires the full table to be built first and therefore
+consumes one evaluator call per structurally valid candidate. Recall and precision are
+computed on sets of objective vectors, hypervolume\cite{zitzler1999hv} is normalised by
+the exhaustive front, and IGD$^{+}$\cite{ishibuchi2015igdplus} uses that front as
+reference, following the guidance on indicator choice in ref.~\citenum{audet2021indicators}.
+Stochastic baselines are compared with the one-sided Mann--Whitney
+$U$ test\cite{mann1947whitney} and Cliff's $\delta$\cite{cliff1993delta}, reported
+unadjusted and treated as exploratory.
+
+\subsection*{Discrete-event evaluator}
+A higher-fidelity evaluator simulates each design with multi-server tiers, explicit link
+contention, deterministic service and Poisson arrivals. It serves two purposes: as an
+internal reference for the accuracy of the analytical model, and as the anchor of the
+evaluation-cost analysis, at a measured $\DesCostMs$\,ms per design point averaged over
+$40$ designs.
+
+\subsection*{Containerised deployment}
+Each edge node, gateway and cloud instance is a separate container limited to one CPU, so
+that a node behaves as the single server the model assumes at node level. Services are
+written in Go and share one binary: a request carries a plan of the remaining stages,
+each node consumes CPU work equal to $w_i/C_t$ and forwards the remainder with the real
+payload to the next hop. Links are shaped per node with \texttt{tc netem}
+\cite{hemminger2005netem} using the delay and rate of the link class under test, with a
+wide-area profile on the cloud hop; shaping is applied in the forward direction of each
+hop, matching the one-way transfers counted by the model. Replication is emulated
+faithfully: $r$ replicas execute the ingest stage in parallel and carry the
+synchronisation payload, and the remainder of the chain executes once. A load generator
+produces Poisson arrivals, $900$ requests per run of which $150$ are discarded as warm-up.
+Thirty-six architectures --- Pareto-optimal, dominated and near-boundary --- were selected
+subject to fitting on one machine ($\le4$ edge nodes, $\le2$ gateways), and each was run
+three times. The analytical model was frozen before this round.
+
+\subsection*{Reproducibility}
+The implementation is Python 3 with NumPy, SciPy and pymoo; the deployment services are
+Go under Docker Compose. Every figure and every numeric table in this paper, main and
+supplementary, is generated from the raw result files by a single script, so no number is
+transcribed by hand.

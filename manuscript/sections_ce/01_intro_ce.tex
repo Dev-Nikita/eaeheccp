@@ -1,0 +1,66 @@
+\section*{Introduction}
+\label{sec:ce:intro}
+
+Engineering a distributed cyber-physical system is an architecture decision before it is
+a software decision. How many edge nodes and gateways to deploy, which hardware class
+each should be, where each processing stage runs, how far the ingest stage is replicated
+and which class of network link connects the tiers together determine whether the system
+meets its deadline, what it costs, how much energy it draws and how much traffic it puts
+on the network. These decisions interact: adding edge nodes shortens queues but raises
+cost and idle power, moving analytics to the cloud unloads the edge but adds a wide-area
+transfer to every request, and replication buys ingest throughput at the price of
+compute load and synchronisation traffic.
+
+The number of candidate architectures is the product of the decision domains and reaches
+$10^{5}$--$10^{7}$ for even a modest set of variables. What makes this different from
+classical processor-level design-space exploration is not the arithmetic but the price of
+one answer: for distributed cyber-physical systems a single design point is evaluated by
+simulation, and an industrial methodology built on execution traces of a lithography
+machine reports up to a minute per design point while explicitly leaving the search
+strategy out of scope\cite{saadatmand2025compdse}. A survey of the area concludes that
+scalable exploration technology for such systems is "more or less
+non-existing"\cite{herget2022dse}. The engineering consequence is concrete: the budget
+that matters is the number of expensive evaluations an engineer can afford, not the size
+of the space.
+
+Two established options each give up something. Exhaustive enumeration returns the exact
+set of optimal trade-offs but pays the evaluator for every candidate. Population-based
+search such as NSGA-II\cite{deb2002nsga2} fits a fixed evaluation budget but returns an
+approximation and, crucially for an engineering decision, cannot say which trade-offs it
+missed. A third and smaller family reasons about \emph{partial} designs and prunes
+regions that provably contain nothing optimal, either symbolically with constraint
+solvers\cite{neubauer2018exact,lukasiewycz2008symbolic} or through bound-based Pareto
+pruning in the wider optimisation
+literature\cite{paretopruning2022,mandow2010namoa}. Integer programming achieves the same
+guarantee for allocation problems in the edge--cloud
+continuum\cite{kouloumpris2024optimization,kouloumpris2026reliability}.
+
+Every method in that third family rests on one assumption: that each decision can only
+add to the objective, so that a partially specified design already carries a valid lower
+bound on all its completions. The dominant objective in a distributed cyber-physical
+system violates it. End-to-end latency contains a waiting term that depends on the
+utilisation of a tier, and utilisation is fixed only jointly, by the number of nodes,
+their class, the replication factor and the placement policy at once. Adding a node
+lowers it. There is therefore no monotone accumulation to bound, and the guarantee that
+makes exact pruning attractive does not transfer.
+
+Here we show that exact exploration is nevertheless achievable for these objectives, and
+that it makes expensive architecture evaluation tractable rather than merely faster. We
+construct admissible bounds for contention-dependent objectives by relaxing each additive
+term of an objective independently over the domains still reachable, and by ordering the
+decisions so that the determinants of tier utilisation are fixed early --- at which point
+the waiting term stops being relaxed and becomes exactly computable on an incomplete
+design. Pruning built on these bounds is provably safe, and the exploration returns the
+exact Pareto front of the analytical model.
+
+The engineering payoff is a change of regime rather than a constant factor. On
+architecture spaces of up to $8.3\times10^{7}$ candidates the method expands at most
+$16\,780$ partial designs and calls the expensive evaluator $16$--$61$ times, while the
+front it returns is identical, vector for vector, to the one exhaustive enumeration
+returns wherever exhaustive enumeration is still feasible. An independent containerised
+edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
+that the ordering the model produces is the ordering the hardware produces for
+$88.6$--$91.3\%$ of the architecture pairs it separates by more than $25\%$ within a
+workload. We report equally clearly where the approach does not help: when the evaluator
+is cheap, when no admissible bound can be derived, and near saturation, where neither the
+model nor the deployment is stable.

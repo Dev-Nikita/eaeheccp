@@ -1,0 +1,273 @@
+\documentclass[preprint,11pt,3p]{elsarticle}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[section]{placeins}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{5}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\usepackage[hidelinks]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\PS}{\mathcal{P}^{\star}}
+\newcommand{\LB}{\mathit{LB}}
+\definecolor{edgec}{HTML}{1F4E79}
+\definecolor{gwc}{HTML}{3690C0}
+\definecolor{cloudc}{HTML}{C0504D}
+
+\journal{Communications Engineering}
+
+\input{generated_numbers}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Exact architecture exploration for heterogeneous edge--cloud\\
+cyber-physical systems}
+
+\author[lp]{Nikita Tarasov}
+\ead{dev.nikita@outlook.com}
+\author[lp]{Vasyl Tomyuk}
+\address[lp]{Lviv Polytechnic National University, Lviv, Ukraine}
+
+\begin{abstract}
+Deciding how many edge nodes and gateways a distributed cyber-physical system should
+have, which hardware and network classes to use, where each processing stage runs and how
+far it is replicated determines whether the system meets its deadline and what it costs
+to run. The number of candidate architectures grows into the millions, while a single
+candidate is evaluated by simulation that can take up to a minute, so the practical
+budget is the number of expensive evaluations an engineer can afford. Exhaustive search
+pays for every candidate; evolutionary search fits a budget but cannot say which
+trade-offs it missed; and existing exact methods assume objectives that accumulate
+monotonically with each decision, which end-to-end latency does not, because it depends
+on the utilisation of a tier that several decisions fix jointly. Here we show that exact
+exploration remains achievable for such objectives. Bounds obtained by relaxing each term
+of an objective separately, combined with a decision order that makes the queueing term
+exactly computable on incomplete designs, allow provably safe elimination of infeasible
+and dominated regions before any evaluation. On spaces of up to $8.3\times10^{7}$
+architectures the method calls the expensive evaluator $\EvalRange$ times and returns the
+exact set of optimal trade-offs wherever exhaustive enumeration can confirm it. In an
+independent containerised deployment with the model frozen beforehand, the predicted
+ordering matches the measured ordering for $\WithinAgreementRange\%$ of clearly separated
+architecture pairs.
+\end{abstract}
+
+\begin{keyword}
+architecture exploration \sep cyber-physical systems \sep edge computing \sep
+multi-objective optimisation \sep design automation
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sections_ce/01_intro_ce}
+
+%% ---------------------------------------------------------------- Fig. 1
+\begin{figure*}[!htbp]
+\centering
+\noindent\makebox[\linewidth][l]{\textbf{a}}\\[1mm]
+\begin{tikzpicture}[
+  font=\footnotesize,
+  box/.style={draw, rounded corners=2pt, minimum height=9mm, minimum width=22mm,
+              align=center, inner sep=2pt},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  lbl/.style={font=\scriptsize, midway, above=0.5mm, inner sep=0pt}]
+\node[box, fill=black!5] (dev) at (0,0) {devices};
+\node[box, fill=edgec!15, draw=edgec] (edge) at (4.1,0)
+     {edge tier\\[-1pt]\scriptsize $n_e\times$ class};
+\node[box, fill=gwc!15, draw=gwc] (gw) at (8.2,0)
+     {gateway tier\\[-1pt]\scriptsize $n_g\times$ class};
+\node[box, fill=cloudc!12, draw=cloudc] (cl) at (12.3,0)
+     {cloud\\[-1pt]\scriptsize class};
+\draw[arr] (dev) -- node[lbl] {access link} (edge);
+\draw[arr] (edge) -- node[lbl] {access link} (gw);
+\draw[arr] (gw) -- node[lbl] {WAN} (cl);
+\draw[arr, dashed] (dev.south) to[out=-35, in=-145]
+      node[font=\scriptsize, midway, below=0.5mm] {alternative stage placement} (gw.south);
+\node[font=\scriptsize, text=edgec, above=1mm of edge] {replication $r$};
+\end{tikzpicture}
+
+\vspace{6mm}
+\noindent\makebox[\linewidth][l]{\textbf{b}}\\[1mm]
+\begin{tikzpicture}[
+  font=\scriptsize,
+  n/.style={circle, draw, minimum size=4mm, inner sep=0pt},
+  pr/.style={rectangle, draw=red!70!black, fill=red!8, rounded corners=1pt,
+             align=center, inner sep=2pt},
+  ev/.style={rectangle, draw=edgec, fill=edgec!12, rounded corners=1pt,
+             align=center, inner sep=2pt},
+  e/.style={-, thin}, el/.style={font=\scriptsize, midway, sloped, above=-0.5mm}]
+\node[n] (root) at (7,3.6) {};
+\node[n] (a) at (3.2,2.4) {}; \node[n] (b) at (10.8,2.4) {};
+\draw[e] (root) -- node[el] {$n_e=2$} (a);
+\draw[e] (root) -- node[el] {$n_e=8$} (b);
+\node[pr] (p1) at (0.9,1.0) {latency bound\\$>$ deadline};
+\node[n]  (c)  at (5.2,1.0) {};
+\draw[e] (a) -- node[el] {low-end class} (p1);
+\draw[e] (a) -- node[el] {high-end class} (c);
+\node[ev] (e1) at (3.9,-0.5) {evaluate};
+\node[pr] (p2) at (7.0,-0.5) {bound dominated\\by evaluated design};
+\draw[e] (c) -- node[el] {$r=1$} (e1);
+\draw[e] (c) -- node[el] {$r=3$} (p2);
+\node[pr] (p3) at (9.6,1.0) {cost bound\\$>$ budget};
+\node[ev] (e2) at (12.7,1.0) {evaluate};
+\draw[e] (b) -- node[el] {fast link} (p3);
+\draw[e] (b) -- node[el] {standard link} (e2);
+\node[font=\scriptsize, anchor=west] at (0.0,3.6)
+     {\begin{tabular}{@{}l@{}}partial\\designs\end{tabular}};
+\end{tikzpicture}
+\caption{\textbf{Exploration by elimination.} \textbf{a}, Architecture template: the
+number and class of edge nodes and gateways, the class of the cloud instance, the access
+link class, the replication factor of the ingest stage and the placement of the
+processing stages are all design decisions. \textbf{b}, Each node of the traversal is a
+partially specified architecture. It is discarded when an optimistic bound on a
+constrained quantity already violates its limit (red), or when its optimistic objective
+vector is dominated by an architecture that has already been evaluated (red); only
+designs that survive to a leaf reach the expensive evaluator (blue).}
+\label{fig:ce:concept}
+\end{figure*}
+
+%% ---------------------------------------------------------------- Table 1
+\begin{table*}[!htbp]
+\centering
+\caption{\textbf{Positioning with respect to the closest prior work.} ``Partial-design
+pruning'' denotes discarding incomplete designs before completing and evaluating them;
+``contention-aware'' denotes objectives that depend on resource utilisation rather than
+accumulating over decisions.}
+\label{tab:ce:prior}
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}p{3.2cm}cp{2.2cm}ccccc@{}}
+\toprule
+Work & Year & System class & Obj. & Exact front & Partial-design & Contention- &
+Real \\
+ & & & & & pruning & aware & measurements \\
+\midrule
+Blickle et al.\cite{blickle1998system} & 1998 & embedded synthesis & 2 & no & no & no & no \\
+Lukasiewycz et al.\cite{lukasiewycz2008symbolic} & 2008 & embedded synthesis & $n$ & no &
+  SAT-based & no & no \\
+Neubauer et al.\cite{neubauer2018exact} & 2018 & heterogeneous MPSoC & 3 & yes & symbolic &
+  no & no \\
+Kouloumpris et al.\cite{kouloumpris2024optimization} & 2024 & edge/hub/cloud & 1 &
+  yes (BILP) & solver & no & UAV case \\
+Sedghani et al.\cite{sedghani2024space4aid} & 2024 & computing continuum & 1 & no & no &
+  partly & yes \\
+CompDSE\cite{saadatmand2025compdse} & 2025 & industrial dCPS & perf. & --- & none & yes &
+  traces \\
+Kouloumpris et al.\cite{kouloumpris2026reliability} & 2026 & edge/hub/cloud & 2 &
+  yes (BILP) & solver & no & case study \\
+\textbf{This work} & 2026 & heterogeneous edge--cloud CPS & \textbf{4} & \textbf{yes} &
+  \textbf{bounds} & \textbf{yes} & \textbf{yes} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\input{sections_ce/02_results_ce}
+
+%% ---------------------------------------------------------------- Figures 2-7
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/funnel.pdf}
+\caption{\textbf{Architectures are removed before they are evaluated.} Raw design space,
+survivors after structural and after bound-based elimination, and the number of
+architectures actually handed to the evaluator, for four design-space scales and three
+workload classes (logarithmic scale).}
+\label{fig:ce:funnel}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/pareto.pdf}
+\caption{\textbf{The recovered set of optimal trade-offs.} Exact Pareto front on the
+$51\,840$-candidate space for the telemetry workload. \textbf{a}, latency versus cost,
+colour encodes network volume. \textbf{b}, latency versus energy over a one-hour horizon,
+colour encodes cost.}
+\label{fig:ce:pareto}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.7\linewidth]{figures/crossover.pdf}
+\caption{\textbf{The saving converts into time when evaluation is expensive.} Speed-up
+over exhaustive enumeration projected from measured evaluation counts and measured
+overheads as a function of the cost of one design-point evaluation. The dotted line marks
+the measured cost of the discrete-event evaluator.}
+\label{fig:ce:crossover}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/hv_budget.pdf}
+\caption{\textbf{Budget-matched stochastic exploration.} Hypervolume ratio against the
+exhaustive front on the $51\,840$-candidate space over 20 seeds. Grey, random search;
+blue, NSGA-II. The red line marks the exact front recovered by the proposed method.}
+\label{fig:ce:hv}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{\textbf{Budget-matched comparison.} Medians over 20 seeds at a budget of 1000
+full evaluations; the full budget sweep is in Supplementary Tables~S1--S3.}
+\label{tab:ce:base}
+\input{tables/baselines_compact}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.7\linewidth]{figures/scalability.pdf}
+\caption{\textbf{The design space is never materialised.} Expanded partial designs and
+full evaluations against the raw design-space size, over five orders of magnitude.}
+\label{fig:ce:scal}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{\textbf{Independent deployment validation.} Analytical predictions against
+measured run means over 36 architectures and 108 runs with the model frozen beforehand.
+Pair agreement is the share of architecture pairs whose measured order matches the
+predicted order among pairs separated by more than $25\%$. ALL pools workloads.}
+\label{tab:ce:testbed}
+\scriptsize
+\input{tables/testbed_compact}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{figures/testbed.pdf}
+\caption{\textbf{Predicted against measured latency.} Analytical latency versus the
+median of three measured mean latencies on the independent containerised deployment. Open
+markers denote architectures whose repeated means differ by a factor of $1.5$ or more.}
+\label{fig:ce:testbed}
+\end{figure}
+
+\input{sections_ce/03_discussion_ce}
+\input{sections_ce/04_methods_ce}
+\input{sections_ce/05_backmatter_ce}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs}
+
+\end{document}
