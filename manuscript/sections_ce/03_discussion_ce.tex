@@ -28,14 +28,13 @@ with mixed hardware tiers. Demonstrating that transfer on a structurally differe
 template is the natural next step, and we make no claim of generality beyond the template
 evaluated here.
 
-The exactness that HCA-DSE provides has a precise scope, and it is important not to
-overstate it. The guarantee is that the method returns the exact Pareto front of the
+The exactness provided here has a precise scope. The guarantee is that the method returns the exact Pareto front of the
 analytical model; it says nothing about the model itself. A design-time method can be
 exact with respect to its own model and still inherit every error of that model. This is
 why the deployment round matters more than the correlation coefficient it produces: with
 $25\%$ absolute error, the model is not a substitute for a simulator or a measurement,
 but it orders clearly separated architectures the same way the hardware does in roughly
-nine cases out of ten, which is what a screening stage has to do. The productive
+nine cases out of ten, which is what a screening stage requires. The productive
 arrangement is therefore two-level. Analytical bounds remove the bulk of the space
 exactly and cheaply; the few dozen survivors are where a high-fidelity simulator or a
 physical deployment should spend its time. Nothing in the method requires the analytical

@@ -11,7 +11,7 @@ meeting; at the per-design-point costs reported for industrial trace-driven
 exploration\cite{saadatmand2025compdse} the projection is two to three orders of
 magnitude of wall-clock time.
 
-The reason this works is narrower than "pruning works", and worth stating precisely.
+The reason this works is narrower than "pruning works" and should be stated precisely.
 Safe pruning of partial designs is an established idea in embedded system
 synthesis\cite{neubauer2018exact,lukasiewycz2008symbolic} and in multi-objective search
 more generally\cite{mandow2010namoa,paretopruning2022}. Its usual precondition ---
@@ -31,21 +31,20 @@ serving\cite{cloud2026coopt}. Demonstrating that transfer on a structurally diff
 template is the natural next step, and we make no claim of generality beyond the template
 evaluated here.
 
-The exactness that HCA-DSE provides has a precise scope, and it is important not to
-overstate it. The guarantee is that the method returns the exact Pareto front of the
+The exactness provided here has a precise scope. The guarantee is that the method returns the exact Pareto front of the
 analytical model; it says nothing about the model itself. A design-time method can be
 exact with respect to its own model and still inherit every error of that model. This is
 why the deployment round matters more than the correlation coefficient it produces: with
 $25\%$ absolute error, the model is not a substitute for a simulator or a measurement,
 but it orders clearly separated architectures the same way the hardware does in roughly
-nine cases out of ten, which is what a screening stage has to do. The productive
+nine cases out of ten, which is what a screening stage requires. The productive
 arrangement is therefore two-level. Analytical bounds remove the bulk of the space
 exactly and cheaply; the few dozen survivors are where a high-fidelity simulator or a
 physical deployment should spend its time. Nothing in the method requires the analytical
 model to be the final word, and an evaluator-centric methodology plugged in behind it
 would be strictly better than either component alone.
 
-Three limits apply. First, when the evaluator is cheap the pruning
+Three limits apply to the results reported here. First, when the evaluator is cheap the pruning
 overhead is comparable to the evaluation it avoids and the wall-clock benefit largely
 disappears --- the measured speed-up with a closed-form evaluator is $1.32$--$3.15\times$
 --- so the method should be chosen on evaluator cost, not on space size. Second, the

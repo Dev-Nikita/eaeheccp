@@ -1,54 +1,49 @@
-# Cover letter — Communications Engineering
-
 Dear Editors,
 
 We submit "Exact architecture exploration for heterogeneous edge–cloud cyber-physical
 systems" for consideration as an Article in Communications Engineering.
 
-**The engineering advance.** Deciding the architecture of a distributed cyber-physical
-system — how many edge nodes and gateways, which hardware and link classes, where each
-processing stage runs, how far the ingest stage is replicated — is a multi-objective
-decision over millions of candidates in which a single candidate is evaluated by
-simulation that can take up to a minute. Engineers therefore work under a budget of
-expensive evaluations, and today they must choose between exhaustive search, which pays
-for every candidate, and evolutionary search, which fits a budget but cannot say which
-trade-offs it missed. Exact methods that discard provably useless regions before
-evaluating them exist, but all of them assume objectives that accumulate monotonically
-with each decision. End-to-end latency does not: it depends on the utilisation of a tier,
-which several decisions fix jointly. We show that exactness is nevertheless attainable for
-such objectives, and that this converts the problem from "too expensive to explore" to
-"explorable in a few dozen evaluations".
+Designing a distributed cyber-physical system requires joint decisions on edge and
+gateway provisioning, hardware and link classes, stage placement and replication. A single
+candidate is evaluated by simulation or by deployment, so the limiting resource is the
+number of high-fidelity evaluations a team can afford rather than the nominal size of the
+search space. Exhaustive enumeration returns the complete set of trade-offs at
+prohibitive cost, and evolutionary search fits a budget but offers no certificate of what
+it missed. The exact partial-design methods closest to our setting typically exploit
+objectives that accumulate monotonically as decisions are fixed; contention-dependent
+end-to-end latency does not, because tier utilisation is determined jointly by several
+architectural choices.
 
-**Why it matters beyond one optimisation benchmark.** The result is not a faster
-optimiser; it is a change in what an engineering team can afford to ask. On design spaces
-of up to 8.3e7 architectures the method calls the expensive evaluator 16–61 times and
-still returns the complete set of optimal trade-offs wherever exhaustive enumeration can
-confirm it. Because the exploration never materialises the space, the largest search takes
-under four seconds and under 100 KiB of traced memory. The mechanism — relax each term of
-an objective separately, and order the decisions so that the load-dependent term becomes
-exactly computable early — is not tied to our template: it applies wherever a subset of
-decisions determines a utilisation-dependent term, which covers service placement across a
-computing continuum, robotic sensing and control pipelines, and industrial edge
-deployments with mixed hardware tiers.
+We construct admissible bounds by relaxing the terms of an objective independently, and
+order the decisions so that the utilisation-dependent term becomes exactly computable on
+an incomplete design. Pruning built on these bounds is provably safe. On spaces of up to
+8.3e7 candidate architectures the method requires 16–61 full evaluator calls and
+reproduces the exhaustive Pareto front wherever exhaustive verification is still
+tractable. Correctness rests on formal proofs, exhaustive machine checks of bound admissibility and
+regression against exhaustive enumeration, and is complemented by budget-matched
+comparison with random search and NSGA-II over 20 seeds and by an independent exact
+baseline built on an SMT solver. A containerised deployment of 36 architectures over 108
+runs, with the analytical model frozen beforehand, shows that predicted and measured
+orderings agree for 88.6–91.3% of clearly separated architecture pairs within a
+workload.
 
-**Evidence.** We prove the pruning rules safe and verify them by machine: bound
-admissibility is checked exhaustively, and for every discarded partial design all of its
-completions are enumerated and tested against the claim that discarded it. We compare
-against exhaustive enumeration, random search, budget-matched NSGA-II over 20 seeds, and
-an independent exact SMT-based solver. We then deployed the architectures as containers
-with per-node network shaping and measured 36 architectures over 108 runs with the
-analytical model frozen beforehand: the predicted ordering matches the measured ordering
-for 88.6–91.3% of clearly separated architecture pairs within a workload.
+We believe the work suits Communications Engineering because it addresses a general
+design bottleneck in heterogeneous distributed infrastructure — screening a very large
+architectural space without spending a high-fidelity evaluation on every candidate — and
+pairs a formally exact search mechanism with systems-level validation.
+It is a design methodology rather than a domain-specific heuristic: the bound
+construction applies wherever a subset of architectural decisions jointly determines a
+utilisation-dependent objective, and the present study demonstrates it on one
+heterogeneous edge–cloud template. We distinguish exactness with respect to the
+analytical model from the fidelity of that model to a physical deployment, and the
+manuscript reports the regimes in which the method brings little benefit.
 
-**What we do not claim.** We state where the method does not help — cheap evaluators,
-objectives without derivable bounds, and near-saturation regimes where neither model nor
-deployment is stable — and we distinguish the exactness of the exploration with respect to
-its model from the fidelity of that model to hardware. Every figure and numeric table in
-the paper is regenerated from the raw result files by a single script.
-
-The manuscript is original, is not under consideration elsewhere, and the authors declare
-no competing interests. We have no preferred or excluded reviewers to name.
+The manuscript is original and is not under consideration elsewhere. The authors declare
+no competing interests. This work has not been discussed with a Communications
+Engineering editor prior to submission.
 
 Sincerely,
-Nikita Tarasov and Vasyl Tomyuk
+
+Nikita Tarasov, corresponding author, on behalf of the authors
 Lviv Polytechnic National University, Lviv, Ukraine
+dev.nikita@outlook.com

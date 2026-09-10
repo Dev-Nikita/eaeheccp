@@ -15,11 +15,17 @@ def main():
     src = open(SRC).read()
     out, n = [], 0
     for chunk in re.split(r"(?=@\w+\{)", src):
+        was_chapter = chunk.strip().startswith("@incollection")
+        if was_chapter and "series" not in chunk:
+            # sn-nature.bst renders @incollection as "in <title>" and drops the book
+            # title; treating it as a conference entry keeps the venue visible
+            chunk = chunk.replace("@incollection{", "@inproceedings{", 1)
         if chunk.strip().startswith("@inproceedings") and "series" not in chunk:
-            m = re.search(r"booktitle\s*=\s*\{(.+?)\},?\s*\n", chunk, re.S)
+            m = (re.search(r"booktitle\s*=\s*\{(.+?)\},?\s*\n", chunk, re.S)
+                 or re.search(r"journal\s*=\s*\{(.+?)\},?\s*\n", chunk, re.S))
             if m:
                 venue = " ".join(m.group(1).split())
-                if not venue.lower().startswith(("proc", "in ")):
+                if not was_chapter and not venue.lower().startswith(("proc", "in ")):
                     venue = "Proc. " + venue
                 chunk = chunk.replace(m.group(0),
                                       m.group(0).rstrip() + f"\n  series    = {{{venue}}},\n")
