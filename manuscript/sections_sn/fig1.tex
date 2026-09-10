@@ -1,0 +1,66 @@
+%% ---------------------------------------------------------------- Fig. 1
+\begin{figure*}[!htbp]
+\centering
+\noindent\makebox[\linewidth][l]{\textbf{a}}\\[1mm]
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\footnotesize,
+  box/.style={draw, rounded corners=2pt, minimum height=9mm, minimum width=22mm,
+              align=center, inner sep=2pt},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  lbl/.style={font=\scriptsize, midway, above=0.5mm, inner sep=0pt}]
+\node[box, fill=black!5] (dev) at (0,0) {devices};
+\node[box, fill=edgec!15, draw=edgec] (edge) at (4.1,0)
+     {edge tier\\[-1pt]\scriptsize $n_e\times$ class};
+\node[box, fill=gwc!15, draw=gwc] (gw) at (8.2,0)
+     {gateway tier\\[-1pt]\scriptsize $n_g\times$ class};
+\node[box, fill=cloudc!12, draw=cloudc] (cl) at (12.3,0)
+     {cloud\\[-1pt]\scriptsize class};
+\draw[arr] (dev) -- node[lbl] {access link} (edge);
+\draw[arr] (edge) -- node[lbl] {access link} (gw);
+\draw[arr] (gw) -- node[lbl] {WAN} (cl);
+\draw[arr, dashed] (dev.south) to[out=-35, in=-145]
+      node[font=\scriptsize, midway, below=0.5mm] {alternative stage placement} (gw.south);
+\node[font=\scriptsize, text=edgec, above=1mm of edge] {replication $r$};
+\end{tikzpicture}}
+
+\vspace{6mm}
+\noindent\makebox[\linewidth][l]{\textbf{b}}\\[1mm]
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\scriptsize,
+  n/.style={circle, draw, minimum size=4mm, inner sep=0pt},
+  pr/.style={rectangle, draw=red!70!black, fill=red!8, rounded corners=1pt,
+             align=center, inner sep=2pt},
+  ev/.style={rectangle, draw=edgec, fill=edgec!12, rounded corners=1pt,
+             align=center, inner sep=2pt},
+  e/.style={-, thin}, el/.style={font=\scriptsize, midway, sloped, above=-0.5mm}]
+\node[n] (root) at (7,3.6) {};
+\node[n] (a) at (3.2,2.4) {}; \node[n] (b) at (10.8,2.4) {};
+\draw[e] (root) -- node[el] {$n_e=2$} (a);
+\draw[e] (root) -- node[el] {$n_e=8$} (b);
+\node[pr] (p1) at (0.9,1.0) {latency bound\\$>$ deadline};
+\node[n]  (c)  at (5.2,1.0) {};
+\draw[e] (a) -- node[el] {low-end class} (p1);
+\draw[e] (a) -- node[el] {high-end class} (c);
+\node[ev] (e1) at (3.9,-0.5) {evaluate};
+\node[pr] (p2) at (7.0,-0.5) {bound dominated\\by evaluated design};
+\draw[e] (c) -- node[el] {$r=1$} (e1);
+\draw[e] (c) -- node[el] {$r=3$} (p2);
+\node[pr] (p3) at (9.6,1.0) {cost bound\\$>$ budget};
+\node[ev] (e2) at (12.7,1.0) {evaluate};
+\draw[e] (b) -- node[el] {fast link} (p3);
+\draw[e] (b) -- node[el] {standard link} (e2);
+\node[font=\scriptsize, anchor=west] at (0.0,3.6)
+     {\begin{tabular}{@{}l@{}}partial\\designs\end{tabular}};
+\end{tikzpicture}}
+\caption{\textbf{Exploration by elimination.} \textbf{a}, Architecture template: the
+number and class of edge nodes and gateways, the class of the cloud instance, the access
+link class, the replication factor of the ingest stage and the placement of the
+processing stages are all design decisions. \textbf{b}, Each node of the traversal is a
+partially specified architecture. It is discarded when an optimistic bound on a
+constrained quantity already violates its limit (red), or when its optimistic objective
+vector is dominated by an architecture that has already been evaluated (red); only
+designs that survive to a leaf reach the expensive evaluator (blue).}
+\label{fig:ce:concept}
+\end{figure*}
