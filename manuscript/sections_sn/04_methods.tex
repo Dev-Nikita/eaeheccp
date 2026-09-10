@@ -28,7 +28,9 @@ capacity of its class, the offered load and utilisation are
 $\Theta_t=\sum_{i:t(i)=t}\Lambda w_i\mu_i$ and $\rho_t=\Theta_t/(N_tC_t)$, where
 $\Lambda$ is the system arrival rate and $\mu_i=r$ for the ingest stage and $1$
 otherwise. A tier is modelled as one queueing station with the aggregate capacity of its
-nodes, deterministic service and Poisson arrivals, so that
+nodes, deterministic service and Poisson arrivals, for which the Pollaczek--Khinchine
+result gives the waiting term\cite{kleinrock1975queueing,harchol2013performance}, so
+that
 \begin{equation}
 L(x)=\sum_{i=1}^{3}\frac{w_i}{C_{t(i)}}
 +\sum_{i=1}^{3}\frac{w_i}{C_{t(i)}}\cdot\frac{\rho_{t(i)}}{2\,(1-\rho_{t(i)})}
@@ -113,7 +115,9 @@ unadjusted and treated as exploratory.
 
 \subsection{Discrete-event evaluator}
 A higher-fidelity evaluator simulates each design with multi-server tiers, explicit link
-contention, deterministic service and Poisson arrivals. It serves two purposes: as an
+contention, deterministic service and Poisson arrivals; it plays the role that a
+discrete-event simulator such as OMNeT++\cite{varga2008omnet} plays in trace-driven
+industrial methodologies\cite{saadatmand2025compdse}. It serves two purposes: as an
 internal reference for the accuracy of the analytical model, and as the anchor of the
 evaluation-cost analysis, at a measured $\DesCostMs$\,ms per design point averaged over
 $40$ designs.

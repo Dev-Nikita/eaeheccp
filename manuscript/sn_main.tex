@@ -2,7 +2,7 @@
 %% Springer Nature sn-jnl class. The Elsevier-format versions main.tex (JSA) and
 %% main_ce.tex are kept unchanged; this file shares the same figures, tables,
 %% generated numbers and bibliography, so recomputing results updates all of them.
-\documentclass[pdflatex,sn-nature]{sn-jnl}
+\documentclass[pdflatex,sn-nature,lineno]{sn-jnl}
 
 \usepackage{graphicx}%
 \usepackage{multirow}%
@@ -48,9 +48,10 @@ costs to run. The number of candidate architectures grows into the millions, whi
 single candidate is evaluated by simulation that can take up to a minute, so the
 practical budget is the number of expensive evaluations an engineer can afford.
 Exhaustive search pays for every candidate; evolutionary search fits a budget but cannot
-say which trade-offs it missed; and existing exact methods assume objectives that
-accumulate monotonically with each decision, which end-to-end latency does not, because
-it depends on the utilisation of a tier that several decisions fix jointly. Here we show
+say which trade-offs it missed; and the exact methods closest to this
+problem commonly exploit objectives that accumulate monotonically with each decision,
+which end-to-end latency does not, because it depends on the utilisation of a tier that
+several decisions fix jointly. Here we show
 that exact exploration remains achievable for such objectives. Bounds obtained by
 relaxing each term of an objective separately, combined with a decision order that makes
 the queueing term exactly computable on incomplete designs, allow provably safe
@@ -97,9 +98,12 @@ N.T. designed the method, implemented the software and the deployment, ran the
 experiments and wrote the manuscript. V.T. contributed to the system model and the
 experimental design and reviewed the manuscript.
 
+\bmhead{Funding}
+The authors received no specific funding for this work.
+
 \bmhead{Competing interests}
 The authors declare no competing interests.
 
-\bibliography{refs}
+\bibliography{refs_sn}
 
 \end{document}

@@ -41,8 +41,21 @@ display items: `fig1.tex`, `tab1.tex`, `displays.tex`. Рисунки, табл�
 через `{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}...}` — не менять на
 resizebox.
 
-Текущая сборка: main 16 страниц, supplement 8 страниц, 0 ошибок, 0 undefined
-ссылок, ни одного overfull больше 10 pt, 19 источников в списке.
+Текущая сборка: main 18 страниц, supplement 8 страниц, 0 ошибок, 0 undefined
+ссылок, ни одного overfull больше 10 pt, **41 источник** в списке.
+
+Библиография SN-версии собирается из `refs_sn.bib`, который генерируется командой
+`python3 experiments/make_sn_bib.py` из общего `refs.bib`: `sn-nature.bst` молча
+выбрасывает `booktitle` у @inproceedings, поэтому конференциям добавляется поле
+`series`. В Elsevier-версиях остаётся исходный `refs.bib` — там `series` дал бы
+дублирование названия конференции. Правьте только `refs.bib` и перегенерируйте.
+
+Аудит числовых утверждений: `python3 experiments/check_claims.py` проверяет, что
+каждое эмпирическое число в тексте встречается в `generated/`, `tables/` или в
+сырых CSV. Сейчас проходит чисто.
+
+Включена нумерация строк (опция класса `lineno`) — как просит Nature Portfolio для
+рецензирования.
 
 Файлы: `COVER_LETTER_CE.md` (новое письмо), `COVER_LETTER.md` (старое, под JSA),
 `HIGHLIGHTS.txt` (нужен только для JSA — Nature Portfolio highlights не просит).
