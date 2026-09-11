@@ -1,0 +1,7 @@
+bound admissibility: OK
+S1/telemetry: |P|=17 evals 30/1080 (97.2% saved)
+S1/control: |P|=18 evals 26/1080 (97.6% saved)
+S1/sensing: |P|=11 evals 16/1080 (98.5% saved)
+S2/telemetry: |P|=27 evals 44/3888 (98.9% saved)
+S2/control: |P|=25 evals 37/3888 (99.0% saved)
+S2/sensing: |P|=16 evals 26/3888 (99.3% saved)

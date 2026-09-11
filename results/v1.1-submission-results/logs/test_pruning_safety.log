@@ -1,0 +1,6 @@
+S1/telemetry: pruned prefixes=849, completions verified=1266 (structural 138, feasibility 233, dominance 895) — all safe
+S1/control: pruned prefixes=863, completions verified=1270 (structural 138, feasibility 269, dominance 863) — all safe
+S1/sensing: pruned prefixes=532, completions verified=1280 (structural 77, feasibility 613, dominance 590) — all safe
+S2/telemetry: pruned prefixes=2957, completions verified=5788 (structural 1422, feasibility 1127, dominance 3239) — all safe
+S2/control: pruned prefixes=2975, completions verified=5795 (structural 1425, feasibility 1236, dominance 3134) — all safe
+S2/sensing: pruned prefixes=1785, completions verified=5806 (structural 1075, feasibility 2323, dominance 2408) — all safe

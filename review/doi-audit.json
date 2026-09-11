@@ -1,0 +1,1466 @@
+[
+  {
+    "doi": "10.23919/DATE.2018.8342014",
+    "status": "200",
+    "title": "Exact multi-objective design space exploration using ASPmT",
+    "author": [
+      {
+        "given": "Kai",
+        "family": "Neubauer",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Philipp",
+        "family": "Wanko",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Torsten",
+        "family": "Schaub",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Christian",
+        "family": "Haubelt",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": null,
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1007/s13218-018-0530-3",
+    "status": "200",
+    "title": "Design Space Exploration with Answer Set Programming",
+    "author": [
+      {
+        "given": "Christian",
+        "family": "Haubelt",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Kai",
+        "family": "Neubauer",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Torsten",
+        "family": "Schaub",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-4986-4881",
+        "authenticated-orcid": false,
+        "given": "Philipp",
+        "family": "Wanko",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "205-206",
+    "volume": "32",
+    "issue": "2-3"
+  },
+  {
+    "doi": "10.1109/DSD57027.2022.00090",
+    "status": "200",
+    "title": "Design Space Exploration for Distributed Cyber-Physical Systems: State-of-the-art, Challenges, and Directions",
+    "author": [
+      {
+        "given": "Marius",
+        "family": "Herget",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Amsterdam,Informatics Institute (IvI),Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Faezeh Sadat",
+        "family": "Saadatmand",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Leiden University,Leiden Institute of Advanced Computer Science,Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Martin",
+        "family": "Bor",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Amsterdam,Informatics Institute (IvI),Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ignacio Gonzalez",
+        "family": "Alonso",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "ASML Netherlands B.V.,Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Todor",
+        "family": "Stefanov",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Leiden University,Leiden Institute of Advanced Computer Science,Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Benny",
+        "family": "Akesson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Amsterdam,Informatics Institute (IvI),Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Andy D.",
+        "family": "Pimentel",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Amsterdam,Informatics Institute (IvI),Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "632-640",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1049/cps2.70019",
+    "status": "200",
+    "title": "CompDSE: A Methodology for Design Space Exploration of Computing Subsystems Within Complex Cyber‐Physical Systems",
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-2813-0929",
+        "authenticated-orcid": false,
+        "given": "Faezeh Sadat",
+        "family": "Saadatmand",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Leiden Institute of Advanced Computer Science (LIACS) Leiden University  Leiden the Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Todor",
+        "family": "Stefanov",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Leiden Institute of Advanced Computer Science (LIACS) Leiden University  Leiden the Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Ignacio González",
+        "family": "Alonso",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "ASML B.V.  Veldhoven the Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Andy D.",
+        "family": "Pimentel",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Informatics Institute (IvI) University of Amsterdam  Amsterdam the Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Benny",
+        "family": "Akesson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Informatics Institute (IvI) University of Amsterdam  Amsterdam the Netherlands"
+          },
+          {
+            "name": "TNO Embedded Systems Innovation (TNO‐ESI)  Eindhoven the Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": null,
+    "volume": "10",
+    "issue": "1"
+  },
+  {
+    "doi": "10.23919/DATE58400.2024.10546764",
+    "status": "200",
+    "title": "Efficient Exploration of Cyber-Physical System Architectures Using Contracts and Subgraph Isomorphism",
+    "author": [
+      {
+        "given": "Yifeng",
+        "family": "Xiao",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Southern California,Dept. of Electrical and Computer Engineering,Los Angeles,CA,US"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Chanwook",
+        "family": "Oh",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Southern California,Dept. of Electrical and Computer Engineering,Los Angeles,CA,US"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Michele",
+        "family": "Lora",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Southern California,Dept. of Electrical and Computer Engineering,Los Angeles,CA,US"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Pierluigi",
+        "family": "Nuzzo",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Southern California,Dept. of Electrical and Computer Engineering,Los Angeles,CA,US"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "1-6",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1109/TSC.2024.3479935",
+    "status": "200",
+    "title": "SPACE4AI-D: A Design-time Tool for AI applications Resource Selection in Computing Continua",
+    "author": [
+      {
+        "given": "Hamta",
+        "family": "Sedghani",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Politecnico di Milano, Milan, Italy"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Federica",
+        "family": "Filippini",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Politecnico di Milano, Milan, Italy"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Danilo",
+        "family": "Ardagna",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Politecnico di Milano, Milan, Italy"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "1-14",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1109/4235.996017",
+    "status": "200",
+    "title": "A fast and elitist multiobjective genetic algorithm: NSGA-II",
+    "author": [
+      {
+        "given": "K.",
+        "family": "Deb",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "A.",
+        "family": "Pratap",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "S.",
+        "family": "Agarwal",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "T.",
+        "family": "Meyarivan",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "182-197",
+    "volume": "6",
+    "issue": "2"
+  },
+  {
+    "doi": "10.1109/ACCESS.2020.2990567",
+    "status": "200",
+    "title": "Pymoo: Multi-Objective Optimization in Python",
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-2227-6476",
+        "authenticated-orcid": false,
+        "given": "Julian",
+        "family": "Blank",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7402-9939",
+        "authenticated-orcid": false,
+        "given": "Kalyanmoy",
+        "family": "Deb",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "89497-89509",
+    "volume": "8",
+    "issue": null
+  },
+  {
+    "doi": "10.1016/j.cie.2022.108022",
+    "status": "200",
+    "title": "A review of Pareto pruning methods for multi-objective optimization",
+    "author": [
+      {
+        "given": "Sanyapong",
+        "family": "Petchrompo",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "David W.",
+        "family": "Coit",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Alexandra",
+        "family": "Brintrup",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Anupong",
+        "family": "Wannakrairot",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ajith Kumar",
+        "family": "Parlikad",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "108022",
+    "volume": "167",
+    "issue": null
+  },
+  {
+    "doi": "10.1145/1754399.1754400",
+    "status": "200",
+    "title": "Multiobjective A\n                    <sup>*</sup>\n                    search with consistent heuristics",
+    "author": [
+      {
+        "given": "Lawrence",
+        "family": "Mandow",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Universidad de Málaga, Málaga, Spain"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "José. Luis Pérez",
+        "family": "De La Cruz",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Universidad de Málaga, Málaga, Spain"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "1-25",
+    "volume": "57",
+    "issue": "5"
+  },
+  {
+    "doi": "10.1145/115234.115368",
+    "status": "200",
+    "title": "Multiobjective A*",
+    "author": [
+      {
+        "given": "Bradley S.",
+        "family": "Stewart",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Univ. of Virginia, Charlottesville"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "suffix": "III",
+        "given": "Chelsea C.",
+        "family": "White",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Univ. of Virginia, Charlottesville"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "775-814",
+    "volume": "38",
+    "issue": "4"
+  },
+  {
+    "doi": "10.1007/3-540-45874-3_2",
+    "status": "200",
+    "title": "A Methodology to Design Programmable Embedded Systems",
+    "author": [
+      {
+        "given": "Bart",
+        "family": "Kienhuis",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ed F.",
+        "family": "Deprettere",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Pieter",
+        "family": "van der Wolf",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Kees",
+        "family": "Vissers",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "18-37",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1109/MDAT.2016.2626445",
+    "status": "200",
+    "title": "Exploring Exploration: A Tutorial Introduction to Embedded Systems Design Space Exploration",
+    "author": [
+      {
+        "given": "Andy D.",
+        "family": "Pimentel",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "77-90",
+    "volume": "34",
+    "issue": "1"
+  },
+  {
+    "doi": "10.3233/EMC-2005-00034",
+    "status": "200",
+    "title": "Multi-objective design space exploration of embedded systems",
+    "author": [
+      {
+        "given": "Gianluca",
+        "family": "Palermo",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Politecnico di Milano, P.za L. Da Vinci 32, I-20133 Milano, Italy"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Cristina",
+        "family": "Silvano",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Politecnico di Milano, P.za L. Da Vinci 32, I-20133 Milano, Italy"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Vittorio",
+        "family": "Zaccaria",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Advanced Computing Group, AST – STMicroelectronics, Via Cantonale 16/E, Manno Lugano, Switzerland"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "305-316",
+    "volume": "1",
+    "issue": "3"
+  },
+  {
+    "doi": "10.1109/4235.797969",
+    "status": "200",
+    "title": "Multiobjective evolutionary algorithms: a comparative case study and the strength Pareto approach",
+    "author": [
+      {
+        "given": "E.",
+        "family": "Zitzler",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "L.",
+        "family": "Thiele",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "257-271",
+    "volume": "3",
+    "issue": "4"
+  },
+  {
+    "doi": "10.1007/978-3-319-15892-1_8",
+    "status": "200",
+    "title": "Modified Distance Calculation in Generational Distance and Inverted Generational Distance",
+    "author": [
+      {
+        "given": "Hisao",
+        "family": "Ishibuchi",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Hiroyuki",
+        "family": "Masuda",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Yuki",
+        "family": "Tanigaki",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Yusuke",
+        "family": "Nojima",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "110-125",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1037/0033-2909.114.3.494",
+    "status": "200",
+    "title": "Dominance statistics: Ordinal analyses to answer ordinal questions.",
+    "author": [
+      {
+        "given": "Norman",
+        "family": "Cliff",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "494-509",
+    "volume": "114",
+    "issue": "3"
+  },
+  {
+    "doi": "10.1214/aoms/1177730491",
+    "status": "200",
+    "title": "On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other",
+    "author": [
+      {
+        "given": "H. B.",
+        "family": "Mann",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "D. R.",
+        "family": "Whitney",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "50-60",
+    "volume": "18",
+    "issue": "1"
+  },
+  {
+    "doi": "10.4108/ICST.SIMUTOOLS2008.3027",
+    "status": "200",
+    "title": "AN OVERVIEW OF THE OMNeT++ SIMULATION ENVIRONMENT",
+    "author": [
+      {
+        "given": "András",
+        "family": "Varga",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Rudolf",
+        "family": "Hornig",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": null,
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1109/ASPDAC.2008.4484047",
+    "status": "200",
+    "title": "NBTI induced performance degradation in logic and memory circuits: how effectively can we approach a reliability solution?",
+    "author": [
+      {
+        "given": "Kunhyuk",
+        "family": "Kang",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Saakshi",
+        "family": "Gangwal",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Sang Phill",
+        "family": "Park",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Roy",
+        "family": "Kaushik",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "726-731",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1145/1119772.1119876",
+    "status": "200",
+    "title": "Robust high-performance low-power carry select adder",
+    "author": [
+      {
+        "given": "Woopyo",
+        "family": "Jeong",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Kaushik",
+        "family": "Roy",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "503",
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1016/j.future.2024.02.005",
+    "status": "200",
+    "title": "An optimization framework for task allocation in the edge/hub/cloud paradigm",
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-9582-6803",
+        "authenticated-orcid": false,
+        "given": "Andreas",
+        "family": "Kouloumpris",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7289-9682",
+        "authenticated-orcid": false,
+        "given": "Georgios L.",
+        "family": "Stavrinides",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1943-6547",
+        "authenticated-orcid": false,
+        "given": "Maria K.",
+        "family": "Michael",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7222-9152",
+        "authenticated-orcid": false,
+        "given": "Theocharis",
+        "family": "Theocharides",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "354-366",
+    "volume": "155",
+    "issue": null
+  },
+  {
+    "doi": "10.1016/j.future.2026.108414",
+    "status": "200",
+    "title": "A reliability- and latency-driven task allocation framework for workflow applications in the edge-hub-cloud continuum",
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-9582-6803",
+        "authenticated-orcid": false,
+        "given": "Andreas",
+        "family": "Kouloumpris",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7289-9682",
+        "authenticated-orcid": false,
+        "given": "Georgios L.",
+        "family": "Stavrinides",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1943-6547",
+        "authenticated-orcid": false,
+        "given": "Maria K.",
+        "family": "Michael",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7222-9152",
+        "authenticated-orcid": false,
+        "given": "Theocharis",
+        "family": "Theocharides",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "108414",
+    "volume": "180",
+    "issue": null
+  },
+  {
+    "doi": "10.1016/j.ejor.2020.11.016",
+    "status": "200",
+    "title": "Performance indicators in multiobjective optimization",
+    "author": [
+      {
+        "given": "Charles",
+        "family": "Audet",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jean",
+        "family": "Bigeon",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Dominique",
+        "family": "Cartier",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sébastien",
+        "family": "Le Digabel",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ludovic",
+        "family": "Salomon",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "397-422",
+    "volume": "292",
+    "issue": "2"
+  },
+  {
+    "doi": "10.1017/CBO9781139226424",
+    "status": "200",
+    "title": "Performance Modeling and Design of Computer Systems",
+    "author": [
+      {
+        "given": "Mor",
+        "family": "Harchol-Balter",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": null,
+    "volume": null,
+    "issue": null
+  },
+  {
+    "doi": "10.1023/A:1008899229802",
+    "status": "200",
+    "title": "System-Level Synthesis Using Evolutionary Algorithms",
+    "author": [
+      {
+        "given": "Tobias",
+        "family": "Blickle",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Jürgen",
+        "family": "Teich",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Lothar",
+        "family": "Thiele",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "page": "23-58",
+    "volume": "3",
+    "issue": "1"
+  },
+  {
+    "doi": "10.3390/electronics9071057",
+    "status": "200",
+    "title": "Exact Design Space Exploration Based on Consistent Approximations",
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-4138-5114",
+        "authenticated-orcid": false,
+        "given": "Kai",
+        "family": "Neubauer",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Applied Microelectronics and Computer Engineering, University of Rostock, 18051 Rostock, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-9604-5382",
+        "authenticated-orcid": false,
+        "given": "Benjamin",
+        "family": "Beichler",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Applied Microelectronics and Computer Engineering, University of Rostock, 18051 Rostock, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1568-5423",
+        "authenticated-orcid": false,
+        "given": "Christian",
+        "family": "Haubelt",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Applied Microelectronics and Computer Engineering, University of Rostock, 18051 Rostock, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "page": "1057",
+    "volume": "9",
+    "issue": "7"
+  }
+]

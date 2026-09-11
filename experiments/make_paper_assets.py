@@ -1,12 +1,13 @@
 """Generate every figure (PDF) and every numeric table (LaTeX) of the manuscript
 directly from the result CSVs. No number in the paper is typed by hand."""
-import sys, os, csv, statistics as st
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import sys, os, csv, statistics as st, json
+from pathlib import Path
+RESULTS = Path(os.environ.get("HCADSE_RESULTS", "results/v1.1-submission-results/data"))
+sys.path.insert(0, str(RESULTS.resolve().parent / "source"))
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from hcadse.model import (make_space, WORKLOADS, EDGE_CLASSES, GW_CLASSES,
                           CLOUD_CLASSES, LINK_CLASSES, POLICIES, VAR_ORDER)
-from hcadse.search import hca_dse
 
 F, T = "manuscript/figures", "manuscript/tables"
 os.makedirs(F, exist_ok=True); os.makedirs(T, exist_ok=True)
@@ -14,11 +15,11 @@ plt.rcParams.update({"font.size": 8, "font.family": "serif", "axes.grid": True,
                      "grid.alpha": .25, "grid.linewidth": .4, "savefig.bbox": "tight"})
 WL = ["telemetry", "control", "sensing"]
 CLR = {"telemetry": "#1f4e79", "control": "#c0504d", "sensing": "#e08214"}
-R = lambda f: list(csv.DictReader(open(f)))
+R = lambda f: list(csv.DictReader(open(RESULTS / Path(f).name)))
 
 
 def tab(name, body, colspec=None, header=None, pre="", post=""):
-    """Write a COMPLETE tabular environment: \input inside a tabular is fragile,
+    r"""Write a COMPLETE tabular environment: \input inside a tabular is fragile,
     so the generated file is self-contained."""
     if colspec is None:
         open(f"{T}/{name}.tex", "w").write(body)
@@ -173,10 +174,10 @@ for w in WL + ["ALL"]:
         name = ("\\textbf{all workloads}" if w == "ALL" else w) + f" ({lab[sub]})"
         rows.append(f"{name} & {r['n']} & {r['MAPE']} & {r['median_AE_ms']} & "
                     f"{r['spearman']} & {r['kendall']} & {r['agree_10pct']} & "
-                    f"{r['agree_25pct']} & {r['median_repeat_iqr_ms']}" + r" \\")
+                    f"{r['agree_25pct'] if r['agree_25pct'] != 'nan' else '--'} & {r['median_repeat_iqr_ms']}" + r" \\")
 tab("testbed", "\n".join(rows), colspec="lrrrrrrrr",
     header=(r"subset & $n$ & MAPE & med.\ AE & Spearman & Kendall & pair & pair & repeat \\"
-            "\n" r" & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & spread [ms] \\"),
+            "\n" r" & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & IQR [ms] \\"),
     pre="\\scriptsize\n\\setlength{\\tabcolsep}{3pt}\n")
 
 # ---------------------------------------------------------------- T11 statistics
@@ -193,6 +194,39 @@ tab("stats", "\n".join(rows), colspec="lrrrrrrr",
     header=(r"workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\"
             "\n" r" & & HV med. & HV med. & & $\delta$ & recall & evals \\"),
     pre="\\scriptsize\n\\setlength{\\tabcolsep}{3.5pt}\n")
+
+
+# Compact main-text views; full source tables remain available for the supplement.
+# Reuse the generated rows, preserving the exact rounding of the full tables.
+from pathlib import Path
+baseline = Path(f"{T}/baselines.tex").read_text()
+for scale in ("S2", "S3"):
+    lines = baseline.splitlines()
+    chosen = []; active = False
+    for line in lines:
+        if line.startswith("\\multirow{10}"):
+            active = ("{*}{" + scale + "}") in line
+        if active and (" & " in line or line == r"\midrule"):
+            chosen.append(line)
+    tab("baselines_" + scale, "\n".join(chosen), colspec="lllrrrrr",
+        header=r"scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\",
+        pre="\\scriptsize\n")
+compact = []
+for line in baseline.splitlines():
+    if line.startswith("\\multirow{10}") or "($B$=1000)" in line or "\\textbf{HCA-DSE}" in line or line == r"\midrule":
+        compact.append(line.replace("multirow{10}", "multirow{4}"))
+tab("baselines_compact", "\n".join(compact).strip().removeprefix(r"\midrule"), colspec="lllrrrrr",
+    header=r"scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\", pre="\\scriptsize\n")
+statlines = Path(f"{T}/stats.tex").read_text().splitlines()
+tab("stats_compact", "\n".join(l for l in statlines if " & 500 & " in l or " & 1000 & " in l),
+    colspec="lrrrrrrr", header=(r"workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\" "\n"
+    r" & & HV med. & HV med. & & $\delta$ & recall & evals \\"), pre="\\scriptsize\n")
+compact = []
+for w in WL + ["ALL"]:
+    r = next(q for q in R("results/e9_summary_mean.csv") if q["workload"] == w and q["subset"] == "all")
+    compact.append(f"{w} & {r['n']} & {r['MAPE']} & {r['spearman']} & {r['agree_25pct']} & {r['pairs_25pct']}" + r" \\")
+tab("testbed_compact", "\n".join(compact), colspec="lrrrrr",
+    header=r"workload & $n$ & MAPE [\%] & Spearman $\rho$ & agreement $>25\%$ & pairs \\", pre="\\small\n")
 
 # ================================================================= FIGURES
 # F: funnel
@@ -226,8 +260,9 @@ for s, ls in (("S2", "--"), ("S3", "-")):
                      key=lambda r: float(r["C_E"]))
         ax.plot([float(r["C_E"]) for r in sub], [float(r["speedup"]) for r in sub],
                 ls, color=CLR[w], lw=1, marker="o", ms=2, label=f"{s}, {w}")
-ax.axvline(19.4e-3, color="k", lw=.7, ls=":")
-ax.text(2.2e-2, 1.6, "measured DES\nevaluator", fontsize=5)
+des_cost = json.loads((RESULTS / "e2_des_timing.json").read_text())["mean_seconds"]
+ax.axvline(des_cost, color="k", lw=.7, ls=":")
+ax.text(des_cost * 1.1, 1.6, "measured DES\nevaluator", fontsize=5)
 ax.axhline(1, color="grey", lw=.5)
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlabel("evaluation cost $C_E$ [s]"); ax.set_ylabel("speed-up over exhaustive")
@@ -266,7 +301,7 @@ for ax, w in zip(axes, WL):
     h = [r for r in d if r["scale"] == "S3" and r["workload"] == w and r["method"] == "HCA-DSE"][0]
     ax.axhline(1.0, color="#c0504d", lw=1)
     ax.set_xticks(range(len(bs))); ax.set_xticklabels(bs, fontsize=6)
-    ax.set_title(f"{w} — HCA-DSE: {h['n_eval']} evals, HV$=1$", fontsize=6)
+    ax.set_title(w, fontsize=8)
     ax.set_xlabel("evaluation budget", fontsize=7)
 axes[0].set_ylabel("HV ratio", fontsize=7)
 fig("hv_budget", f)
@@ -285,7 +320,7 @@ ax.set_ylabel("full evaluations (S3)"); ax.legend(fontsize=6)
 fig("ablation", f)
 
 # F: Pareto front projections (S3, telemetry)
-front = hca_dse(make_space("S3"), WORKLOADS["telemetry"]).front
+front = [(None, f) for f in json.loads((RESULTS / "e1_fronts.json").read_text())["S3/telemetry"]]
 L = [f_[0] * 1e3 for _, f_ in front]
 E = [f_[1] / 3.6e6 for _, f_ in front]          # J over T=1h -> kWh
 C = [f_[2] for _, f_ in front]
@@ -304,7 +339,7 @@ cb1.set_label("cost [units]", fontsize=6); cb1.ax.tick_params(labelsize=5)
 fig("pareto", f)
 
 # F: model vs measurement (Docker testbed)
-d = R("results/e9_per_design_docker.csv")
+d = R("results/e9_per_design_mean.csv")
 f, ax = plt.subplots(figsize=(3.2, 2.9))
 for w, mk in zip(WL, "ov^"):
     lo = [r for r in d if r["workload"] == w and float(r["spread"]) < 1.5]
@@ -315,10 +350,10 @@ for w, mk in zip(WL, "ov^"):
     ax.scatter([float(r["p50_measured"]) * 1e3 for r in hi],
                [float(r["L_analytical"]) * 1e3 for r in hi], s=26, marker=mk,
                facecolors="none", edgecolors="k", linewidths=.7)
-lim = [5, 2500]
+lim = [5, max(2500, max(float(r["p50_measured"])*1e3 for r in d)*1.3)]
 ax.plot(lim, lim, "k--", lw=.7); ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(*lim); ax.set_ylim(*lim)
-ax.set_xlabel("measured median $p_{50}$ latency [ms]")
+ax.set_xlabel("measured mean latency [ms]")
 ax.set_ylabel("analytical latency [ms]")
 ax.set_title("open markers: repeat spread $\\geq 1.5\\times$", fontsize=6)
 ax.legend(fontsize=6)

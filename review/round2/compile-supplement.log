@@ -1,0 +1,8 @@
+Root: /Users/nikitatarasov/Science Article 2025-/Hierarchical Constraint-Aware Design-Space/manuscript/supplement.tex
+Compiler: texlive
+Command: /Library/TeX/texbin/latexmk -norc -pdf -interaction=nonstopmode -halt-on-error -synctex=1 -outdir=/Users/nikitatarasov/Science Article 2025-/Hierarchical Constraint-Aware Design-Space/review/round2/build-supplement /Users/nikitatarasov/Science Article 2025-/Hierarchical Constraint-Aware Design-Space/manuscript/supplement.tex
+Exit code: 0
+PDF: /Users/nikitatarasov/Science Article 2025-/Hierarchical Constraint-Aware Design-Space/review/round2/build-supplement/supplement.pdf
+
+Attempts:
+- texlive: passed (exit 0)

@@ -1,0 +1,3 @@
+instrumented evaluator-call budgets: PASS
+O1/O2 with/without queue: bounds and exactness PASS
+DES single-request fork/join latency and seed repeatability: PASS
