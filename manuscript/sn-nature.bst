@@ -1047,17 +1047,26 @@ FUNCTION {format.booktitle}
   booktitle "booktitle" bibinfo.check
   emphasize
 }
+%% LOCAL FIX (1 function, see README): as shipped in the Springer Nature article
+%% template (sn-nature.bst 2024/07/19 v1.1) this function reads the book title from
+%% an empty literal stack, so BibTeX aborts with "You can't pop an empty literal
+%% stack" on every @inproceedings and @incollection entry and the conference or book
+%% venue is dropped from the reference list. The body below pushes format.booktitle
+%% first and builds the "(ed. ...)" suffix explicitly; nothing else in the style is
+%% changed.
 FUNCTION {format.in.ed.booktitle}
-{  duplicate$ empty$ 'skip$
-    { 
-editor "editor" format.names.ed duplicate$ empty$ 'pop$
-        {  
-format.booktitle swap$
-"(" editor num.names$ #1 > 'bbl.in.editors 'bbl.editor if$  * swap$   ") " *
-          * swap$
+{ format.booktitle
+  duplicate$ empty$ 'skip$
+    { editor "editor" format.names.ed duplicate$ empty$ 'pop$
+        { editor num.names$ #1 > 'bbl.in.editors 'bbl.editor if$
+          " " *
+          swap$ *
+          "(" swap$ *
+          ")" *
+          " " swap$ *
           * }
-      if$ 
-    }  
+      if$
+    }
   if$
 }
 FUNCTION {empty.misc.check}

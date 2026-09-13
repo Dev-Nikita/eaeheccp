@@ -40,12 +40,11 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     for stale in OUT.glob("*"):
         if stale.is_file() and stale.suffix in {".aux", ".log", ".fls", ".fdb_latexmk",
-                                                ".out", ".bbl", ".blg", ".spl", ".synctex.gz"}:
+                                                ".out", ".blg", ".spl", ".gz"}:
             stale.unlink()
 
     for src, dst in [("sn_main.tex", "main.tex"), ("supplement_sn.tex", "supplement.tex")]:
         body = flatten(M / src)
-        body = body.replace("\\bibliography{refs_sn}", "\\bibliography{refs}")
         (OUT / dst).write_text(body)
         clean = "\\input{" not in body
         print(f"flattened {src} -> sn-manuscript/{dst}: "
@@ -53,10 +52,11 @@ def main():
 
     shutil.copyfile(M / "sn-jnl.cls", OUT / "sn-jnl.cls")
     shutil.copyfile(M / "sn-nature.bst", OUT / "sn-nature.bst")
-    shutil.copyfile(M / "refs_sn.bib", OUT / "refs.bib")
-    for extra in ("refs_sn.bib", "sn_main.tex", "supplement_sn.tex"):
-        if (OUT / extra).exists():
-            (OUT / extra).unlink()
+    shutil.copyfile(M / "refs.bib", OUT / "refs.bib")
+    # names produced by earlier versions of this script; remove if still around
+    for stale_name in ("refs_sn.bib", "sn_main.tex", "supplement_sn.tex"):
+        if (OUT / stale_name).exists():
+            (OUT / stale_name).unlink()
     figures = OUT / "figures"
     figures.mkdir(exist_ok=True)
     used = set(re.findall(r"includegraphics\[[^\]]*\]\{figures/([^}]+)\}",
@@ -71,10 +71,15 @@ def main():
         "experiments/make_submission_package.py -- do not edit by hand).\n\n"
         "  main.tex        manuscript, all sections and tables inlined\n"
         "  supplement.tex  Supplementary Information\n"
-        "  refs.bib        bibliography (conference venues expanded for sn-nature.bst)\n"
+        "  refs.bib        bibliography, 41 entries\n"
         "  sn-jnl.cls      Springer Nature class\n"
-        "  sn-nature.bst   Nature reference style\n"
-        "  figures/        vector figures used by main.tex\n\n"
+        "  sn-nature.bst   Nature reference style, with a one-function local fix\n"
+        "                  (see the comment above format.in.ed.booktitle): the file as\n"
+        "                  shipped in the template aborts BibTeX on @inproceedings and\n"
+        "                  @incollection entries and drops the venue\n"
+        "  figures/        vector figures used by main.tex\n"
+        "  main.bbl        pre-built reference list, so the package typesets even\n"
+        "                  without running BibTeX\n\n"
         "Build:\n"
         "  pdflatex main && bibtex main && pdflatex main && pdflatex main\n"
         "  pdflatex supplement && pdflatex supplement\n")

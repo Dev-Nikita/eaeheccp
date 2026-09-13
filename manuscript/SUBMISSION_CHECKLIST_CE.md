@@ -9,10 +9,12 @@
 - [x] нумерация строк (опция класса `lineno`);
 - [x] Declarations: Data availability, Code availability, Author contributions, Funding,
       Competing interests;
-- [x] 41 цитируемый источник, у конференций видно venue (генерируется `refs_sn.bib`);
+- [x] 41 цитируемый источник, у конференций видно venue (исправлена функция
+      `format.in.ed.booktitle` в `sn-nature.bst`, из-за которой BibTeX падал и ссылки
+      выводились как `???`);
 - [x] Supplementary Information: Notes 1–2 + Tables S1–S13, ссылки из main совпадают;
 - [x] аудит числовых утверждений `python3 experiments/check_claims.py` — проходит;
-- [x] сборка без ошибок: main 18 стр., supplement 8 стр., 0 undefined, нет overfull > 10 pt;
+- [x] сборка без ошибок: main 19 стр., supplement 8 стр., 0 undefined, нет overfull > 10 pt;
 - [x] Zenodo DOI 10.5281/zenodo.22729667 и GitHub Dev-Nikita/eaeheccp вписаны в Data
       availability и Code availability; ORCID обоих авторов — в титульном блоке;
 - [x] добавлено заявление «Use of AI tools» (только языковая правка, без генерации
@@ -36,7 +38,7 @@
       10.5281/zenodo.22729667 остаётся прежним);
 - [ ] прогон воспроизведения с чистого клона: `python3 tests/test_regression.py`,
       `python3 tests/test_pruning_safety.py`, `python3 experiments/make_paper_assets.py`,
-      `python3 experiments/make_sn_bib.py`, затем пересборка обоих PDF;
+      затем пересборка обоих PDF;
 - [ ] проверить DOI и метаданные всех 41 источника (см. `BIBLIOGRAPHY_AUDIT.md`);
       отдельно: ссылка на препринт arXiv 2026 — не вышла ли уже журнальная версия;
 - [ ] сверить Author contributions с реальным вкладом соавтора;

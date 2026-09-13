@@ -41,14 +41,18 @@ display items: `fig1.tex`, `tab1.tex`, `displays.tex`. Рисунки, табл�
 через `{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}...}` — не менять на
 resizebox.
 
-Текущая сборка: main 18 страниц, supplement 8 страниц, 0 ошибок, 0 undefined
+Текущая сборка: main 19 страниц, supplement 8 страниц, 0 ошибок, 0 undefined
 ссылок, ни одного overfull больше 10 pt, **41 источник** в списке.
 
-Библиография SN-версии собирается из `refs_sn.bib`, который генерируется командой
-`python3 experiments/make_sn_bib.py` из общего `refs.bib`: `sn-nature.bst` молча
-выбрасывает `booktitle` у @inproceedings, поэтому конференциям добавляется поле
-`series`. В Elsevier-версиях остаётся исходный `refs.bib` — там `series` дал бы
-дублирование названия конференции. Правьте только `refs.bib` и перегенерируйте.
+Библиография у всех версий одна — `manuscript/refs.bib`. В `sn-nature.bst` из
+официального шаблона (2024/07/19 v1.1) сломана функция `format.in.ed.booktitle`:
+она читает название сборника с пустого стека, поэтому BibTeX падает с
+`You can't pop an empty literal stack` на каждом @inproceedings/@incollection,
+обрывает сборку (в latexmk/Overleaf это и даёт `???` вместо номеров ссылок) и
+выбрасывает название конференции. В `manuscript/sn-nature.bst` эта одна функция
+исправлена, правка помечена комментарием `LOCAL FIX`; больше в стиле ничего не
+менялось. Ранее для обхода генерировался `refs_sn.bib` с полем `series` —
+он и скрипт `make_sn_bib.py` удалены.
 
 Аудит числовых утверждений: `python3 experiments/check_claims.py` проверяет, что
 каждое эмпирическое число в тексте встречается в `generated/`, `tables/` или в
