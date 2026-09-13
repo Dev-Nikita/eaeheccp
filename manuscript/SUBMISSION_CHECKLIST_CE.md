@@ -1,6 +1,6 @@
 # Чек-лист перед подачей в Communications Engineering
 
-Статус на 2026-09-10. Отмечайте по мере закрытия.
+Статус на 2026-09-13. Отмечайте по мере закрытия.
 
 ## Готово
 - [x] структура Introduction → Results → Discussion → Methods → Declarations → References;
@@ -13,13 +13,27 @@
 - [x] Supplementary Information: Notes 1–2 + Tables S1–S13, ссылки из main совпадают;
 - [x] аудит числовых утверждений `python3 experiments/check_claims.py` — проходит;
 - [x] сборка без ошибок: main 18 стр., supplement 8 стр., 0 undefined, нет overfull > 10 pt;
+- [x] Zenodo DOI 10.5281/zenodo.22729667 и GitHub Dev-Nikita/eaeheccp вписаны в Data
+      availability и Code availability; ORCID обоих авторов — в титульном блоке;
+- [x] добавлено заявление «Use of AI tools» (только языковая правка, без генерации
+      содержания, кода или результатов);
+- [x] канонический порядок переменных в коде и в тексте совпадает (determinants-early);
+      все числа main и SI пересчитаны из одного набора результатов;
+- [x] чистая папка подачи `manuscript/sn-manuscript/`: main.tex, supplement.tex,
+      refs.bib, sn-jnl.cls, sn-nature.bst, figures/ — все \input развёрнуты,
+      генерируется `python3 experiments/make_submission_package.py`;
 - [x] cover letter переписан под CE (~400 слов, без bold-заголовков, с абзацем про fit и
       с фразой о том, что работа заранее не обсуждалась с редактором).
 
 ## Осталось сделать вам
-- [ ] **ORCID** обоих авторов в системе подачи (обязательно для corresponding author);
-- [ ] **Zenodo / GitHub release** с неизменяемым DOI, вписать его в Data availability и
-      Code availability вместо «replication package accompanying this submission»;
+- [ ] **ORCID** обоих авторов ввести в самой системе подачи (в тексте они уже стоят);
+- [ ] **опечатать новый релиз результатов на Mac** (там есть z3 и Python 3.12):
+      `python3 experiments/reproduce.py --release v1.2-canonical-order --testbed results/e9_testbed_round2.csv`,
+      затем `python3 experiments/verify_manuscript_numbers.py`. Сейчас числа в рукописи
+      взяты из живой папки `results/`, а запечатанный релиз `v1.1-submission-results`
+      относится к прежнему порядку переменных;
+- [ ] после опечатывания обновить версию архива на Zenodo (новый DOI версии, concept DOI
+      10.5281/zenodo.22729667 остаётся прежним);
 - [ ] прогон воспроизведения с чистого клона: `python3 tests/test_regression.py`,
       `python3 tests/test_pruning_safety.py`, `python3 experiments/make_paper_assets.py`,
       `python3 experiments/make_sn_bib.py`, затем пересборка обоих PDF;

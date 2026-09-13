@@ -2,7 +2,7 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\emailauthor{dev.nikita@outlook.com}{Vasyl Tomyuk}
+\emailauthor{dev.nikita@outlook.com}{Nikita Tarasov}
 \Newlabel{lp}{a}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
@@ -11,10 +11,12 @@
 \citation{deb2002nsga2}
 \citation{neubauer2018exact,haubelt2018asp}
 \citation{paretopruning2022,mandow2010namoa}
+\citation{neubauer2020consistent}
 \@writefile{toc}{\contentsline {paragraph}{Contributions}{2}{section*.1}\protected@file@percent }
 \citation{neubauer2018exact}
-\citation{paretopruning2022}
 \citation{stewart1991moa,mandow2010namoa}
+\citation{neubauer2020consistent}
+\citation{paretopruning2022}
 \citation{herget2022dse}
 \citation{saadatmand2025compdse}
 \citation{kienhuis2002ychart}
@@ -24,161 +26,217 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Exact multi-objective design-space exploration}{3}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Design-space exploration for distributed cyber-physical systems}{3}{subsection.2.2}\protected@file@percent }
 \citation{xiao2024contrarc}
+\citation{amir2020pareto}
+\citation{saadatmand2024workload}
+\citation{guo2023}
+\citation{guo2025}
+\citation{kouloumpris2024optimization}
+\citation{kouloumpris2026reliability}
 \citation{sedghani2024space4aid}
+\citation{casini2025edge}
+\citation{gene2024}
+\citation{ali2026icn}
+\citation{cloud2026coopt}
+\citation{filippini2026replica}
+\citation{predictive2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Exact allocation by integer programming}{4}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:related:milp}{{2.3}{4}{Exact allocation by integer programming}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Design-time placement in the edge--cloud continuum}{4}{subsection.2.4}\protected@file@percent }
 \citation{deb2002nsga2}
 \citation{blank2020pymoo}
 \citation{zitzler1999hv}
 \citation{ishibuchi2015igdplus}
+\citation{audet2021indicators}
+\citation{blickle1998system}
+\citation{haubelt2003pareto}
+\citation{lukasiewycz2008symbolic}
 \citation{neubauer2018exact}
-\citation{saadatmand2025compdse}
+\citation{herget2022dse}
+\citation{kouloumpris2024optimization}
 \citation{xiao2024contrarc}
 \citation{sedghani2024space4aid}
+\citation{saadatmand2025compdse}
+\citation{kouloumpris2026reliability}
 \citation{deb2002nsga2}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Positioning with respect to the closest prior work.}}{4}{table.caption.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Positioning with respect to the closest prior work. ``Partial-design pruning'' denotes discarding incomplete designs before they are completed and evaluated; ``contention-aware'' denotes objectives that depend on resource utilisation rather than being additive over decisions. ``Weighted denotes exact optimisation for specified weights, without full-front enumeration.}}{5}{table.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:related}{{1}{4}{Positioning with respect to the closest prior work}{table.caption.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Design-time placement in the edge--cloud continuum}{4}{subsection.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Metaheuristic exploration of edge--cloud deployments}{4}{subsection.2.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Architecture template. Solid arrows show the default request path; dashed arrows show the alternative stage placements selected by the placement policy.}}{5}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:arch}{{1}{5}{Architecture template. Solid arrows show the default request path; dashed arrows show the alternative stage placements selected by the placement policy}{figure.caption.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Resource classes. Compute classes: capacity $C$ [MIPS], memory $M$ [MB], idle and peak power [W], cost [units]. Link classes: bandwidth $B$, propagation delay $\tau $, transfer energy $e$, cost.}}{5}{table.caption.4}\protected@file@percent }
-\newlabel{tab:resources}{{2}{5}{Resource classes. Compute classes: capacity $C$ [MIPS], memory $M$ [MB], idle and peak power [W], cost [units]. Link classes: bandwidth $B$, propagation delay $\tau $, transfer energy $e$, cost}{table.caption.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}System and design-space model}{5}{section.3}\protected@file@percent }
-\newlabel{sec:model}{{3}{5}{System and design-space model}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Architecture template}{5}{subsection.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Workload}{5}{subsection.3.2}\protected@file@percent }
-\citation{kleinrock1975queueing}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Workload classes. Stage values are given as $\tau _1/\tau _2/\tau _3$.}}{6}{table.caption.5}\protected@file@percent }
-\newlabel{tab:workloads}{{3}{6}{Workload classes. Stage values are given as $\tau _1/\tau _2/\tau _3$}{table.caption.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Design variables and domain sizes of the four design-space scales.}}{6}{table.caption.6}\protected@file@percent }
-\newlabel{tab:variables}{{4}{6}{Design variables and domain sizes of the four design-space scales}{table.caption.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Decision vector and design space}{6}{subsection.3.3}\protected@file@percent }
-\newlabel{eq:decision}{{1}{6}{Decision vector and design space}{equation.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Evaluation model}{6}{subsection.3.4}\protected@file@percent }
-\newlabel{eq:rho}{{2}{6}{Evaluation model}{equation.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Latency}{6}{section*.7}\protected@file@percent }
-\newlabel{eq:latency}{{3}{6}{Latency}{equation.3}{}}
+\newlabel{tab:related}{{1}{5}{Positioning with respect to the closest prior work. ``Partial-design pruning'' denotes discarding incomplete designs before they are completed and evaluated; ``contention-aware'' denotes objectives that depend on resource utilisation rather than being additive over decisions. ``Weighted denotes exact optimisation for specified weights, without full-front enumeration}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Metaheuristic exploration of edge--cloud deployments}{5}{subsection.2.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Architecture template. Solid arrows show the default request path; dashed arrows show the alternative stage placements selected by the placement policy.}}{6}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:arch}{{1}{6}{Architecture template. Solid arrows show the default request path; dashed arrows show the alternative stage placements selected by the placement policy}{figure.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Resource classes. Compute classes: capacity $C$ [MIPS], memory $M$ [MB], idle and peak power [W], cost [units]. Link classes: bandwidth $B$, propagation delay $\tau $, transfer energy $e$, cost.}}{6}{table.caption.4}\protected@file@percent }
+\newlabel{tab:resources}{{2}{6}{Resource classes. Compute classes: capacity $C$ [MIPS], memory $M$ [MB], idle and peak power [W], cost [units]. Link classes: bandwidth $B$, propagation delay $\tau $, transfer energy $e$, cost}{table.caption.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}System and design-space model}{6}{section.3}\protected@file@percent }
+\newlabel{sec:model}{{3}{6}{System and design-space model}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Architecture template}{6}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Workload}{6}{subsection.3.2}\protected@file@percent }
+\citation{kleinrock1975queueing,harchol2013performance}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Workload classes. Stage values are given as $\tau _1/\tau _2/\tau _3$.}}{7}{table.caption.5}\protected@file@percent }
+\newlabel{tab:workloads}{{3}{7}{Workload classes. Stage values are given as $\tau _1/\tau _2/\tau _3$}{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Design variables and domain sizes of the four design-space scales.}}{7}{table.caption.6}\protected@file@percent }
+\newlabel{tab:variables}{{4}{7}{Design variables and domain sizes of the four design-space scales}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Decision vector and design space}{7}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:decision}{{1}{7}{Decision vector and design space}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Evaluation model}{7}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:rho}{{2}{7}{Evaluation model}{equation.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Latency}{7}{section*.7}\protected@file@percent }
+\newlabel{eq:latency}{{3}{8}{Latency}{equation.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Energy, cost and network volume}{8}{section*.8}\protected@file@percent }
+\newlabel{eq:energy}{{4}{8}{Energy, cost and network volume}{equation.4}{}}
+\newlabel{eq:cost}{{5}{8}{Energy, cost and network volume}{equation.5}{}}
+\newlabel{eq:netvol}{{6}{8}{Energy, cost and network volume}{equation.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Feasibility}{8}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}HCA-DSE}{8}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{8}{HCA-DSE}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Partial architectures}{8}{subsection.4.1}\protected@file@percent }
 \citation{neubauer2018exact}
-\@writefile{toc}{\contentsline {paragraph}{Energy, cost and network volume}{7}{section*.8}\protected@file@percent }
-\newlabel{eq:energy}{{4}{7}{Energy, cost and network volume}{equation.4}{}}
-\newlabel{eq:cost}{{5}{7}{Energy, cost and network volume}{equation.5}{}}
-\newlabel{eq:netvol}{{6}{7}{Energy, cost and network volume}{equation.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Feasibility}{7}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}HCA-DSE}{7}{section.4}\protected@file@percent }
-\newlabel{sec:method}{{4}{7}{HCA-DSE}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Partial architectures}{7}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Admissible bounds}{7}{subsection.4.2}\protected@file@percent }
-\newlabel{lem:relax}{{1}{7}{Term-wise relaxation}{lemma.1}{}}
-\newlabel{lem:exact}{{2}{8}{Exactness on determined terms}{lemma.2}{}}
-\newlabel{rem:order}{{1}{8}{Why the variable order matters}{remark.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Pruning rules}{8}{subsection.4.3}\protected@file@percent }
-\newlabel{prop:feas}{{1}{8}{Safe feasibility pruning}{proposition.1}{}}
-\newlabel{prop:dom}{{2}{8}{Safe dominance pruning}{proposition.2}{}}
-\newlabel{prop:struct}{{3}{8}{Closure of the well-formedness predicate}{proposition.3}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces HCA-DSE}}{9}{algorithm.1}\protected@file@percent }
-\newlabel{alg:hca}{{1}{9}{HCA-DSE}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Algorithm}{9}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Correctness}{9}{subsection.4.5}\protected@file@percent }
-\newlabel{thm:exact}{{1}{9}{Pareto-front preservation}{theorem.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Admissible bounds}{9}{subsection.4.2}\protected@file@percent }
+\newlabel{lem:relax}{{1}{9}{Term-wise relaxation}{lemma.1}{}}
+\newlabel{lem:exact}{{2}{9}{Exactness on determined terms}{lemma.2}{}}
+\newlabel{rem:order}{{1}{9}{Why the variable order matters}{remark.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Pruning rules}{9}{subsection.4.3}\protected@file@percent }
+\newlabel{prop:feas}{{1}{9}{Safe feasibility pruning}{proposition.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Pruning on the prefix tree. Sub-trees are discarded when the optimistic bound already violates a constraint (Proposition~\ref {prop:feas}) or is dominated by an evaluated feasible design (Proposition~\ref {prop:dom}); only surviving leaves reach the expensive evaluator.}}{10}{figure.caption.10}\protected@file@percent }
 \newlabel{fig:tree}{{2}{10}{Pruning on the prefix tree. Sub-trees are discarded when the optimistic bound already violates a constraint (Proposition~\ref {prop:feas}) or is dominated by an evaluated feasible design (Proposition~\ref {prop:dom}); only surviving leaves reach the expensive evaluator}{figure.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Complexity}{10}{subsection.4.6}\protected@file@percent }
-\newlabel{eq:complexity}{{8}{10}{Complexity}{equation.8}{}}
-\newlabel{eq:breakeven}{{9}{10}{Complexity}{equation.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental methodology}{10}{section.5}\protected@file@percent }
-\newlabel{sec:methodology}{{5}{10}{Experimental methodology}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Research questions}{10}{subsection.5.1}\protected@file@percent }
+\newlabel{prop:dom}{{2}{10}{Safe dominance pruning}{proposition.2}{}}
+\newlabel{prop:struct}{{3}{10}{Closure of the well-formedness predicate}{proposition.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Algorithm}{10}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Correctness}{10}{subsection.4.5}\protected@file@percent }
+\newlabel{thm:exact}{{1}{10}{Pareto-front preservation}{theorem.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces HCA-DSE}}{11}{algorithm.1}\protected@file@percent }
+\newlabel{alg:hca}{{1}{11}{HCA-DSE}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Complexity}{11}{subsection.4.6}\protected@file@percent }
+\newlabel{eq:complexity}{{8}{11}{Complexity}{equation.8}{}}
 \citation{deb2002nsga2}
 \citation{blank2020pymoo}
 \citation{zitzler1999hv}
 \citation{ishibuchi2015igdplus}
 \citation{mann1947whitney}
 \citation{cliff1993delta}
+\newlabel{eq:breakeven}{{9}{12}{Complexity}{equation.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental methodology}{12}{section.5}\protected@file@percent }
+\newlabel{sec:methodology}{{5}{12}{Experimental methodology}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Research questions}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Design of the experiments}{12}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Baselines}{12}{section*.11}\protected@file@percent }
+\citation{demoura2008z3}
 \citation{hemminger2005netem}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Design of the experiments}{11}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Baselines}{11}{section*.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Metrics}{11}{section*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Ablation}{11}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Two-level evaluation and the cost model}{11}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Testbed}{11}{subsection.5.4}\protected@file@percent }
-\newlabel{sec:testbed}{{5.4}{11}{Testbed}{subsection.5.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Containerised testbed. Every tier node is a separate one-CPU container; access links carry the delay and bandwidth of the link class of the design, the cloud hop carries the WAN profile.}}{12}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:testbed}{{3}{12}{Containerised testbed. Every tier node is a separate one-CPU container; access links carry the delay and bandwidth of the link class of the design, the cloud hop carries the WAN profile}{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Reproducibility}{12}{subsection.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{12}{section.6}\protected@file@percent }
-\newlabel{sec:results}{{6}{12}{Results}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}RQ1: most architectures are discarded before evaluation}{12}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}RQ2: the exact front is preserved}{12}{subsection.6.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Exploration funnel. Reduction is with respect to the raw design space; recall is against exhaustive enumeration where the latter is tractable.}}{13}{table.caption.15}\protected@file@percent }
-\newlabel{tab:funnel}{{5}{13}{Exploration funnel. Reduction is with respect to the raw design space; recall is against exhaustive enumeration where the latter is tractable}{table.caption.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Design-space funnel across scales and workloads (logarithmic scale).}}{13}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:funnel}{{4}{13}{Design-space funnel across scales and workloads (logarithmic scale)}{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}RQ3: when pruning pays off}{13}{subsection.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}RQ4: comparison with budget-matched exploration}{13}{subsection.6.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Exact Pareto front recovered on S3/telemetry, projected on latency--cost and latency--energy; colour encodes the remaining objectives.}}{14}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:pareto}{{5}{14}{Exact Pareto front recovered on S3/telemetry, projected on latency--cost and latency--energy; colour encodes the remaining objectives}{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Ablation: what each layer contributes}{14}{subsection.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}RQ5: scalability}{14}{subsection.6.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Speed-up over exhaustive enumeration as a function of the evaluator cost $C_E$, from the measured overheads and evaluation counts.}}{15}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:crossover}{{6}{15}{Speed-up over exhaustive enumeration as a function of the evaluator cost $C_E$, from the measured overheads and evaluation counts}{figure.caption.18}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}RQ6: transfer to a real deployment}{15}{subsection.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics}{13}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Ablation}{13}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Finite-table exact baseline}{13}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Two-level evaluation and the cost model}{13}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Testbed}{13}{subsection.5.4}\protected@file@percent }
+\newlabel{sec:testbed}{{5.4}{13}{Testbed}{subsection.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Containerised testbed. Every tier node is a separate one-CPU container; access links carry the delay and bandwidth of the link class of the design, the cloud hop carries the WAN profile.}}{14}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:testbed}{{3}{14}{Containerised testbed. Every tier node is a separate one-CPU container; access links carry the delay and bandwidth of the link class of the design, the cloud hop carries the WAN profile}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Reproducibility}{14}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{14}{section.6}\protected@file@percent }
+\newlabel{sec:results}{{6}{14}{Results}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}RQ1: most architectures are discarded before evaluation}{14}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Exploration funnel. The reduction column refers to \emph  {full design-point evaluations} with respect to the raw design space, not to runtime; recall is against exhaustive enumeration where the latter is tractable.}}{15}{table.caption.16}\protected@file@percent }
+\newlabel{tab:funnel}{{5}{15}{Exploration funnel. The reduction column refers to \emph {full design-point evaluations} with respect to the raw design space, not to runtime; recall is against exhaustive enumeration where the latter is tractable}{table.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Design-space funnel across scales and workloads (logarithmic scale).}}{15}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:funnel}{{4}{15}{Design-space funnel across scales and workloads (logarithmic scale)}{figure.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}RQ2: the exact front is preserved}{15}{subsection.6.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Exact Pareto front recovered on S3/telemetry. (a) latency versus cost, colour encodes network volume; (b) latency versus energy over the accounting horizon $T=1$\,h, colour encodes cost.}}{16}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:pareto}{{5}{16}{Exact Pareto front recovered on S3/telemetry. (a) latency versus cost, colour encodes network volume; (b) latency versus energy over the accounting horizon $T=1$\,h, colour encodes cost}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}RQ3: when pruning pays off}{16}{subsection.6.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Speed-up over exhaustive enumeration projected as a function of the evaluator cost $C_E$ from the measured overheads and evaluation counts. The dotted line marks the measured cost of the discrete-event evaluator.}}{17}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:crossover}{{6}{17}{Speed-up over exhaustive enumeration projected as a function of the evaluator cost $C_E$ from the measured overheads and evaluation counts. The dotted line marks the measured cost of the discrete-event evaluator}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}RQ4: comparison with budget-matched exploration}{17}{subsection.6.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Budget-matched comparison. Medians over 20 seeds for the stochastic methods at $B=1000$; the full sweep is in Supplementary Tables S1--S2.}}{18}{table.caption.20}\protected@file@percent }
+\newlabel{tab:baselines}{{6}{18}{Budget-matched comparison. Medians over 20 seeds for the stochastic methods at $B=1000$; the full sweep is in Supplementary Tables S1--S2}{table.caption.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Hypervolume ratio against the exhaustive front on S3 over 20 seeds. Grey: random search; blue: NSGA-II. The red line marks the exact front recovered by HCA-DSE.}}{18}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:hv_budget}{{7}{18}{Hypervolume ratio against the exhaustive front on S3 over 20 seeds. Grey: random search; blue: NSGA-II. The red line marks the exact front recovered by HCA-DSE}{figure.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces NSGA-II versus random search on S3 at $B=500$ and $1000$ over 20 seeds: median HV ratio, one-sided Mann--Whitney $U$ $p$-value and Cliff's $\delta $. HCA-DSE attains HV ratio $1.0$ deterministically with the number of evaluations given in the last column.}}{19}{table.caption.22}\protected@file@percent }
+\newlabel{tab:stats}{{7}{19}{NSGA-II versus random search on S3 at $B=500$ and $1000$ over 20 seeds: median HV ratio, one-sided Mann--Whitney $U$ $p$-value and Cliff's $\delta $. HCA-DSE attains HV ratio $1.0$ deterministically with the number of evaluations given in the last column}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Ablation: what each layer contributes}{19}{subsection.6.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Ablation on S3. For each workload: expanded partial states, full evaluations and runtime.}}{19}{table.caption.23}\protected@file@percent }
+\newlabel{tab:ablation}{{8}{19}{Ablation on S3. For each workload: expanded partial states, full evaluations and runtime}{table.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Full evaluations per pruning configuration on S3 (logarithmic scale).}}{19}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:ablation}{{8}{19}{Full evaluations per pruning configuration on S3 (logarithmic scale)}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Variable order and early queueing contributions}{20}{subsection.6.6}\protected@file@percent }
+\newlabel{sec:order}{{6.6}{20}{Variable order and early queueing contributions}{subsection.6.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Order/queue ablation on S3. ``Active'' counts checked incomplete prefixes with positive queue contribution; ``pruned'' counts those rejected only with that contribution against the same archive. Runtime is the median of three uninstrumented runs.}}{20}{table.caption.25}\protected@file@percent }
+\newlabel{tab:order}{{9}{20}{Order/queue ablation on S3. ``Active'' counts checked incomplete prefixes with positive queue contribution; ``pruned'' counts those rejected only with that contribution against the same archive. Runtime is the median of three uninstrumented runs}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Small-space exact solver comparison}{20}{subsection.6.7}\protected@file@percent }
+\newlabel{sec:solver}{{6.7}{20}{Small-space exact solver comparison}{subsection.6.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Exact finite-table Z3 baseline. Solver time includes encoding; total time also includes full table evaluation. ``Calls'' counts full evaluator invocations.}}{20}{table.caption.26}\protected@file@percent }
+\newlabel{tab:solver}{{10}{20}{Exact finite-table Z3 baseline. Solver time includes encoding; total time also includes full table evaluation. ``Calls'' counts full evaluator invocations}{table.caption.26}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}RQ5: scalability}{21}{subsection.6.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Scalability. For each workload: expanded partial states, full evaluations and runtime [s].}}{21}{table.caption.27}\protected@file@percent }
+\newlabel{tab:scalability}{{11}{21}{Scalability. For each workload: expanded partial states, full evaluations and runtime [s]}{table.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Expanded partial states and full evaluations against the raw design-space size.}}{21}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:scalability}{{9}{21}{Expanded partial states and full evaluations against the raw design-space size}{figure.caption.28}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.9}RQ6: transfer to a real deployment}{21}{subsection.6.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Analytical mean latency versus DES: 40 distinct designs per workload, five seeds per design. Simulated latency is the median of the five run means.}}{22}{table.caption.29}\protected@file@percent }
+\newlabel{tab:des}{{12}{22}{Analytical mean latency versus DES: 40 distinct designs per workload, five seeds per design. Simulated latency is the median of the five run means}{table.caption.29}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Independent testbed validation against measured run means. Pair agreement is the share of architecture pairs whose measured order matches the model order, among pairs the model separates by more than $25\%$. ALL pools workloads. $p_{50}$ subsets and $10\%$ results appear in Supplementary Table S4.}}{22}{table.caption.30}\protected@file@percent }
+\newlabel{tab:testbed}{{13}{22}{Independent testbed validation against measured run means. Pair agreement is the share of architecture pairs whose measured order matches the model order, among pairs the model separates by more than $25\%$. ALL pools workloads. $p_{50}$ subsets and $10\%$ results appear in Supplementary Table S4}{table.caption.30}{}}
 \citation{saadatmand2025compdse}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Hypervolume ratio against the exhaustive front on S3 over 20 seeds. The red line marks the exact front recovered by HCA-DSE.}}{16}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:hv_budget}{{7}{16}{Hypervolume ratio against the exhaustive front on S3 over 20 seeds. The red line marks the exact front recovered by HCA-DSE}{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}A model correction found by the measurements}{16}{subsection.6.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{16}{section.7}\protected@file@percent }
-\newlabel{sec:discussion}{{7}{16}{Discussion}{section.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Why hierarchical pruning works here}{16}{subsection.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Analytical latency against the median of three measured mean latencies on the independent containerised testbed round. Open markers denote architectures whose repeated mean latencies differ by a factor of $1.5$ or more.}}{23}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:model_vs_measured}{{10}{23}{Analytical latency against the median of three measured mean latencies on the independent containerised testbed round. Open markers denote architectures whose repeated mean latencies differ by a factor of $1.5$ or more}{figure.caption.31}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.10}Independent validation after model correction}{23}{subsection.6.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{23}{section.7}\protected@file@percent }
+\newlabel{sec:discussion}{{7}{23}{Discussion}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Why hierarchical pruning works here}{23}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}When HCA-DSE is the right tool --- and when it is not}{23}{subsection.7.2}\protected@file@percent }
 \citation{neubauer2018exact}
 \citation{saadatmand2025compdse}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Full evaluations per pruning configuration on S3 (logarithmic scale).}}{17}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:ablation}{{8}{17}{Full evaluations per pruning configuration on S3 (logarithmic scale)}{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}When HCA-DSE is the right tool --- and when it is not}{17}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Relation to symbolic exact exploration}{17}{subsection.7.3}\protected@file@percent }
-\citation{sedghani2024space4aid}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Visited partial states and full evaluations against the raw design-space size.}}{18}{figure.caption.24}\protected@file@percent }
-\newlabel{fig:scalability}{{9}{18}{Visited partial states and full evaluations against the raw design-space size}{figure.caption.24}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Relation to evaluator-centric methodologies}{18}{subsection.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Accuracy versus ordering}{18}{subsection.7.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Analytical latency against the measured median $p_{50}$ latency of the same architecture on the containerised testbed. Open markers denote the four architectures whose repeats differ by a factor of $1.5$ or more.}}{19}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:model_vs_measured}{{10}{19}{Analytical latency against the measured median $p_{50}$ latency of the same architecture on the containerised testbed. Open markers denote the four architectures whose repeats differ by a factor of $1.5$ or more}{figure.caption.26}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Threats to validity}{19}{section.8}\protected@file@percent }
-\newlabel{sec:threats}{{8}{19}{Threats to validity}{section.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{Internal validity}{19}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Construct validity}{20}{section*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{External validity}{20}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Conclusion validity}{20}{section*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Limitations}{20}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusions}{20}{section.9}\protected@file@percent }
-\newlabel{sec:conclusion}{{9}{20}{Conclusions}{section.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Relation to symbolic exact exploration}{24}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Relation to evaluator-centric methodologies}{24}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Accuracy versus ordering}{24}{subsection.7.5}\protected@file@percent }
+\citation{kouloumpris2024optimization,kouloumpris2026reliability}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Threats to validity}{25}{section.8}\protected@file@percent }
+\newlabel{sec:threats}{{8}{25}{Threats to validity}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Internal validity}{25}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc model correction}{25}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Construct validity}{25}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{External validity}{25}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Conclusion validity}{25}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evaluation-budget accounting}{25}{section*.37}\protected@file@percent }
 \bibstyle{elsarticle-num}
 \bibdata{refs}
 \bibcite{saadatmand2025compdse}{{1}{}{{}}{{}}}
 \bibcite{herget2022dse}{{2}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {paragraph}{Limitations}{26}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusions}{26}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{26}{Conclusions}{section.9}{}}
 \bibcite{deb2002nsga2}{{3}{}{{}}{{}}}
 \bibcite{neubauer2018exact}{{4}{}{{}}{{}}}
 \bibcite{haubelt2018asp}{{5}{}{{}}{{}}}
 \bibcite{paretopruning2022}{{6}{}{{}}{{}}}
 \bibcite{mandow2010namoa}{{7}{}{{}}{{}}}
-\bibcite{stewart1991moa}{{8}{}{{}}{{}}}
-\bibcite{kienhuis2002ychart}{{9}{}{{}}{{}}}
-\bibcite{varga2008omnet}{{10}{}{{}}{{}}}
-\bibcite{xiao2024contrarc}{{11}{}{{}}{{}}}
-\bibcite{sedghani2024space4aid}{{12}{}{{}}{{}}}
-\bibcite{blank2020pymoo}{{13}{}{{}}{{}}}
-\bibcite{zitzler1999hv}{{14}{}{{}}{{}}}
-\bibcite{ishibuchi2015igdplus}{{15}{}{{}}{{}}}
-\bibcite{kleinrock1975queueing}{{16}{}{{}}{{}}}
-\bibcite{mann1947whitney}{{17}{}{{}}{{}}}
-\bibcite{cliff1993delta}{{18}{}{{}}{{}}}
-\bibcite{hemminger2005netem}{{19}{}{{}}{{}}}
+\bibcite{neubauer2020consistent}{{8}{}{{}}{{}}}
+\bibcite{stewart1991moa}{{9}{}{{}}{{}}}
+\bibcite{kienhuis2002ychart}{{10}{}{{}}{{}}}
+\bibcite{varga2008omnet}{{11}{}{{}}{{}}}
+\bibcite{xiao2024contrarc}{{12}{}{{}}{{}}}
+\bibcite{amir2020pareto}{{13}{}{{}}{{}}}
+\bibcite{saadatmand2024workload}{{14}{}{{}}{{}}}
+\bibcite{guo2023}{{15}{}{{}}{{}}}
+\bibcite{guo2025}{{16}{}{{}}{{}}}
+\bibcite{kouloumpris2024optimization}{{17}{}{{}}{{}}}
+\bibcite{kouloumpris2026reliability}{{18}{}{{}}{{}}}
+\bibcite{sedghani2024space4aid}{{19}{}{{}}{{}}}
+\bibcite{casini2025edge}{{20}{}{{}}{{}}}
+\bibcite{gene2024}{{21}{}{{}}{{}}}
+\bibcite{ali2026icn}{{22}{}{{}}{{}}}
+\bibcite{cloud2026coopt}{{23}{}{{}}{{}}}
+\bibcite{filippini2026replica}{{24}{}{{}}{{}}}
+\bibcite{predictive2026}{{25}{}{{}}{{}}}
+\bibcite{blank2020pymoo}{{26}{}{{}}{{}}}
+\bibcite{zitzler1999hv}{{27}{}{{}}{{}}}
+\bibcite{ishibuchi2015igdplus}{{28}{}{{}}{{}}}
+\bibcite{audet2021indicators}{{29}{}{{}}{{}}}
+\bibcite{blickle1998system}{{30}{}{{}}{{}}}
+\bibcite{haubelt2003pareto}{{31}{}{{}}{{}}}
+\bibcite{lukasiewycz2008symbolic}{{32}{}{{}}{{}}}
+\bibcite{kleinrock1975queueing}{{33}{}{{}}{{}}}
+\bibcite{harchol2013performance}{{34}{}{{}}{{}}}
+\bibcite{mann1947whitney}{{35}{}{{}}{{}}}
+\bibcite{cliff1993delta}{{36}{}{{}}{{}}}
+\bibcite{demoura2008z3}{{37}{}{{}}{{}}}
+\bibcite{hemminger2005netem}{{38}{}{{}}{{}}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Budget-matched comparison. Medians over 20 seeds for the stochastic methods.}}{23}{table.caption.19}\protected@file@percent }
-\newlabel{tab:baselines}{{6}{23}{Budget-matched comparison. Medians over 20 seeds for the stochastic methods}{table.caption.19}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Ablation on S3. For each workload: visited partial states, full evaluations and runtime.}}{24}{table.caption.21}\protected@file@percent }
-\newlabel{tab:ablation}{{7}{24}{Ablation on S3. For each workload: visited partial states, full evaluations and runtime}{table.caption.21}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Scalability. For each workload: visited partial states, full evaluations and runtime [s].}}{24}{table.caption.23}\protected@file@percent }
-\newlabel{tab:scalability}{{8}{24}{Scalability. For each workload: visited partial states, full evaluations and runtime [s]}{table.caption.23}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Testbed validation. Pair agreement is the share of architecture pairs whose measured order matches the model order, among pairs the model separates by more than $10\%$ resp.\ $25\%$.}}{24}{table.caption.25}\protected@file@percent }
-\newlabel{tab:testbed}{{9}{24}{Testbed validation. Pair agreement is the share of architecture pairs whose measured order matches the model order, among pairs the model separates by more than $10\%$ resp.\ $25\%$}{table.caption.25}{}}
-\gdef \@abspage@last{24}
+\gdef \@abspage@last{29}

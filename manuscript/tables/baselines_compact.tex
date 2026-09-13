@@ -1,0 +1,37 @@
+\scriptsize
+\begin{tabular}{lllrrrrr}
+\toprule
+scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
+\midrule
+
+\multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.044 \\
+ & & random ($B$=1000) & 1000 & 0.259 & 0.927 & 0.0388 & 0.014 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.926 & 0.999 & 0.0002 & 0.147 \\
+ & & \textbf{HCA-DSE} & \textbf{44} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.036 \\
+\midrule
+\multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.042 \\
+ & & random ($B$=1000) & 1000 & 0.240 & 0.922 & 0.0377 & 0.014 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.800 & 0.999 & 0.0030 & 0.160 \\
+ & & \textbf{HCA-DSE} & \textbf{37} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.035 \\
+\midrule
+\multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.029 \\
+ & & random ($B$=1000) & 1000 & 0.250 & 0.897 & 0.0626 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.875 & 1.000 & 0.0017 & 0.182 \\
+ & & \textbf{HCA-DSE} & \textbf{26} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.016 \\
+\midrule
+\multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.308 \\
+ & & random ($B$=1000) & 1000 & 0.032 & 0.732 & 0.1147 & 0.011 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.500 & 0.946 & 0.0454 & 0.145 \\
+ & & \textbf{HCA-DSE} & \textbf{50} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.138 \\
+\midrule
+\multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.265 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.725 & 0.1189 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.984 & 0.0236 & 0.147 \\
+ & & \textbf{HCA-DSE} & \textbf{41} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.125 \\
+\midrule
+\multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.266 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.658 & 0.1569 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.951 & 0.1677 & 0.175 \\
+ & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.085 \\
+\bottomrule
+\end{tabular}

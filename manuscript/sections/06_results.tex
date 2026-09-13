@@ -1,16 +1,12 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{RQ1: most architectures are discarded before evaluation}
-Table~\ref{tab:funnel} and Fig.~\ref{fig:funnel} report the exploration funnel. On S3
-($51\,840$ candidates) HCA-DSE performs 41 to 54 full evaluations depending on the
-workload, a reduction of $99.90\%$ with respect to the raw space; on S4
-($345\,600$ candidates) it performs 52 to 60, a reduction of $99.98\%$. The composition
-of the funnel differs by workload: for data-intensive sensing the feasibility bounds
-remove the largest share, whereas for telemetry dominance pruning does most of the work,
-which reflects the different binding constraints of the two regimes.
+\FloatBarrier
 
-\begin{table*}[t]
+\subsection{RQ1: most architectures are discarded before evaluation}
+\input{generated/rq1}
+
+\begin{table*}[!htbp]
 \centering
 \caption{Exploration funnel. The reduction column refers to \emph{full design-point
 evaluations} with respect to the raw design space, not to runtime; recall is against
@@ -19,12 +15,14 @@ exhaustive enumeration where the latter is tractable.}
 \input{tables/funnel}
 \end{table*}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/funnel.pdf}
 \caption{Design-space funnel across scales and workloads (logarithmic scale).}
 \label{fig:funnel}
 \end{figure}
+
+\FloatBarrier
 
 \subsection{RQ2: the exact front is preserved}
 For every scale for which exhaustive enumeration is tractable (S1--S3) and for every
@@ -36,7 +34,7 @@ violation, and for every pruned prefix on S1 and S2 all completions were enumera
 found consistent with the claim of the corresponding proposition.
 Fig.~\ref{fig:pareto} shows the resulting front for S3/telemetry in two projections.
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/pareto.pdf}
 \caption{Exact Pareto front recovered on S3/telemetry. (a) latency versus cost, colour
@@ -45,182 +43,152 @@ colour encodes cost.}
 \label{fig:pareto}
 \end{figure}
 
-\subsection{RQ3: when pruning pays off}
-Using the measured overheads and evaluation counts in \eqref{eq:breakeven}, the
-break-even evaluator cost is $1$--$3\,\mu$s on S2 and below $1\,\mu$s on S3. This
-figure is a property of the evaluated implementation, hardware, design-space geometry and
-search order, not a universal constant; what it establishes is that on the spaces studied
-here the pruning overhead is repaid by evaluators whose cost is of the order of
-microseconds and above, which places the discrete-event evaluator used in this paper well
-inside the favourable regime. Fig.~\ref{fig:crossover} shows the speed-up over exhaustive enumeration
-as a function of $C_E$. We stress that the curve is a \emph{projection}: the overheads and the evaluation counts
-are measured, and the cost of one discrete-event evaluation ($19.4$\,ms, averaged over 40
-design points) is measured, but the two exploration strategies were not re-executed
-end-to-end with the discrete-event evaluator in the inner loop. Under that projection the
-speed-up at $C_E=19.4$\,ms is $78\times$ on S2 and $558\times$ on S3, saturating at the
-ratio of evaluation counts, $81\times$ and $640\times$ respectively. With
-the cheap analytical evaluator the measured speed-up is only $1.3$--$3.3\times$, because
-then the bound computation dominates the runtime; this is exactly the regime in which
-pruning is \emph{not} the right tool, and we report it rather than omit it.
+\FloatBarrier
 
-\begin{figure}[t]
+\subsection{RQ3: when pruning pays off}
+\input{generated/rq3}
+
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{figures/crossover.pdf}
+\includegraphics[width=0.55\linewidth]{figures/crossover.pdf}
 \caption{Speed-up over exhaustive enumeration projected as a function of the evaluator
 cost $C_E$ from the measured overheads and evaluation counts. The dotted line marks the
 measured cost of the discrete-event evaluator.}
 \label{fig:crossover}
 \end{figure}
 
+\FloatBarrier
+
 \subsection{RQ4: comparison with budget-matched exploration}
-Table~\ref{tab:baselines} reports the comparison over 20 seeds. On S3 NSGA-II reaches a
-median Pareto recall of $0.50$--$0.74$ and an HV ratio of $0.94$--$0.98$ only at a budget
-of $1000$ full evaluations, while random search never recovers a single exact front point
-at that scale. HCA-DSE attains recall, precision and HV ratio of $1.0$ with 41 to 54
-evaluations, i.e.\ between $18\times$ and $24\times$ fewer evaluations than the best
-budget of the stochastic baseline. At the smaller S2 scale NSGA-II is competitive in
-hypervolume ($0.999$ at $B=1000$) but still misses $9$--$22\%$ of the exact front points.
-Fig.~\ref{fig:hv_budget} shows the seed-level distributions, and
-Table~\ref{tab:stats} reports the non-parametric comparison between the two stochastic
-baselines: NSGA-II overtakes random search only from a budget of $500$ evaluations
-onwards, where the effect size becomes large and the difference significant, while at
-$100$ evaluations random search is not worse and is sometimes better --- the population
-has not yet had time to converge.
+\input{generated/rq4}
 
-The comparison should be read as a statement about guarantees, not about the quality of
-evolutionary search: NSGA-II converges towards the front and would reach it with more
-budget, but it cannot certify that anything is missing, whereas HCA-DSE returns the exact
-front and does so at a small fraction of the evaluation budget --- provided admissible
-bounds exist.
-
-\begin{table}[t]
+\begin{table}[!htbp]
 \centering
-\caption{Budget-matched comparison. Medians over 20 seeds for the stochastic methods.}
+\caption{Budget-matched comparison. Medians over 20 seeds for the stochastic methods at $B=1000$;
+the full sweep is in Supplementary Tables S1--S2.}
 \label{tab:baselines}
-\input{tables/baselines}
+\input{tables/baselines_compact}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/hv_budget.pdf}
-\caption{Hypervolume ratio against the exhaustive front on S3 over 20 seeds. The red line
+\caption{Hypervolume ratio against the exhaustive front on S3 over 20 seeds.
+Grey: random search; blue: NSGA-II. The red line
 marks the exact front recovered by HCA-DSE.}
 \label{fig:hv_budget}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[!htbp]
 \centering
-\caption{NSGA-II versus random search on S3 over 20 seeds: median HV ratio, one-sided
+\caption{NSGA-II versus random search on S3 at $B=500$ and $1000$ over 20 seeds: median HV ratio, one-sided
 Mann--Whitney $U$ $p$-value and Cliff's $\delta$. HCA-DSE attains HV ratio $1.0$
 deterministically with the number of evaluations given in the last column.}
 \label{tab:stats}
-\input{tables/stats}
+\input{tables/stats_compact}
 \end{table}
 
-\subsection{Ablation: what each layer contributes}
-Table~\ref{tab:ablation} and Fig.~\ref{fig:ablation} isolate the layers on S3. Structural
-pruning alone leaves the full $34\,560$ well-formed candidates to be evaluated.
-Feasibility bounds alone reduce this to $7\,025$--$12\,700$ ($2.7\times$--$4.9\times$).
-Dominance bounds alone are far more aggressive, leaving $327$--$415$ evaluations, but the
-two are complementary: combined they leave 41 to 54, i.e.\ another $6\times$--$10\times$
-beyond dominance alone, because feasibility pruning removes exactly the sub-trees for
-which the dominance test would otherwise have to be repeated deep in the tree. All
-variants preserve the exact front.
+\FloatBarrier
 
-\begin{table}[t]
+\subsection{Ablation: what each layer contributes}
+\input{generated/ablation}
+
+\begin{table}[!htbp]
 \centering
-\caption{Ablation on S3. For each workload: visited partial states, full evaluations and
+\caption{Ablation on S3. For each workload: expanded partial states, full evaluations and
 runtime.}
 \label{tab:ablation}
 \scriptsize
 \input{tables/ablation}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.85\linewidth]{figures/ablation.pdf}
+\includegraphics[width=0.70\linewidth]{figures/ablation.pdf}
 \caption{Full evaluations per pruning configuration on S3 (logarithmic scale).}
 \label{fig:ablation}
 \end{figure}
 
-\subsection{RQ5: scalability}
-Table~\ref{tab:scalability} and Fig.~\ref{fig:scalability} extend the raw design space
-over five orders of magnitude, from $1.3\times10^{3}$ to $8.3\times10^{7}$ candidates.
-The number of visited partial states grows from $391$ to $16\,778$, i.e.\ by a factor of
-$43$ while the space grows by a factor of $64\,000$; the number of full evaluations is
-essentially flat at 30 to 61; the runtime stays below $2.4$\,s and the peak memory below
-$90$\,KiB, because the Cartesian product is never materialised. The fraction of visited
-candidates falls from $0.30$ to $1.7\times10^{-4}$.
+\FloatBarrier
 
-\begin{table}[t]
+\subsection{Variable order and early queueing contributions}
+\label{sec:order}
+\input{generated/order}
+On S3, O2 reduces expanded states in each workload, but uses two more full evaluations
+than O1 for telemetry and control, and the same number for sensing. Within O2, enabling
+the queue bound reduces full evaluations for all three workloads; its extra computation
+means that this need not reduce runtime with the cheap analytical evaluator. Thus early
+queueing pruning is demonstrable, while the best traversal depends on the cost metric.
+\begin{table}[!htbp]\centering
+\caption{Order/queue ablation on S3. ``Active'' counts checked incomplete prefixes with
+positive queue contribution; ``pruned'' counts those rejected only with that contribution
+against the same archive. Runtime is the median of three uninstrumented runs.}
+\label{tab:order}\input{tables/order}
+\end{table}
+\FloatBarrier
+\subsection{Small-space exact solver comparison}
+\label{sec:solver}
+\input{generated/solver}
+\begin{table}[!htbp]\centering
+\caption{Exact finite-table Z3 baseline. Solver time includes encoding; total time also
+includes full table evaluation. ``Calls'' counts full evaluator invocations.}
+\label{tab:solver}\input{tables/solver}
+\end{table}
+\FloatBarrier
+\subsection{RQ5: scalability}
+\input{generated/scalability}
+
+\begin{table}[!htbp]
 \centering
-\caption{Scalability. For each workload: visited partial states, full evaluations and
+\caption{Scalability. For each workload: expanded partial states, full evaluations and
 runtime [s].}
 \label{tab:scalability}
 \scriptsize
 \input{tables/scalability}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{figures/scalability.pdf}
-\caption{Visited partial states and full evaluations against the raw design-space size.}
+\includegraphics[width=0.70\linewidth]{figures/scalability.pdf}
+\caption{Expanded partial states and full evaluations against the raw design-space size.}
 \label{fig:scalability}
 \end{figure}
 
+\FloatBarrier
+
 \subsection{RQ6: transfer to a real deployment}
-Against the discrete-event evaluator the analytical model attains Spearman's $\rho$ of
-$0.92$, $0.92$ and $0.96$ for telemetry, control and sensing, with MAPE of $39\%$, $44\%$
-and $14\%$. On the containerised testbed (Table~\ref{tab:testbed},
-Fig.~\ref{fig:model_vs_measured}) the prediction error over the 36 architectures is
-$28.7\%$ (MAPE) with a median absolute error of $7.5$\,ms. Within each workload the rank
-correlation is $\rho=0.84$ (telemetry), $0.87$ (control) and $0.95$ (sensing). The pooled
-correlation is higher ($\rho=0.97$, $\tau=0.89$), but part of that value comes from the
-separation \emph{between} workloads --- sensing latencies are an order of magnitude above
-the other two --- so we report it for completeness and base the argument on the
-per-workload values and on the decision-relevant metric, the pairwise ordering agreement:
-among the $498$ architecture pairs that the model separates by more than $25\%$, the
-measured order agrees in $98.2\%$ of the cases; among the $561$ pairs separated by more
-than $10\%$, in $96.8\%$.
+\input{generated/validation}
 
-Two systematic effects are visible. For the data-intensive sensing workload the model
-\emph{over}-predicts latency by roughly $30\%$ on eight of twelve architectures; because
-the bias is systematic rather than random, the rank correlation for that workload is the
-highest of the three ($\rho=0.95$) while its MAPE is the worst ($50\%$). And four
-architectures --- all sensing designs with $\rho\ge0.75$ --- were not reproducible across
-repeats, varying by factors of two to five (for instance $157$, $293$ and $556$\,ms
-against a predicted $82$\,ms). Near saturation neither the analytical model nor the
-deployment itself is stable, which is a result about the limits of design-time
-prediction rather than measurement noise to be filtered out.
-
-\begin{table}[t]
-\centering
-\caption{Testbed validation. Pair agreement is the share of architecture pairs whose
-measured order matches the model order, among pairs the model separates by more than
-$10\%$ resp.\ $25\%$.}
-\label{tab:testbed}
-\scriptsize
-\input{tables/testbed}
+\begin{table}[!htbp]\centering
+\caption{Analytical mean latency versus DES: 40 distinct designs per workload, five seeds
+per design. Simulated latency is the median of the five run means.}
+\label{tab:des}\input{tables/des_validation}
 \end{table}
 
-\begin{figure}[t]
+\begin{table}[!htbp]
 \centering
-\includegraphics[width=0.8\linewidth]{figures/testbed.pdf}
-\caption{Analytical latency against the measured median $p_{50}$ latency of the same
-architecture on the containerised testbed. Open markers denote the four architectures
-whose repeats differ by a factor of $1.5$ or more.}
+\caption{Independent testbed validation against measured run means. Pair agreement is the share of architecture pairs whose
+measured order matches the model order, among pairs the model separates by more than
+$25\%$. ALL pools workloads. $p_{50}$ subsets and $10\%$ results appear in Supplementary Table S4.}
+\label{tab:testbed}
+\scriptsize
+\input{tables/testbed_compact}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.65\linewidth]{figures/testbed.pdf}
+\caption{Analytical latency against the median of three measured mean latencies on the independent containerised testbed round. Open markers denote architectures whose repeated mean latencies differ by a factor of $1.5$ or more.}
 \label{fig:model_vs_measured}
 \end{figure}
 
-\subsection{A model correction found by the measurements}
-The following is an exploratory, post-hoc correction and is reported as such: the
-comparison below uses the same testbed dataset that revealed the problem, so the
-improvement is a consistency check rather than an out-of-sample validation.
-The first version of the analytical model used an M/M/1 waiting term. Because stage
-execution is deterministic, that formulation overestimates waiting by a factor of two,
-and replacing it with the M/D/1 expression of \eqref{eq:latency} reduced the MAPE from
-$28.9\%$ to $23.7\%$ on an identical set of measurements. Interestingly the rank
-correlation was slightly \emph{higher} for the M/M/1 variant ($0.918$ versus $0.889$ on
-that testbed configuration), i.e.\ accuracy and ordering do not improve in lockstep --- a
-practical reminder that a model tuned for absolute prediction is not automatically the
-better model for exploration.
+\FloatBarrier
+
+\subsection{Independent validation after model correction}
+Earlier deployment measurements motivated replacing an M/M/1-inspired waiting term
+with the M/D/1-inspired expression. This historical change was post hoc; the independent
+round reported here uses a frozen model and is not fitted to its observations.
+Deterministic service motivates the factor of two only in an idealised single-server
+queue. It does not establish an exact queueing formula for the full deployment, so we
+retain the measured errors and unstable repeats as limitations rather than adjusting
+the model after validation.

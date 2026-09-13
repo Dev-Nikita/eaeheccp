@@ -10,10 +10,9 @@ dominance on \emph{incomplete} assignments, returning conflict clauses that remo
 infeasible and dominated regions early. Their formulation targets heterogeneous
 multiprocessors with routing, optimising latency, area and energy, and their pruning is
 sound for problems whose objectives are assignment monotonous. In the broader
-optimisation literature, bound-based Pareto pruning is a recognised
-family~\cite{paretopruning2022}, and multi-objective $A^{*}$ with admissible or
+optimisation literature, multi-objective $A^{*}$ with admissible or
 consistent heuristics~\cite{stewart1991moa,mandow2010namoa} provides its theoretical
-foundation: a partial solution whose optimistic vector is dominated by a complete
+foundation for bound-based pruning: a partial solution whose optimistic vector is dominated by a complete
 solution can be discarded without losing Pareto-optimal completions.
 
 HCA-DSE belongs to this family, and we do not claim safe pruning as such as a
@@ -22,17 +21,19 @@ dominant latency term is contention-dependent: it is a function of tier utilisat
 which no single assignment determines. We therefore construct bounds that are admissible
 without assignment monotonicity, by combining a term-wise relaxation with an explicit
 decision ordering that makes the contention term exactly computable as soon as its
-determinants are fixed (Section~\ref{sec:method}). A second difference is operational:
-symbolic approaches evaluate design points inside the solver and are consequently
-evaluated with cheap objective functions, whereas we explicitly target the regime of an
-expensive external evaluator and quantify the evaluator cost at which pruning becomes
-worthwhile.
+determinants are fixed (Section~\ref{sec:method}). Avoiding expensive evaluations is also an explicit aim of consistent-approximation
+DSE~\cite{neubauer2020consistent}, which combines safe approximations with exact
+assessment of promising designs. We therefore do not claim evaluator avoidance
+as a new principle. Our study specialises bounds to this CPS model and measures
+the evaluation-cost trade-off. The term ``Pareto pruning'' also refers to selecting
+a representative subset of an already computed front~\cite{paretopruning2022};
+that operation differs from our exact search-space pruning.
 
 \subsection{Design-space exploration for distributed cyber-physical systems}
 Herget et al.~\cite{herget2022dse} survey DSE for dCPS and identify the two premises of
 this paper: design spaces that are far larger than in classical MPSoC exploration, and
 design-point evaluations that are considerably more expensive. CompDSE
-\cite{saadatmand2025compdse} follows the Y-chart philosophy~\cite{kienhuis2002ychart}
+\cite{saadatmand2025compdse} uses Y-chart modelling~\cite{kienhuis2002ychart}
 and derives workload, platform and mapping models from execution traces of an industrial
 lithography machine, evaluating design points with OMNeT++~\cite{varga2008omnet}. It is
 an evaluator, not a search strategy: the authors report a manual exploration of three
@@ -47,6 +48,13 @@ combined with contract refinement checking, pruning through subgraph isomorphism
 minimises a single objective (cost) subject to requirements rather than constructing a
 Pareto front, and its pruning is constraint-based rather than bound-based.
 
+Simulation-based CPS exploration also includes the cyber/control co-design approach of
+Amir and Givargis~\cite{amir2020pareto}. Automated workload derivation for industrial
+dCPS~\cite{saadatmand2024workload} addresses the input-model construction problem.
+Edge CNN exploration~\cite{guo2023} and its robustness extensions~\cite{guo2025}
+illustrate application-specific architecture trade-offs at the edge. These studies motivate
+broader workloads and reliability models; they do not supply the objective bounds proved here.
+
 \subsection{Exact allocation by integer programming}
 \label{sec:related:milp}
 A second exact family formulates allocation as an integer program and solves it to
@@ -55,17 +63,18 @@ an application over an edge/hub/cloud triple with binary integer linear programm
 minimising latency or energy under computation, communication, memory and energy
 constraints, and validate on a UAV inspection use case with synthetic benchmarks of up to
 1000 tasks. Their follow-up~\cite{kouloumpris2026reliability} extends the formulation to
-a bi-objective reliability/latency problem, again solved exactly and offline.
+a reliability/latency problem solved exactly and offline for specified objective weights. This certifies a weighted optimum, not enumeration of the entire discrete Pareto front.
 
 These works are exact in a different sense than the present paper, and the distinction
 matters for the choice of method. They solve one \emph{allocation} instance over a fixed
 infrastructure with a model that is linear in the decision variables, whereas we explore
 an \emph{architecture} space in which the number and class of nodes, the link class and
 the replication factor are themselves decisions, and in which the latency model contains
-a non-linear contention term. A linear formulation of our problem would require
-linearising $\rho_t/(2(1-\rho_t))$ and would therefore optimise a different model; this
-is the reason we prune with bounds instead of delegating to a solver, and it is also the
-reason we do not report an integer-programming baseline (Section~\ref{sec:threats}).
+a non-linear contention term. A compact mixed-integer linear formulation would require an encoding of the
+queueing term. Piecewise-linear approximations can change the objective, but
+finite-domain table or disjunctive encodings can in principle retain the exact
+values at the cost of model size. Nonlinearity therefore does not rule out an
+exact solver baseline. Section~\ref{sec:solver} measures a finite-table SMT baseline, including table construction; a compact symbolic encoding remains outside the comparison.
 
 \subsection{Design-time placement in the edge--cloud continuum}
 SPACE4AI-D~\cite{sedghani2024space4aid} is the closest work in terms of the problem
@@ -77,6 +86,18 @@ annealing and genetic algorithms; no exactness guarantee is provided. Its valida
 a real deployment reports deviations of $12\%$ in cost and $20\%$ in execution time,
 which is a useful reference point for the accuracy reported in
 Section~\ref{sec:results}.
+
+Recent Journal of Systems Architecture studies provide complementary context.
+Casini et al.~\cite{casini2025edge} combine design-time allocation and timing analysis
+with runtime monitoring for real-time edge applications. Workflow scheduling in
+MEC-supported CPS~\cite{gene2024} addresses constrained offloading and resource allocation
+with a metaheuristic. Dependency-aware microservice offloading has also been studied
+on an ICN edge testbed~\cite{ali2026icn}. More recent work examines energy-efficient
+cloud--edge inference co-optimisation~\cite{cloud2026coopt}, distributed replica allocation
+and load balancing~\cite{filippini2026replica}, and predictive energy-aware continuum
+orchestration~\cite{predictive2026}. These are relevant deployment and optimisation
+settings, but their application models and dynamic decisions differ from the fixed,
+finite architecture space for which we certify an analytical Pareto front.
 
 \subsection{Metaheuristic exploration of edge--cloud deployments}
 A large body of work applies evolutionary and swarm metaheuristics to task allocation,
@@ -98,7 +119,7 @@ Table~\ref{tab:related} summarises the comparison.
 \caption{Positioning with respect to the closest prior work. ``Partial-design pruning''
 denotes discarding incomplete designs before they are completed and evaluated;
 ``contention-aware'' denotes objectives that depend on resource utilisation rather than
-being additive over decisions.}
+being additive over decisions. ``Weighted denotes exact optimisation for specified weights, without full-front enumeration.}
 \label{tab:related}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -118,16 +139,16 @@ Neubauer et al.~\cite{neubauer2018exact} & 2018 & heterog.\ MPSoC &
   allocation, binding, routing & 3 & \textbf{yes} & symbolic & no & no & no \\
 Herget et al.~\cite{herget2022dse} & 2022 & distributed CPS & survey & --- & --- &
   --- & --- & --- & --- \\
-Kouloumpris et al.~\cite{kouloumpris2024optimization} & 2024 & edge/hub/cloud &
-  task allocation & 1 & \textbf{yes} (BILP) & solver & no & no & UAV case \\
+Kouloumpris et al.~\cite{kouloumpris2024optimization} & 2024 & edge/\allowbreak hub/\allowbreak cloud &
+  task allocation & 1 & n/a & solver & no & no & UAV case \\
 Xiao et al.~\cite{xiao2024contrarc} & 2024 & CPS architectures &
   component selection & 1 & --- & isomorphism & no & no & no \\
 Sedghani et al.~\cite{sedghani2024space4aid} & 2024 & computing continuum &
   resources, placement & 1 & no & no & partly & no & \textbf{yes} \\
 CompDSE~\cite{saadatmand2025compdse} & 2025 & industrial dCPS &
   cores, hosts, frequency & perf. & --- & none & yes & --- & traces \\
-Kouloumpris et al.~\cite{kouloumpris2026reliability} & 2026 & edge/hub/cloud &
-  task allocation & 2 & \textbf{yes} (BILP) & solver & no & no & case study \\
+Kouloumpris et al.~\cite{kouloumpris2026reliability} & 2026 & edge/\allowbreak hub/\allowbreak cloud &
+  task allocation & 2 & weighted & solver & no & no & case study \\
 NSGA-II family~\cite{deb2002nsga2} & --- & edge--cloud & varies & 2--4 & no & no &
   partly & no & rarely \\
 \textbf{HCA-DSE (this work)} & 2026 & heterog.\ edge--cloud CPS &

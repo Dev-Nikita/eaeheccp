@@ -1,0 +1,9 @@
+\input{generated/refdefs}%
+\RefDesTab{} reports analytical mean-latency predictions against the revised
+DES model. The independent Docker round retains the same 36 configurations and all 108
+runs with the analytical model frozen. \RefTestbedTab{} compares predictions with
+the median of three measured run means. Pooled MAPE is $25.4\%$ and median absolute error is $6.51$\,ms. Within-workload pair agreement above $25\%$ is $\WithinAgreementRange\%$, compared with $\PooledAgreement\%$ over 498 pooled pairs. Pooled agreement benefits from separation between workloads and is not
+a substitute for within-workload validation. 6 configurations have a ratio of largest to smallest repeated mean latency of at least
+$1.5$; all remain in the main summary. Supplementary Table S4 separately reports the
+$p_{50}$ comparison and its utilisation/repeat subsets. Differences between predicted
+means and measured medians must not be interpreted as direct mean-prediction error.

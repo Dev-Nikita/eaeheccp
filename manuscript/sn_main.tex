@@ -12,6 +12,7 @@
 \usepackage{xcolor}%
 \usepackage{textcomp}%
 \usepackage{booktabs}%
+\usepackage{url}%
 \usepackage{tikz}%
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}%
 
@@ -29,6 +30,8 @@
 
 \raggedbottom
 
+\input{generated/refdefs_sn}
+
 \begin{document}
 
 \title[Exact architecture exploration for edge--cloud CPS]{Exact architecture
@@ -36,6 +39,7 @@ exploration for heterogeneous edge--cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
 \author[1]{\fnm{Vasyl} \sur{Tomyuk}}\email{vasyl.a.tomiuk@lpnu.ua}
+%% ORCID: N. Tarasov 0000-0003-1870-3436; V. Tomyuk 0000-0003-4999-7019
 
 \affil*[1]{\orgdiv{Institute of Computer Science and Information Technologies},
 \orgname{Lviv Polytechnic National University}, \orgaddress{\street{S. Bandery St. 12},
@@ -85,18 +89,28 @@ Supplementary Notes~1--2 and Supplementary Tables~S1--S13 accompany this paper.
 \bmhead{Data availability}
 All result files underlying the figures and tables --- exploration funnels, budget sweeps
 with per-seed metrics, ablations, scalability sweeps, discrete-event comparisons and the
-$108$ measured deployment runs --- are included in the replication package accompanying
-this submission.
+$108$ measured deployment runs --- are archived at Zenodo,
+\url{https://doi.org/10.5281/zenodo.22729667}.
 
 \bmhead{Code availability}
 The exploration method, the analytical and discrete-event evaluators, the baselines, the
-containerised deployment and the verification tests are included in the same package,
-together with the single script that regenerates every display item from the raw results.
+containerised deployment, the verification tests and the single script that regenerates
+every display item from the raw results are archived in the same Zenodo record,
+\url{https://doi.org/10.5281/zenodo.22729667}, and developed at
+\url{https://github.com/Dev-Nikita/eaeheccp}.
 
 \bmhead{Author contributions}
-N.T. designed the method, implemented the software and the deployment, ran the
-experiments and wrote the manuscript. V.T. contributed to the system model and the
-experimental design and reviewed the manuscript.
+N.T. (ORCID 0000-0003-1870-3436) designed the method, implemented the software and the
+deployment, ran the experiments and wrote the manuscript. V.T. (ORCID
+0000-0003-4999-7019) contributed to the system model and the experimental design and
+reviewed the manuscript. Both authors approved the final version and take responsibility
+for its content.
+
+\bmhead{Use of AI tools}
+Large language model assistants were used to help draft and revise manuscript text and to
+assist with software implementation. All text, code and results were checked and edited by
+the authors, who take full responsibility for the content; no AI tool is listed as an
+author, and no AI tool generated or altered experimental data.
 
 \bmhead{Funding}
 The authors received no specific funding for this work.

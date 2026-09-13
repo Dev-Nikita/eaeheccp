@@ -107,20 +107,18 @@ utilisation of a tier are
 that is, replication multiplies the load of the ingest stage but not of the others.
 
 \paragraph{Latency}
-We model a tier as a single queueing station whose service rate is the \emph{aggregate}
-capacity $N_tC_t$ of its nodes, with deterministic service and Poisson arrivals, and use
-the Pollaczek--Khinchine formula for M/D/1~\cite{kleinrock1975queueing,
-harchol2013performance} for the waiting time. This is an approximation in two respects:
-a tier of $N_t$ single-server nodes with per-request dispatching is an M/D/$c$ system
-rather than an M/D/1 system with $c$-fold capacity, and the approximation is optimistic
-because it lets one request use the capacity of the whole tier. We keep it deliberately,
-for three reasons: it is the coarsest model that still makes latency depend on
-utilisation, which is what the bounds of Section~\ref{sec:method} must handle; it is
-monotone in the design variables, which is what makes those bounds computable in closed
-form; and its consequences are quantified rather than assumed --- both the discrete-event
-evaluator and the testbed of Section~\ref{sec:testbed} implement per-node servers, so
-the residual error of the approximation is measured in Section~\ref{sec:results} rather
-than argued away. With
+We use a stage-wise M/D/1-inspired waiting approximation
+\cite{kleinrock1975queueing,harchol2013performance}: each stage retains its
+per-node service time $w_i/C_{t(i)}$, while the waiting multiplier uses the
+average tier utilisation $\rho_t$ based on aggregate capacity $N_tC_t$.
+This is not an exact M/D/1 queue with service capacity $N_tC_t$: such a queue
+would also divide the service time by $N_t$. Nor is it an exact multi-server
+model. Stages sharing a tier have different service demands, and routing,
+replication and successive visits can violate the Poisson-arrival assumption.
+The expression is therefore a tractable surrogate whose prediction error must
+be assessed empirically; it is not a proven lower bound on deployment latency.
+The simulator and testbed implement per-node servers and quantify this gap.
+With
 $\mathcal{H}(x)$ the set of communication hops implied by the policy and the replication
 factor,
 \begin{equation}

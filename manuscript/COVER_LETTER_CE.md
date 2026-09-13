@@ -5,9 +5,9 @@ systems" for consideration as an Article in Communications Engineering.
 
 Designing a distributed cyber-physical system requires joint decisions on edge and
 gateway provisioning, hardware and link classes, stage placement and replication. A single
-candidate is evaluated by simulation or by deployment, so the limiting resource is the
-number of high-fidelity evaluations a team can afford rather than the nominal size of the
-search space. Exhaustive enumeration returns the complete set of trade-offs at
+candidate is evaluated by simulation or by deployment, so in practice the budget that
+binds is the number of high-fidelity evaluations a team can afford, which is usually far
+smaller than the nominal size of the search space. Exhaustive enumeration returns the complete set of trade-offs at
 prohibitive cost, and evolutionary search fits a budget but offers no certificate of what
 it missed. The exact partial-design methods closest to our setting typically exploit
 objectives that accumulate monotonically as decisions are fixed; contention-dependent
@@ -17,7 +17,7 @@ architectural choices.
 We construct admissible bounds by relaxing the terms of an objective independently, and
 order the decisions so that the utilisation-dependent term becomes exactly computable on
 an incomplete design. Pruning built on these bounds is provably safe. On spaces of up to
-8.3e7 candidate architectures the method requires 16–61 full evaluator calls and
+83 million candidate architectures the method requires 16–63 full evaluator calls and
 reproduces the exhaustive Pareto front wherever exhaustive verification is still
 tractable. Correctness rests on formal proofs, exhaustive machine checks of bound admissibility and
 regression against exhaustive enumeration, and is complemented by budget-matched

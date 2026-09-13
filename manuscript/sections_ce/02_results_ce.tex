@@ -8,21 +8,17 @@ when it is structurally ill-formed, when an optimistic bound on any constrained 
 already violates its limit, or when an optimistic bound on the whole objective vector is
 dominated by an architecture that has already been evaluated. Only designs that survive
 to a leaf are handed to the expensive evaluator. The bounds are admissible by
-construction: each additive term of an objective is relaxed independently over the
+construction: each additive term of an objective is minimised independently over the
 domains still reachable, and the waiting term becomes exact once the determinants of tier
-utilisation have been assigned (Methods). Safety of the two bound-based rules and
-preservation of the exact front follow from this property; the statements and proofs are
-in Methods and Supplementary Note~1.
+utilisation have been assigned, which the traversal order arranges to happen early
+(Methods). Safety of the two bound-based rules and preservation of the exact front follow
+from this property; the statements and proofs are in Methods and Supplementary Note~1.
 
 \subsection*{Expensive evaluations become the scarce resource that is actually spent}
-Across four design-space scales and three workload classes, the funnel removes the design
-space before it is evaluated rather than after (Fig.~\ref{fig:ce:funnel}). On a space of
-$51\,840$ candidates the method performs $\SthreeEvalRange$ full evaluations, discarding
-$99.90$--$99.92\%$ of the raw space beforehand; on $345\,600$ candidates it performs
-$\SfourEvalRange$, a reduction of $99.98$--$99.99\%$. The composition differs by
-workload: for data-intensive sensing the feasibility bounds remove the largest share,
-whereas for telemetry dominance pruning does most of the work, reflecting which
-constraint binds in each regime.
+\input{generated/rq1}
+The composition of the funnel differs by workload: for data-intensive sensing the
+feasibility bounds remove the largest share, whereas for telemetry dominance pruning does
+most of the work, reflecting which constraint binds in each regime.
 
 The reduction is exact, not approximate. For every scale at which exhaustive enumeration
 is tractable and for every workload, the set of objective vectors returned by HCA-DSE is
@@ -30,61 +26,37 @@ identical to the exhaustive Pareto front, with recall and precision of $1.0$
 (Fig.~\ref{fig:ce:pareto}). Admissibility of the bounds was verified exhaustively --- all
 partial designs against all their completions --- and for every pruned partial design all
 completions were enumerated and checked against the claim of the rule that discarded it.
-An independent exact solver built on a finite table and an SMT backend recovers the same
-front in all six small and medium cases, at the price of evaluating the entire
-structurally valid space first: $1080$ and $3888$ evaluator calls respectively
-(Supplementary Table~S5).
+\input{generated/solver}
 
-\subsection*{The saving converts into time exactly when evaluation is expensive}
+\subsection*{The saving converts into time when evaluation is expensive}
 Whether fewer evaluations translate into less time depends on what an evaluation costs.
 We measured the overhead of the exploration itself and the cost of one design-point
 evaluation for two evaluators, and projected the resulting speed-up
-(Fig.~\ref{fig:ce:crossover}). With a closed-form analytical evaluator, whose cost is
-comparable to that of the bounds, the measured speed-up over exhaustive enumeration is
-only $1.32$--$3.15\times$ despite the $99.9\%$ reduction in evaluations: in that regime
-pruning is not the right tool, and we report it as such. With a discrete-event evaluator
-measured at $\DesCostMs$\,ms per design point, the same reduction projects to
-$86.4$--$146.7\times$ on the medium space and $638.2$--$771.1\times$ on the large one.
-The break-even evaluator cost --- the price above which pruning repays its own overhead
---- is $1.25$--$2.55\,\mu$s for the medium space and at or below $0.40\,\mu$s for the
-large one, on the hardware and implementation used here. These are projections computed
-from measured counts and measured overheads; neither strategy was executed end to end
-with the discrete-event evaluator in the inner loop, and the break-even value is a
-property of this implementation rather than a constant of the method.
+(Fig.~\ref{fig:ce:crossover}).
+\input{generated/rq3}
 
 \subsection*{Guarantees at a fraction of a stochastic search budget}
 Under matched evaluation budgets, NSGA-II approaches the exact front but does not reach
 it, and cannot certify what is missing (Fig.~\ref{fig:ce:hv}, Table~\ref{tab:ce:base}).
-At a budget of $1000$ full evaluations on the large space its median Pareto recall is
-$0.500$--$0.741$ with a hypervolume ratio of $0.946$--$0.984$, while random search
-recovers at most $3.2\%$ of the front points. HCA-DSE returns the complete front with
-$\SthreeEvalRange$ evaluations, between $20$ and $24$ times fewer. On the medium space
-NSGA-II is closer in hypervolume ($0.999$--$1.000$) yet still misses $7$--$20\%$ of the
-front points. Across the six exploratory comparisons between NSGA-II and random search at
-the two largest budgets, none reaches $p<0.05$ (unadjusted, $0.057$--$0.338$; Cliff's
-$\delta$ $0.080$--$0.295$), so we do not claim a separation between the two stochastic
-baselines --- the comparison that matters here is between guaranteed and approximate
-outcomes, not between two approximations.
+\input{generated/rq4}
+The comparison should be read as a statement about guarantees rather than about the
+quality of evolutionary search: NSGA-II converges towards the front and would reach it
+with more budget, but it cannot certify that anything is missing, whereas HCA-DSE returns
+the exact front at a small fraction of the evaluation budget --- provided admissible
+bounds exist.
 
 \subsection*{The mechanism scales because the space is never built}
-Sweeping the raw space over five orders of magnitude, from $1.3\times10^{3}$ to
-$8.3\times10^{7}$ candidates, the number of expanded partial designs never exceeds
-$16\,780$ and the number of full evaluations stays between $18$ and $61$
-(Fig.~\ref{fig:ce:scal}). The largest observed search time is $3.98$\,s with memory
-tracing enabled, and peak traced allocation is $99.6$\,KiB, because the Cartesian product
-is generated lazily and never materialised. Exhaustive front equality cannot be checked
-at these sizes and is not claimed there.
+\input{generated/scalability}
+Exhaustive front equality cannot be checked at these sizes and is not claimed there.
 
-Two internal ablations show where the reduction comes from. Removing the bound layers one
-at a time on the large space leaves $34\,560$ evaluations for structural pruning alone,
-$7025$--$12\,700$ with feasibility bounds, $322$--$415$ with dominance bounds, and
-$\SthreeEvalRange$ with both --- the layers are complementary, because feasibility
-pruning removes exactly the sub-trees in which the dominance test would otherwise be
-repeated (Supplementary Table~S6). Toggling the contention-aware term of the bound while
-holding the traversal order fixed isolates its contribution: $3777$--$5139$ incomplete
-designs carry a positive queueing contribution, of which $163$--$419$ are discarded only
-because that term is present. All $36$ order/toggle/scale/workload combinations preserve
-the exact front (Supplementary Table~S7).
+Two internal ablations show where the reduction comes from.
+\input{generated/ablation}
+The layers are complementary, because feasibility pruning removes exactly the sub-trees in
+which the dominance test would otherwise be repeated (Supplementary Table~S6). Toggling
+the contention-aware term of the bound while holding the traversal order fixed isolates
+its contribution.
+\input{generated/order}
+The full order and toggle sweep is in Supplementary Table~S7.
 
 \subsection*{The ordering transfers to a real deployment}
 To test whether an architecture ranking produced at design time survives contact with a
@@ -93,14 +65,9 @@ tier node, per-node link shaping with delay and bandwidth of the design under te
 wide-area profile on the cloud hop --- and measured $36$ architectures, three repeats
 each, $108$ runs (Table~\ref{tab:ce:testbed}, Fig.~\ref{fig:ce:testbed}). The analytical
 model was frozen before this round: it was not refitted to these observations.
-
-Absolute prediction error is $25.4\%$ (pooled MAPE) with a median absolute error of
-$6.51$\,ms. The decision-relevant quantity is different: among architecture pairs that
-the model separates by more than $25\%$, the measured order agrees with the predicted
-order for $88.6$--$91.3\%$ of pairs within a workload. Pooling workloads raises this to
-$97.8\%$ over $498$ pairs, but part of that value comes from the separation between
-workloads rather than from resolution within one, so we base the claim on the
-within-workload figures. Six configurations were not reproducible across repeats, with a
-ratio of largest to smallest repeated mean latency of at least $1.5$; they are retained
-in the summary rather than removed, and all sit close to saturation, where neither the
-analytical model nor the deployment itself is stable.
+\input{generated/validation}
+Absolute prediction error is therefore substantial, while the decision-relevant quantity
+--- the ordering of architectures that the model separates clearly --- transfers. Six
+configurations were not reproducible across repeats; they are retained in the summary
+rather than removed, and all sit close to saturation, where neither the analytical model
+nor the deployment itself is stable.

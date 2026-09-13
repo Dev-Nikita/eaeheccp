@@ -1,32 +1,27 @@
 \section{Conclusions}
 \label{sec:conclusion}
+In the class of heterogeneous dCPS design spaces studied here, exploration cost is
+strongly driven by full design-point evaluation cost as well as combinatorial space size.
+HCA-DSE combines structural, feasibility and dominance pruning with objective-specific
+admissible relaxations for a finite edge--cloud architecture model. The construction
+preserves the exact analytical Pareto front; safe pruning and evaluator avoidance are
+established principles, while the contribution here is their concrete bound construction
+and experimental assessment for this model.
 
-Architecture exploration for heterogeneous distributed cyber-physical systems is limited
-less by the size of the design space than by the cost of evaluating a single design point.
-This paper presented HCA-DSE, a hierarchical constraint-aware exploration method that
-removes structurally ill-formed, provably infeasible and provably dominated regions of the
-space before any full evaluation is performed. Its technical core is a family of
-admissible bounds for \emph{contention-dependent} objectives, obtained by a term-wise
-relaxation combined with a decision ordering under which the queueing term of a tier
-becomes exactly computable on a partial design. This removes the assignment-monotonicity
-assumption on which existing exact exploration methods rely, and we proved that the exact
-Pareto front is preserved.
+The default method performs $\EvalRange$ full evaluations across the reported spaces,
+including a sweep up to $8.3\times10^7$ raw candidates. Exhaustive reference comparisons
+on S1--S3 recover identical unrounded objective-vector sets. Stochastic baselines now
+spend precisely their stated full-call budgets; at $B=1000$, NSGA-II median recall ranges
+from $\BaselineRecallRange$. The cost model projects up to $\ProjectionMax\times$
+speed-up using the measured $\DesCostMs$\,ms DES cost, without claiming an end-to-end
+DES search measurement. The order/queue ablation distinguishes early bound activation
+from traversal effects, and the finite-table SMT comparison provides a small-space exact
+reference whose table-construction cost is explicitly included.
 
-Across four design-space scales, three workload classes and spaces of up to
-$8.3\times10^{7}$ candidate architectures, HCA-DSE performed 26 to 61 full evaluations,
-a reduction of $99.90\%$ to $99.98\%$ with respect to the raw space, while reproducing the
-exhaustive Pareto front exactly wherever exhaustive enumeration is tractable. Both the
-admissibility of the bounds and the equality of the fronts were verified exhaustively by
-machine. Budget-matched NSGA-II required $1000$ evaluations to reach a median Pareto
-recall of $0.50$--$0.91$. The break-even evaluator cost is in the microsecond range, and
-with a discrete-event evaluator the measured speed-up reaches $558\times$. On a
-containerised edge--gateway--cloud testbed with per-node link shaping, 36 architectures
-and 108 measured runs, the analytical ordering agreed with the measured ordering in
-$98\%$ of the architecture pairs that the model separates by more than $25\%$.
-
-The method is intended as design-time decision support: it does not require runtime
-adaptation, learned performance models, or a high-fidelity simulator in the inner loop.
-Its natural continuation is the combination with an evaluator-centric methodology, in
-which analytical bounds reduce an industrial design space to a few dozen candidates and a
-trace-derived simulator evaluates only those; and the derivation of tighter, possibly
-surrogate-assisted bounds that remain provably admissible.
+The independent Docker round uses 36 fixed architectures and 108 runs without refitting
+the model. Agreement with measured mean-latency order is $\WithinAgreementRange\%$
+within workloads for pairs separated by more than $25\%$ in the model, compared with
+$\PooledAgreement\%$ pooled. These measurements assess transfer of analytical rankings;
+they neither validate energy/cost objectives nor establish deployment-level Pareto
+exactness. Further work should develop compact symbolic solver encodings and tighter
+bounds proved admissible for higher-fidelity evaluators.

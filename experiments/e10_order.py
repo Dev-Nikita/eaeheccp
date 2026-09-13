@@ -2,15 +2,17 @@
 import sys,csv,statistics
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from hcadse.model import make_space,WORKLOADS,VAR_ORDER
+from hcadse.model import make_space,WORKLOADS,VAR_ORDER,ORDER_DETERMINANTS_LAST
 from hcadse.search import hca_dse,exhaustive
 from hcadse.metrics import objset
-O2=['n_e','edge_cls','n_g','gw_cls','rep','policy','link_cls','cloud_cls']
+# "determinants-early" is the canonical order used everywhere else in the paper;
+# "determinants-late" assigns replication and placement policy last.
+ORDERS=[('determinants-early',VAR_ORDER),('determinants-late',ORDER_DETERMINANTS_LAST)]
 rows=[]
 for scale in ['S1','S2','S3']:
  for w,wl in WORKLOADS.items():
   sp=make_space(scale);reference=exhaustive(sp,wl).front;ref=objset(reference)
-  for name,order in [('O1',VAR_ORDER),('O2',O2)]:
+  for name,order in ORDERS:
    for queue in [False,True]:
     runs=[hca_dse(sp,wl,variable_order=order,use_queue_bound=queue) for _ in range(3)]
     h=hca_dse(sp,wl,variable_order=order,use_queue_bound=queue,measure_queue=True)

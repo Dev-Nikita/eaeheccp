@@ -1,0 +1,2 @@
+\input{generated/refdefs}%
+The scalability sweep (\RefScalSite{}) covers raw spaces from $1.3\times10^3$ to $8.3\times10^7$ candidates. Across the sweep, expanded partial states never exceed $16780$; full evaluations range from $18\text{--}61$. The largest observed runtime is $3.98$\,s, measured with Python memory tracing enabled, and peak traced allocations are $99.6$\,KiB. This is traced Python memory during search, not process RSS or total interpreter memory. Exhaustive front equality is not checked for these larger spaces.

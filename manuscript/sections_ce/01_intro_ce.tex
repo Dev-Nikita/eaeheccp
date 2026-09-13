@@ -55,12 +55,12 @@ exact Pareto front of the analytical model.
 
 The reduction is large enough to change which studies are practical. On
 architecture spaces of up to $8.3\times10^{7}$ candidates the method expands at most
-$16\,780$ partial designs and calls the expensive evaluator $16$--$61$ times, while the
+$\MaxStates$ partial designs and calls the expensive evaluator $\EvalRange$ times, while the
 front it returns is identical, vector for vector, to the one exhaustive enumeration
 returns wherever exhaustive enumeration is still feasible. An independent containerised
 edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
 that the ordering the model produces is the ordering the hardware produces for
-$88.6$--$91.3\%$ of the architecture pairs it separates by more than $25\%$ within a
-workload. We report equally clearly where the approach does not help: when the evaluator
+$\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
+within a workload. We report equally clearly where the approach does not help: when the evaluator
 is cheap, when no admissible bound can be derived, and near saturation, where neither the
 model nor the deployment is stable.

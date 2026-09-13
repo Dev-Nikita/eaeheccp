@@ -1,0 +1,561 @@
+%% Supplementary Information, typeset with the Springer Nature sn-jnl class.
+\documentclass[pdflatex,sn-nature]{sn-jnl}
+
+\usepackage{graphicx}\usepackage{multirow}\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}\usepackage{array}\usepackage{booktabs}\usepackage{xcolor}
+
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\PS}{\mathcal{P}^{\star}}
+\newcommand{\LB}{\mathit{LB}}
+\theoremstyle{thmstyleone}
+\newtheorem{theorem}{Supplementary Theorem}
+\newtheorem{proposition}[theorem]{Supplementary Proposition}
+\theoremstyle{thmstyletwo}
+\newtheorem{remark}{Remark}
+\theoremstyle{thmstylethree}
+\newtheorem{definition}{Supplementary Definition}
+
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\raggedbottom
+
+\begin{document}
+
+\title[Supplementary Information]{Supplementary Information:\\
+Exact architecture exploration for heterogeneous edge--cloud cyber-physical systems}
+
+\author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
+\author[1]{\fnm{Vasyl} \sur{Tomyuk}}\email{vasyl.a.tomiuk@lpnu.ua}
+\affil*[1]{\orgdiv{Institute of Computer Science and Information Technologies},
+\orgname{Lviv Polytechnic National University}, \orgaddress{\city{Lviv},
+\postcode{79013}, \country{Ukraine}}}
+
+\abstract{Supplementary Notes 1--2 and Supplementary Tables S1--S13 accompanying the
+main manuscript. All tabulated values are generated from the same result files as the
+main-text summaries.}
+
+\maketitle
+
+\section{Supplementary Note 1: correctness of the pruning rules}\label{snote1}
+
+\subsection{Setting}
+The design space is the Cartesian product $\X=D_1\times\dots\times D_k$ traversed under a
+fixed variable order $v_1,\dots,v_k$. A \emph{partial design} of depth $d$ is a prefix of
+assignments $p=(a_1,\dots,a_d)$, $a_i\in D_i$, and its completions are
+$\C(p)=\{x\in\X: x_i=a_i,\ i\le d\}$.
+
+Let $\sigma:\X\to\{0,1\}$ be the well-formedness predicate, $\X_\sigma$ the well-formed
+space, $\F$ the feasible set and $\F_\sigma=\F\cap\X_\sigma$. Objectives
+$F(x)=(f_1(x),\dots,f_n(x))$ are minimised, $u\preceq v$ denotes $u_i\le v_i$ for all $i$
+with at least one strict inequality, and
+\begin{equation}
+\PS=\{F(x): x\in\F_\sigma,\ \nexists\,y\in\F_\sigma:\ F(y)\preceq F(x)\}.
+\end{equation}
+A bound $\LB_i$ is \emph{admissible} for $f_i$ if $\LB_i(p)\le f_i(x)$ for every partial
+design $p$ and every $x\in\C(p)$.
+
+\subsection{Construction of the bounds}
+
+\begin{theorem}[Term-wise relaxation]\label{sthm:relax}
+Let $f_i(x)=\sum_{t\in T_i}\varphi_t(x)$ with $\varphi_t\ge0$ and
+$\underline{\varphi}_t(p)=\min_{x\in\C(p)}\varphi_t(x)$. Then
+$\LB_i(p)=\sum_{t\in T_i}\underline{\varphi}_t(p)$ is admissible.
+\end{theorem}
+\begin{proof}
+For every $x\in\C(p)$ and every $t\in T_i$ we have
+$\underline{\varphi}_t(p)\le\varphi_t(x)$, because the minimum is taken over a set that
+contains $x$. Summing over $t\in T_i$ gives $\LB_i(p)\le\sum_t\varphi_t(x)=f_i(x)$.
+\end{proof}
+
+The minima are taken independently per term, so the combination of values realising them
+need not correspond to any single completion; the bound is optimistic but valid. Every
+term of the model is monotone in each of its free variables, so each minimum is attained
+at a domain endpoint and is read from a table of precomputed extrema in constant time.
+
+\begin{theorem}[Exactness on determined terms]\label{sthm:exact}
+Let $\mathrm{supp}(\varphi_t)$ be the set of variables $\varphi_t$ depends on. If
+$\mathrm{supp}(\varphi_t)\subseteq\{v_1,\dots,v_d\}$, then $\varphi_t$ is constant on
+$\C(p)$, and substituting its exact value for $\underline{\varphi}_t(p)$ preserves
+admissibility while tightening the bound.
+\end{theorem}
+\begin{proof}
+Constancy follows from the definition of $\C(p)$, and a constant equals its own minimum
+over $\C(p)$, so Theorem~\ref{sthm:relax} applies with the substituted value.
+\end{proof}
+
+\begin{remark}[Role of the variable order]
+The order places the determinants of tier utilisation --- node counts, node classes,
+replication factor and placement policy --- before the remaining variables. Once they are
+assigned, the waiting term $\frac{w_i}{C_t}\cdot\frac{\rho_t}{2(1-\rho_t)}$ is constant
+on $\C(p)$ and enters the bound exactly by Theorem~\ref{sthm:exact} instead of being
+relaxed to its trivial bound $0$. This is what makes a contention-dependent objective
+usable for safe pruning without assignment monotonicity. If the determinants are fixed
+and $\rho_t\ge1$, no completion has finite latency and $\LB_L(p)=\infty$, which is
+admissible.
+\end{remark}
+
+\subsection{The three pruning rules}
+
+\begin{proposition}[Safe feasibility pruning]\label{sprop:feas}
+If $\LB_{g_j}$ is admissible for the constrained quantity $g_j$ and
+$\LB_{g_j}(p)>g_j^{\max}$, then $\C(p)\cap\F=\varnothing$.
+\end{proposition}
+\begin{proof}
+For any $x\in\C(p)$, admissibility gives $g_j(x)\ge\LB_{g_j}(p)>g_j^{\max}$, so $x$
+violates the constraint and $x\notin\F$.
+\end{proof}
+
+\begin{proposition}[Safe dominance pruning]\label{sprop:dom}
+Let $y\in\F_\sigma$ be a fully evaluated feasible architecture with
+$F(y)\preceq\LB(p)$. Then $F(x)\notin\PS$ for every $x\in\C(p)$.
+\end{proposition}
+\begin{proof}
+Let $x\in\C(p)$. Admissibility gives $f_i(x)\ge\LB_i(p)\ge F_i(y)$ for all $i$, and by
+assumption there is a $j$ with $F_j(y)<\LB_j(p)\le f_j(x)$. Hence $y$ strictly dominates
+$x$, so $F(x)$ is not on the Pareto front.
+\end{proof}
+
+\begin{proposition}[Closure of the well-formedness predicate]\label{sprop:struct}
+Each invariant of $\sigma$ depends only on assigned variables and, under the chosen
+order, all variables of an invariant are assigned before it is first checked. Since
+assignments are never revised, $\neg\sigma(p)$ implies $\sigma(x)=0$ for all
+$x\in\C(p)$, that is $\C(p)\cap\X_\sigma=\varnothing$.
+\end{proposition}
+
+\begin{remark}
+The structural invariants define what counts as an architecture rather than following
+from the constraints of the problem: the evaluator can formally compute objectives for,
+say, a replicated deployment under a policy that places the ingest stage off the edge
+tier, although such a configuration is meaningless. Structural pruning is therefore part
+of the definition of the search space, and the exhaustive baseline applies the same
+predicate.
+\end{remark}
+
+\subsection{Front preservation}
+
+\begin{theorem}[Pareto-front preservation]\label{sthm:front}
+If all bounds are admissible, pruning is performed only by
+Propositions~\ref{sprop:feas}--\ref{sprop:struct}, and the archive contains only feasible
+fully evaluated architectures, then the set of non-dominated vectors returned by the
+exploration equals $\PS$.
+\end{theorem}
+\begin{proof}
+$(\subseteq)$ Every returned vector is $F(x)$ for an evaluated $x\in\F_\sigma$ that
+survives non-dominated filtering. A vector dominating it would belong to an architecture
+that was either evaluated, in which case filtering would have removed the dominated one,
+or pruned; pruning by Proposition~\ref{sprop:feas} or \ref{sprop:struct} would contradict
+its feasibility and well-formedness, and pruning by Proposition~\ref{sprop:dom} implies a
+further feasible evaluated architecture dominating it, so the argument repeats along a
+strictly decreasing chain in a finite set.
+
+$(\supseteq)$ Let $u\in\PS$ and $x\in\F_\sigma$ with $F(x)=u$. The traversal is a prefix
+tree, so $x$ is reached through the unique chain
+$p_0\subset p_1\subset\dots\subset p_k=x$. If some $p_d$ were pruned, then by
+Proposition~\ref{sprop:struct} $\sigma(x)=0$ and by Proposition~\ref{sprop:feas}
+$x\notin\F$, both contradicting $x\in\F_\sigma$; by Proposition~\ref{sprop:dom} there
+would exist a feasible $y$ strictly dominating $x$, contradicting $u\in\PS$. Hence no
+$p_d$ is pruned, $x$ is evaluated, and $u$ survives the final filtering.
+\end{proof}
+
+\begin{remark}[Duplicates]
+The theorem is stated in objective space. If two distinct architectures share an
+objective vector, dominance pruning may retain only one of them; the front is unaffected.
+All experiments therefore compare sets of objective vectors.
+\end{remark}
+
+\begin{remark}[Order independence]
+Proposition~\ref{sprop:dom} holds for any archive of evaluated feasible architectures, so
+the traversal order affects pruning efficiency but never correctness. This is confirmed
+empirically in Supplementary Table~S7, where all order and toggle combinations return the
+same front.
+\end{remark}
+
+\subsection{Complexity and break-even}
+With $C_E$ the cost of one full evaluation, $C_P$ the cost of computing the bounds at one
+node, $N$ the number of expanded partial designs, $N_E$ the number of full evaluations
+and $|A|$ the archive size,
+\begin{equation}
+T_{\mathrm{exh}}=O\big(|\X|\,C_E\big),\qquad
+T_{\mathrm{HCA}}=O\big(N(C_P+n|A|)+N_E\,C_E\big),
+\end{equation}
+so pruning is profitable when $C_E>N(C_P+n|A|)/(|\X|-N_E)$. The right-hand side is
+measured rather than assumed in the main text.
+
+\section{Supplementary Note 2: full evaluation model}\label{snote2}
+
+With $\mathcal{H}(x)$ the hop set implied by the placement policy and the replication
+factor, $\Lambda$ the system arrival rate, $T$ the accounting horizon and $\rho_t$ the
+tier utilisation defined in Methods:
+\begin{align}
+E(x) &= \sum_{t\in\{e,g\}} N_t\Big(P^{\mathrm{idle}}_t+\rho_t\big(P^{\mathrm{peak}}_t-
+        P^{\mathrm{idle}}_t\big)\Big)T
+      + \rho_c P^{\mathrm{peak}}_c T
+      + \sum_{(s,\ell)\in\mathcal{H}(x)} s\Lambda e_\ell T, \\
+C(x) &= n_e\big(c_{\kappa_e}+c_\ell\big)+n_g\big(c_{\kappa_g}+c_\ell\big)+c_{\kappa_c}, \\
+D(x) &= \Lambda \sum_{(s,\ell)\in\mathcal{H}(x)} s .
+\end{align}
+An architecture is feasible when $\rho_t\le0.85$ on every used tier, the resident memory
+of the stages mapped to a tier fits the memory of its node class, the aggregate
+access-link traffic does not exceed the total bandwidth of the attached nodes, and the
+latency, cost and energy budgets hold. Energy is reported in kWh over $T=1$\,h. Cost
+coefficients are synthetic normalised values encoding relative price tiers; no monetary
+interpretation is claimed, and neither the energy nor the cost model is validated against
+measurements.
+
+\section{Supplementary Tables}\label{stables}
+
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S2. Medians over 20 seeds.}\label{tabS1}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{lllrrrrr}
+\toprule
+scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.044 \\
+ & & random ($B$=100) & 100 & 0.037 & 0.642 & 0.1455 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.074 & 0.795 & 0.1033 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.148 & 0.882 & 0.0602 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.259 & 0.927 & 0.0388 & 0.014 \\
+ & & NSGA-II ($B$=100) & 100 & 0.018 & 0.580 & 0.1773 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.241 & 0.883 & 0.0467 & 0.028 \\
+ & & NSGA-II ($B$=500) & 500 & 0.685 & 0.981 & 0.0081 & 0.064 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.926 & 0.999 & 0.0002 & 0.147 \\
+ & & \textbf{HCA-DSE} & \textbf{44} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.036 \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.042 \\
+ & & random ($B$=100) & 100 & 0.040 & 0.652 & 0.1598 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.080 & 0.791 & 0.1056 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.120 & 0.875 & 0.0556 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.240 & 0.922 & 0.0377 & 0.014 \\
+ & & NSGA-II ($B$=100) & 100 & 0.020 & 0.594 & 0.1519 & 0.011 \\
+ & & NSGA-II ($B$=250) & 250 & 0.320 & 0.902 & 0.0373 & 0.030 \\
+ & & NSGA-II ($B$=500) & 500 & 0.720 & 0.993 & 0.0065 & 0.070 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.800 & 0.999 & 0.0030 & 0.160 \\
+ & & \textbf{HCA-DSE} & \textbf{37} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.035 \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.029 \\
+ & & random ($B$=100) & 100 & 0.031 & 0.359 & 0.2624 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.062 & 0.750 & 0.1344 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.156 & 0.849 & 0.0859 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.250 & 0.897 & 0.0626 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.271 & 0.3183 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.250 & 0.725 & 0.0983 & 0.030 \\
+ & & NSGA-II ($B$=500) & 500 & 0.625 & 0.941 & 0.0172 & 0.073 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.875 & 1.000 & 0.0017 & 0.182 \\
+ & & \textbf{HCA-DSE} & \textbf{26} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.016 \\
+\midrule
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S3. Medians over 20 seeds.}\label{tabS2}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{lllrrrrr}
+\toprule
+scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.308 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.372 & 0.3783 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.546 & 0.2558 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.613 & 0.1827 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.032 & 0.732 & 0.1147 & 0.011 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.072 & 0.4807 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.032 & 0.324 & 0.2723 & 0.026 \\
+ & & NSGA-II ($B$=500) & 500 & 0.258 & 0.763 & 0.1132 & 0.061 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.500 & 0.946 & 0.0454 & 0.145 \\
+ & & \textbf{HCA-DSE} & \textbf{50} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.138 \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.265 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.365 & 0.4042 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.525 & 0.2933 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.609 & 0.1771 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.725 & 0.1189 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.114 & 0.4329 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.037 & 0.575 & 0.2181 & 0.027 \\
+ & & NSGA-II ($B$=500) & 500 & 0.352 & 0.888 & 0.0427 & 0.064 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.984 & 0.0236 & 0.147 \\
+ & & \textbf{HCA-DSE} & \textbf{41} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.125 \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.266 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.045 & 0.5753 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.311 & 0.3251 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.446 & 0.2306 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.658 & 0.1569 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.030 & 0.6768 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.018 & 0.126 & 0.3325 & 0.027 \\
+ & & NSGA-II ($B$=500) & 500 & 0.204 & 0.713 & 0.2267 & 0.064 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.951 & 0.1677 & 0.175 \\
+ & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.085 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Full S3 statistical comparison: one-sided Mann--Whitney test for larger NSGA-II
+hypervolume and Cliff's $\delta$. Unadjusted $p$-values, exploratory.}\label{tabS3}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\
+ & & HV med. & HV med. & & $\delta$ & recall & evals \\
+\midrule
+telemetry & 100 & 0.0721 & 0.3723 & 0.999 & -0.565 & 0.0 & 50 \\
+telemetry & 250 & 0.3235 & 0.546 & 0.938 & -0.282 & 0.032 & 50 \\
+telemetry & 500 & 0.7628 & 0.6125 & 0.338 & 0.08 & 0.258 & 50 \\
+telemetry & 1000 & 0.9455 & 0.7322 & 0.299 & 0.1 & 0.5 & 50 \\
+control & 100 & 0.1144 & 0.3648 & 0.975 & -0.36 & 0.0 & 41 \\
+control & 250 & 0.5746 & 0.5252 & 0.430 & 0.035 & 0.037 & 41 \\
+control & 500 & 0.8884 & 0.6087 & 0.090 & 0.25 & 0.352 & 41 \\
+control & 1000 & 0.9835 & 0.7246 & 0.057 & 0.295 & 0.648 & 41 \\
+sensing & 100 & 0.0299 & 0.0449 & 0.955 & -0.31 & 0.0 & 43 \\
+sensing & 250 & 0.1262 & 0.3109 & 0.780 & -0.14 & 0.018 & 43 \\
+sensing & 500 & 0.7127 & 0.4465 & 0.308 & 0.095 & 0.204 & 43 \\
+sensing & 1000 & 0.9506 & 0.6581 & 0.142 & 0.2 & 0.741 & 43 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The main text compares analytical predictions with the mean latency measured over each
+deployment run. Supplementary Table~S4 is the complementary robustness analysis, in which
+the same predictions are compared with the measured median ($p_{50}$) of the same runs.
+
+\begin{table}[!htbp]\centering
+\caption{Testbed validation against measured $p_{50}$, including utilisation and
+reproducibility subsets. Pair agreement is a fraction; undefined values (no eligible
+pairs) are shown as --.}\label{tabS4}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+subset & $n$ & MAPE & med.\ AE & Spearman & Kendall & pair & pair & repeat \\
+ & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & IQR [ms] \\
+\midrule
+telemetry (all) & 12 & 19.9 & 7.43 & 0.811 & 0.697 & 0.815 & 0.895 & 0.23 \\
+telemetry ($\rho\le0.75$) & 6 & 15.4 & 2.85 & 0.829 & 0.733 & 0.818 & 1.0 & 0.2 \\
+control (all) & 12 & 14.4 & 2.49 & 0.865 & 0.748 & 0.896 & 0.909 & 0.11 \\
+control ($\rho\le0.75$) & 10 & 9.4 & 2.32 & 0.766 & 0.629 & 0.815 & 0.833 & 0.11 \\
+sensing (all) & 12 & 51.1 & 19.15 & 0.935 & 0.84 & 0.935 & 0.913 & 1.0 \\
+sensing ($\rho\le0.75$) & 10 & 51.0 & 18.82 & 0.985 & 0.944 & 1.0 & 1.0 & 0.75 \\
+sensing (reproducible) & 8 & 39.3 & 18.56 & 0.97 & 0.909 & 1.0 & -- & 0.67 \\
+\textbf{all workloads} (all) & 36 & 28.4 & 7.43 & 0.968 & 0.884 & 0.961 & 0.98 & 0.27 \\
+\textbf{all workloads} ($\rho\le0.75$) & 26 & 26.8 & 3.96 & 0.945 & 0.855 & 0.959 & 0.982 & 0.22 \\
+\textbf{all workloads} (reproducible) & 32 & 22.7 & 4.5 & 0.957 & 0.869 & 0.956 & 0.979 & 0.23 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Exact finite-table SMT baseline. Solver time includes encoding; total time also
+includes full table evaluation. ``Calls'' counts full evaluator
+invocations.}\label{tabS5}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{llrrrrrr}
+\toprule
+scale & workload & calls & feasible & table [s] & solver [s] & total [s] & front \\
+\midrule
+S1 & telemetry & 1080 & 494 & 0.006 & 0.332 & 0.338 & 17 \\
+S1 & control & 1080 & 520 & 0.007 & 0.424 & 0.431 & 18 \\
+S1 & sensing & 1080 & 228 & 0.006 & 0.160 & 0.166 & 11 \\
+S2 & telemetry & 3888 & 1743 & 0.023 & 3.297 & 3.319 & 27 \\
+S2 & control & 3888 & 1753 & 0.022 & 2.209 & 2.231 & 25 \\
+S2 & sensing & 3888 & 910 & 0.023 & 0.929 & 0.951 & 16 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Ablation on S3: expanded partial designs, full evaluations and runtime for each
+workload.}\label{tabS6}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+& \multicolumn{3}{c}{telemetry} & \multicolumn{3}{c}{control} & \multicolumn{3}{c}{sensing} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+variant & states & evals & [ms] & states & evals & [ms] & states & evals & [ms] \\
+\midrule
+structural only & 56\,797 & 34\,560 & 322 & 56\,797 & 34\,560 & 294 & 56\,797 & 34\,560 & 282 \\
+structural + feasibility bounds & 22\,205 & 12\,700 & 490 & 16\,110 & 7\,025 & 256 & 21\,084 & 10\,956 & 280 \\
+structural + dominance bounds & 15\,552 & 322 & 610 & 15\,648 & 407 & 354 & 7\,961 & 415 & 160 \\
+\textbf{HCA-DSE (all layers)} & 5\,828 & 50 & 134 & 5\,826 & 41 & 127 & 4\,393 & 43 & 99 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Full order and queue-bound ablation on S1--S3. All configurations preserve the
+unrounded exhaustive front.}\label{tabS7}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{llllrrrrrr}
+\toprule
+scale & workload & order & queue & states & checks & evals & active & pruned & ms \\
+\midrule
+S1 & telemetry & O1 & off & 695 & 1299 & 136 & 0 & 0 & 9.7 \\
+S1 & telemetry & O1 & on & 589 & 1299 & 30 & 0 & 0 & 10.6 \\
+S1 & telemetry & O2 & off & 447 & 746 & 136 & 0 & 0 & 5.8 \\
+S1 & telemetry & O2 & on & 249 & 516 & 32 & 306 & 46 & 4.8 \\
+S1 & control & O1 & off & 679 & 1317 & 112 & 0 & 0 & 9.5 \\
+S1 & control & O1 & on & 593 & 1317 & 26 & 0 & 0 & 10.5 \\
+S1 & control & O2 & off & 391 & 669 & 113 & 0 & 0 & 5.3 \\
+S1 & control & O2 & on & 242 & 512 & 28 & 312 & 35 & 4.7 \\
+S1 & sensing & O1 & off & 497 & 819 & 148 & 0 & 0 & 5.8 \\
+S1 & sensing & O1 & on & 365 & 819 & 16 & 0 & 0 & 5.7 \\
+S1 & sensing & O2 & off & 481 & 810 & 147 & 0 & 0 & 5.9 \\
+S1 & sensing & O2 & on & 226 & 503 & 16 & 309 & 72 & 3.7 \\
+S2 & telemetry & O1 & off & 1816 & 3940 & 208 & 0 & 0 & 30.6 \\
+S2 & telemetry & O1 & on & 1652 & 3940 & 44 & 0 & 0 & 33.4 \\
+S2 & telemetry & O2 & off & 939 & 1815 & 208 & 0 & 0 & 15.1 \\
+S2 & telemetry & O2 & on & 604 & 1383 & 46 & 839 & 99 & 13.0 \\
+S2 & control & O1 & off & 1780 & 3960 & 164 & 0 & 0 & 29.9 \\
+S2 & control & O1 & on & 1653 & 3960 & 37 & 0 & 0 & 34.2 \\
+S2 & control & O2 & off & 835 & 1674 & 165 & 0 & 0 & 13.1 \\
+S2 & control & O2 & on & 587 & 1364 & 39 & 842 & 80 & 12.0 \\
+S2 & sensing & O1 & off & 1268 & 2421 & 290 & 0 & 0 & 17.5 \\
+S2 & sensing & O1 & on & 1004 & 2421 & 26 & 0 & 0 & 15.8 \\
+S2 & sensing & O2 & off & 1161 & 2184 & 289 & 0 & 0 & 15.1 \\
+S2 & sensing & O2 & on & 600 & 1427 & 26 & 879 & 177 & 9.9 \\
+S3 & telemetry & O1 & off & 6029 & 14794 & 251 & 0 & 0 & 113.0 \\
+S3 & telemetry & O1 & on & 5828 & 14794 & 50 & 0 & 0 & 132.5 \\
+S3 & telemetry & O2 & off & 2871 & 6806 & 251 & 0 & 0 & 51.2 \\
+S3 & telemetry & O2 & on & 2397 & 6100 & 52 & 3777 & 188 & 53.4 \\
+S3 & control & O1 & off & 5990 & 14812 & 205 & 0 & 0 & 108.6 \\
+S3 & control & O1 & on & 5826 & 14812 & 41 & 0 & 0 & 129.0 \\
+S3 & control & O2 & off & 2755 & 6636 & 206 & 0 & 0 & 48.2 \\
+S3 & control & O2 & on & 2375 & 6074 & 43 & 3777 & 163 & 50.9 \\
+S3 & sensing & O1 & off & 4888 & 11367 & 538 & 0 & 0 & 83.9 \\
+S3 & sensing & O1 & on & 4393 & 11367 & 43 & 0 & 0 & 83.2 \\
+S3 & sensing & O2 & off & 4351 & 9905 & 537 & 0 & 0 & 72.5 \\
+S3 & sensing & O2 & on & 3221 & 8281 & 43 & 5139 & 419 & 60.8 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Design variables and domain sizes of the four design-space
+scales.}\label{tabS8}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{llrrrr}
+\toprule
+variable & meaning & S1 & S2 & S3 & S4 \\
+\midrule
+$\mathit{n\_e}$ & number of edge nodes & 3 & 6 & 24 & 80 \\
+$\mathit{edge\_cls}$ & edge node class & 3 & 3 & 3 & 3 \\
+$\mathit{n\_g}$ & number of gateways & 2 & 3 & 5 & 8 \\
+$\mathit{gw\_cls}$ & gateway class & 2 & 2 & 2 & 2 \\
+$\mathit{link\_cls}$ & access link class & 3 & 3 & 3 & 3 \\
+$\mathit{cloud\_cls}$ & cloud instance class & 2 & 2 & 2 & 2 \\
+$\mathit{rep}$ & replication factor of stage 1 & 2 & 3 & 4 & 5 \\
+$\mathit{policy}$ & placement policy & 3 & 3 & 3 & 3 \\
+\midrule
+\multicolumn{2}{l}{\emph{design-space size} $|\mathcal{X}|$} & 1\,296 & 5\,832 & 51\,840 & 345\,600 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Workload classes. Stage values are given as
+$\tau_1/\tau_2/\tau_3$.}\label{tabS9}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{lrrrrrrr}
+\toprule
+workload & $n_d$ & $\lambda$ & $\Lambda$ & $w_i$ [MI] & $s_i$ [kB] & $D$ [ms] & $C^{\max}$ \\
+\midrule
+telemetry & 200 & 2 & 400 & 8/4/20 & 20/10/10 & 120 & 60 \\
+control & 60 & 10 & 600 & 5/3/9 & 5/4/3 & 30 & 60 \\
+sensing & 40 & 1.5 & 60 & 120/30/260 & 1200/350/300 & 900 & 90 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Resource classes used in all experiments.}\label{tabS10}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{lrrrrr}
+\toprule
+class & $C$ / $B$ & $M$ / $\tau$ & $P^{\mathrm{idle}}$ / $e$ & $P^{\mathrm{peak}}$ & cost \\
+\midrule
+\multicolumn{6}{l}{\emph{compute node classes}} \\
+edge-low & 2000 & 2048 & 4 & 12 & 1 \\
+edge-med & 6000 & 8192 & 8 & 30 & 2.4 \\
+edge-high & 15000 & 16384 & 15 & 65 & 5.2 \\
+gw-low & 4000 & 4096 & 6 & 20 & 1.8 \\
+gw-high & 12000 & 16384 & 12 & 48 & 4 \\
+cloud-med & 40000 & 131072 & 0 & 180 & 6 \\
+cloud-high & 100000 & 262144 & 0 & 380 & 12 \\
+\midrule \multicolumn{6}{l}{\emph{link classes} (name, $B$ [Mb/s], $\tau$ [ms], $e$ [J/MB], cost)} \\
+constrained & 10 & 4 & 0.3 & 0.2 & -- \\
+standard & 100 & 2 & 0.12 & 0.6 & -- \\
+fast & 1000 & 1 & 0.05 & 1.4 & -- \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Exploration funnel across all scales and workloads.}\label{tabS11}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llrrrrrrrrrr}
+\toprule
+scale & workload & $|\mathcal{X}|$ & structural & feasibility & dominance & full & feasible & $|\mathcal{P}|$ & full-eval & exhaustive & recall \\
+ & & & pruned & pruned & pruned & evals & & & reduction [\%] & evals & \\
+\midrule
+S1 & telemetry & 1\,296 & 138 & 233 & 895 & 30 & 23 & 17 & 97.69 & 1\,080 & 1.0 \\
+S1 & control & 1\,296 & 138 & 269 & 863 & 26 & 23 & 18 & 97.99 & 1\,080 & 1.0 \\
+S1 & sensing & 1\,296 & 77 & 613 & 590 & 16 & 11 & 11 & 98.77 & 1\,080 & 1.0 \\
+S2 & telemetry & 5\,832 & 1\,422 & 1\,127 & 3\,239 & 44 & 36 & 27 & 99.25 & 3\,888 & 1.0 \\
+S2 & control & 5\,832 & 1\,425 & 1\,236 & 3\,134 & 37 & 34 & 25 & 99.37 & 3\,888 & 1.0 \\
+S2 & sensing & 5\,832 & 1\,075 & 2\,323 & 2\,408 & 26 & 19 & 16 & 99.55 & 3\,888 & 1.0 \\
+S3 & telemetry & 51\,840 & 8\,374 & 27\,573 & 15\,843 & 50 & 42 & 31 & 99.90 & 34\,560 & 1.0 \\
+S3 & control & 51\,840 & 8\,385 & 28\,512 & 14\,902 & 41 & 38 & 27 & 99.92 & 34\,560 & 1.0 \\
+S3 & sensing & 51\,840 & 7\,176 & 27\,328 & 17\,293 & 43 & 36 & 27 & 99.92 & 34\,560 & 1.0 \\
+S4 & telemetry & 345\,600 & 24\,331 & 292\,656 & 28\,558 & 55 & 47 & 32 & 99.98 & -- & -- \\
+S4 & control & 345\,600 & 24\,351 & 294\,344 & 26\,854 & 51 & 48 & 29 & 99.99 & -- & -- \\
+S4 & sensing & 345\,600 & 23\,497 & 286\,394 & 35\,657 & 52 & 45 & 28 & 99.98 & -- & -- \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Scalability sweep: expanded partial designs, full evaluations and
+runtime.}\label{tabS12}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+& \multicolumn{3}{c}{telemetry} & \multicolumn{3}{c}{control} & \multicolumn{3}{c}{sensing} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+$|\mathcal{X}|$ & states & evals & [s] & states & evals & [s] & states & evals & [s] \\
+\midrule
+${1.3\times 10^{3}}$ & 656 & 40 & 0.12 & 659 & 32 & 0.11 & 391 & 18 & 0.05 \\
+${5.8\times 10^{3}}$ & 1\,989 & 52 & 0.41 & 1\,997 & 52 & 0.38 & 1\,142 & 30 & 0.18 \\
+${5.2\times 10^{4}}$ & 7\,286 & 55 & 1.61 & 7\,293 & 55 & 1.49 & 5\,183 & 53 & 0.94 \\
+${3.5\times 10^{5}}$ & 10\,341 & 56 & 2.31 & 10\,348 & 56 & 2.12 & 8\,643 & 59 & 1.64 \\
+${2.8\times 10^{6}}$ & 14\,076 & 56 & 3.14 & 14\,083 & 56 & 2.97 & 12\,056 & 61 & 2.41 \\
+${1.6\times 10^{7}}$ & 15\,613 & 56 & 3.44 & 15\,620 & 56 & 3.55 & 13\,216 & 61 & 2.71 \\
+${8.3\times 10^{7}}$ & 16\,773 & 56 & 3.98 & 16\,780 & 56 & 3.66 & 13\,888 & 61 & 3.11 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[!htbp]\centering
+\caption{Analytical mean latency versus the discrete-event evaluator: 40 designs per
+workload, five seeds per design.}\label{tabS13}
+{\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
+\begin{tabular}{lrrr}
+\toprule
+workload & designs & MAPE [\%] & Spearman $\rho$ \\
+\midrule
+telemetry & 40 & 39.3 & 0.921 \\
+control & 40 & 44.3 & 0.919 \\
+sensing & 36 & 14.2 & 0.963 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\end{document}

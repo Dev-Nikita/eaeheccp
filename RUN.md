@@ -1,101 +1,63 @@
-# Как запустить — по шагам
+# Воспроизведение HCA-DSE
 
-Все команды выполняются в **Terminal.app на Mac** (не в Claude). Путь с пробелами,
-поэтому кавычки обязательны.
+Канонический набор статьи: `results/v1.1-submission-results/data/`.
+`manifest.json` фиксирует SHA-256 исходников и данных, окружение и время выполнения.
+`source/` — отдельная копия исходников, реально использованная для расчёта; `logs/` — журналы.
+CSV непосредственно в `results/` являются историческими и не используются статьёй.
 
-```bash
-cd "/Users/nikitatarasov/Science Article 2025-/Hierarchical Constraint-Aware Design-Space"
-```
-
----
-
-## Шаг 0. Проверка окружения (10 секунд)
+## Окружение
 
 ```bash
-python3 -V && docker info >/dev/null 2>&1 && echo "Docker OK" || echo "ЗАПУСТИТЕ Docker Desktop"
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
 ```
 
-Нужен Python 3.9+ и запущенный Docker Desktop. Больше ничего ставить не нужно:
-`run_testbed.py` использует только стандартную библиотеку.
+Зафиксированное окружение использует Python 3.12. Для сборки PDF требуется TeX Live/MacTeX
+с elsarticle; для стенда — запущенный Docker Desktop с Compose и Linux network shaping.
 
----
-
-## Шаг 1. Что уже посчитано (ничего запускать не надо)
-
-Всё, что относится к самому методу, уже прогнано мной и лежит в `results/` и
-`figures/`. Проверить, что расчёты воспроизводятся, можно так (~3 минуты):
+## Проверить и пересобрать текущий результат
 
 ```bash
-python3 tests/test_regression.py      # P_HCA == P_exhaustive на S1-S3
-python3 tests/test_core.py            # исчерпывающая проверка корректности bounds
+make assets
+make verify
+cd manuscript
+latexmk -pdf main.tex
+latexmk -pdf supplement.tex
 ```
 
-Для этих двух команд ничего кроме Python не нужно.
+`verify` повторно вычисляет детерминированные счётчики, проверяет реальные бюджеты всех
+960 stochastic runs, пересчитывает статистические сравнения и проверяет хеши.
+Точные сравнения фронтов S1–S3 входят в полный прогон. Времена, память и физические
+измерения не обязаны совпадать побитно.
 
----
+## Новый независимый полный прогон
 
-## Шаг 2. Единственное, что осталось запустить: стенд на Docker
-
-Он даст те же измерения, что я снял, но на большем числе ядер — войдут
-конфигурации до 4 edge + 2 gateway вместо 2 + 1.
+Сохранённый release не перезаписывается. Для нового прогона задайте новое имя:
 
 ```bash
-python3 testbed/select_designs.py --max-edge 4 --max-gw 2 --out testbed/specs/designs.json
-python3 testbed/run_testbed.py --repeats 3
+make reproduce RELEASE=verification-run
 ```
 
-- первая команда: выбирает 36 архитектур (Pareto / dominated / boundary), ~5 сек;
-- вторая: собирает Docker-образ и прогоняет 36 x 3 = 108 запусков, **40-70 минут**.
+Команда создаёт новую копию исходников, выполняет correctness tests и E1–E8, E10, E11,
+проверяет результаты и сохраняет неизменяемый manifest. Ожидаются те же дискретные
+счётчики и результаты при фиксированных исходниках/версиях; времена будут отличаться.
+Экспериментальные скрипты запускаются последовательно, без конкурирующих CPU-нагрузок.
 
-Прогресс печатается построчно (`model=… measured p50=…`). Прогон можно прервать
-Ctrl+C и запустить ту же команду позже — уже сделанные запуски пропускаются.
-Результат пишется в `results/e9_testbed.csv`.
-
-Если Docker жалуется на нехватку ресурсов: Docker Desktop → Settings → Resources,
-поставьте не меньше 6 CPU и 6 GB RAM.
-
----
-
-## Шаг 3. Анализ
-
-Скажите мне «стенд отработал» — CSV лежит в общей папке, и я сам построю MAPE,
-Spearman, согласие пар и рисунок. Если хотите сделать это сами, нужны две
-библиотеки:
+Для независимого Docker round сохраните фиксированный `testbed/specs/designs.json`:
 
 ```bash
-pip3 install --user scipy matplotlib
-python3 testbed/analyze.py --input results/e9_testbed.csv \
-        --designs testbed/specs/designs.json --tag docker
+python3 testbed/run_testbed.py --repeats 3 --run-dir testbed/run-validation \
+  --out /private/tmp/hcadse-validation.csv
+make reproduce RELEASE=validation-run TESTBED=/private/tmp/hcadse-validation.csv
+make assets RELEASE=validation-run
 ```
 
----
+При необходимости отдельного Buildx state используйте
+`BUILDX_CONFIG=/private/tmp/hcadse-buildx` перед Docker-командой.
+Вначале выполняется Docker round, затем computational run, чтобы не смешивать нагрузки.
+Раннер не повторно подбирает модель или конфигурации. Все 108 успешных повторов обязательны
+для анализа; неудачные измерения не отбрасываются молча. Строятся отдельные summaries
+для mean и p50. `make assets` для полного manuscript требует release с testbed-данными.
 
-## Необязательное: пересчитать всё остальное самому
-
-Нужны `numpy pandas scipy matplotlib pymoo`:
-
-```bash
-pip3 install --user numpy pandas scipy matplotlib pymoo
-python3 experiments/e1_pruning.py        # воронка отсечения, ~1 мин
-python3 experiments/e2_costsweep.py      # окупаемость по стоимости evaluation
-python3 experiments/e3_baselines.py      # NSGA-II и random, 20 seeds, ~10 мин
-python3 experiments/e4_ablation.py       # вклад каждого уровня отсечения
-python3 experiments/e5_scalability.py    # до 8.3e7 кандидатов
-python3 experiments/e6_simvalidation.py  # модель против DES
-python3 experiments/e8_stats.py          # Mann-Whitney U, Cliff's delta
-python3 experiments/make_figures.py      # figures/fig1..fig6
-```
-
----
-
-## Что где лежит
-
-| Путь | Что это |
-|---|---|
-| `hcadse/` | сам метод: модель, evaluator, bounds, поиск, метрики |
-| `experiments/` | эксперименты E1-E8 |
-| `testbed/` | стенд: Go-сервисы, Dockerfile, раннеры, анализ |
-| `results/` | все CSV с результатами |
-| `figures/` | рисунки fig1-fig7 |
-| `STATUS.md` | текущий статус со всеми числами |
-| `RUN.md` | этот файл |
+Артефакты документа находятся в `manuscript/`; генераторы читают только выбранный
+release через `HCADSE_RESULTS`. При смене release пересоберите оба PDF.

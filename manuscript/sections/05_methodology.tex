@@ -16,38 +16,62 @@
 \subsection{Design of the experiments}
 Four design-space scales (S1--S4, Table~\ref{tab:variables}) are combined with the three
 workload classes of Table~\ref{tab:workloads}. Exhaustive ground truth is computed for
-S1--S3; S4 and the scalability study are explored by HCA-DSE only. Every configuration is
-deterministic except the stochastic baselines, which are run with 20 independent seeds.
+S1--S3; S4 and the scalability study are explored by HCA-DSE only. Search counts are deterministic for a fixed traversal order. Stochastic baselines use 20 independent seeds; DES and deployment measurements have separately specified repetitions.
 
 \paragraph{Baselines}
 Exhaustive enumeration provides the ground-truth Pareto front. Random search and
 NSGA-II~\cite{deb2002nsga2} (pymoo~\cite{blank2020pymoo}, population 40, SBX crossover,
 polynomial mutation, integer repair) are run under matched evaluation budgets of
 $100$, $250$, $500$ and $1000$ full evaluations, 20 seeds each. All methods use exactly
-the same evaluator and the same feasibility rules, so differences are attributable to the
-exploration strategy alone.
+the same evaluator and feasibility rules. A proposal rejected structurally consumes no
+full-evaluation budget. Every invocation on a structurally valid design consumes one unit,
+including invocations returning infeasibility and repeated designs. The stopping condition
+is exactly $N_E=B$, also for a partial final NSGA-II generation. We persist proposal counts,
+structural rejections, feasibility rejections and full evaluator calls; runtime includes
+proposal generation and rejection. Duplicate handling remains method-specific: random
+sampling is with replacement, while NSGA-II eliminates duplicates within its population.
 
 \paragraph{Metrics}
 Pareto recall and precision are computed on sets of objective vectors against the
-exhaustive front. Hypervolume~\cite{zitzler1999hv} is normalised by the hypervolume of the
+exhaustive front, identifying objective vectors at nine decimal places for these quality metrics. Exactness experiments additionally compare unrounded binary64 objective-vector sets. Hypervolume~\cite{zitzler1999hv} is normalised by the hypervolume of the
 exhaustive front (HV ratio); IGD$^{+}$~\cite{ishibuchi2015igdplus} uses the exhaustive
 front as reference. We additionally report the number of full evaluations $N_E$, the
-number of visited partial states $N$, and wall-clock time. Stochastic baselines are
+number of expanded partial states $N$ (recursive visits), and wall-clock time. Stochastic baselines are
 compared with the Mann--Whitney $U$ test~\cite{mann1947whitney} and Cliff's
-$\delta$~\cite{cliff1993delta}.
+$\delta$~\cite{cliff1993delta}. The Mann--Whitney alternative is that
+NSGA-II has larger HV values than random search; positive $\delta$ favours
+NSGA-II. Reported $p$-values are unadjusted and comparisons are exploratory.
 
 \paragraph{Ablation}
 Four variants isolate the contribution of each layer: structural only; structural +
-feasibility bounds; structural + dominance bounds; and the full method.
+feasibility bounds; structural + dominance bounds; and the full method. A separate
+$2\times2$ experiment crosses orders O1/O2 (Remark~\ref{rem:order}) with the queueing
+bound enabled/disabled on S1--S3. We record expanded states, bound calls, full evaluations,
+and exact front equality. An untimed instrumented pass counts incomplete prefixes with a
+positive queueing contribution and those pruned only because of that contribution against
+the same current archive. Runtime is the median of three uninstrumented runs.
+
+\paragraph{Finite-table exact baseline}
+On S1/S2 we also use Z3~\cite{demoura2008z3} to enumerate non-dominated points of an exact
+finite relation. Every structurally valid design is first evaluated; feasible objective
+vectors are encoded by per-objective integer ranks preserving the strict ordering of the
+stored binary64 values, with no linearisation or rounding. Repeated dominance queries
+find a non-dominated point and block its dominated region until UNSAT. Reported time
+includes all evaluator calls, table construction, encoding and solver queries. This tests
+an exact table encoding, not a compact symbolic model capable of avoiding those calls.
 
 \subsection{Two-level evaluation and the cost model}
 The analytical evaluator of Section~\ref{sec:model} (level A) is used for pruning,
 ground truth and all exactness claims. A discrete-event simulator (level B) provides a
 higher-fidelity, and therefore more expensive, evaluator: multi-server queues with a
 finite number of servers per tier, explicit link contention, deterministic service times
-and Poisson arrivals. Its measured cost is $19.4$\,ms per design point against
-$\approx8\,\mu$s for the analytical evaluator, which allows the crossover analysis of
-RQ3 to be anchored at two measured points rather than assumed.
+and Poisson arrivals. Replicated first-stage jobs fork and join; arrivals after propagation
+are scheduled before claiming a server. The cloud and WAN each have one server. We time
+40 feasible S1/telemetry designs, each with 3000 requests and 400 warm-up requests, and
+use their mean cost (\DesCostMs\,ms) as a hardware- and sample-specific anchor. Search
+overheads in the projection are medians of three runs. Model validation uses 40 distinct
+S2 designs per workload and five DES seeds, reporting the median simulated mean latency.
+DES is a separate queueing model; its front is not covered by the analytical exactness proof.
 
 \subsection{Testbed}
 \label{sec:testbed}
@@ -67,7 +91,12 @@ which the first 150 are discarded as warm-up, and reports the latency percentile
 Thirty-six architectures were selected across the three workloads --- Pareto-optimal,
 dominated and near-boundary designs --- restricted to those that fit on a single machine
 ($\le4$ edge nodes, $\le2$ gateways, one cloud instance). Each was executed three times,
-giving 108 measured runs.
+giving 108 measured runs in an independent second round. The configuration list and
+analytical model were frozen before this round; no parameters were fitted to its results.
+Network-shaping failures abort a run. We retain all repetitions, including unstable ones.
+The primary mean-latency comparison uses the median of three measured run means;
+we additionally retain the historical $p_{50}$ comparison, which targets a different latency
+statistic and is not a direct validation of an expected-value approximation.
 
 \begin{figure}[t]
 \centering
@@ -100,10 +129,14 @@ measured order agrees with the model order among the pairs that the model separa
 more than $10\%$ and $25\%$.
 
 \subsection{Reproducibility}
-The implementation is in Python 3 with NumPy, SciPy and pymoo; the testbed services are
+The implementation is in Python 3 with NumPy, SciPy, pymoo and Z3; the testbed services are
 in Go and run under Docker Compose. All figures and all numeric tables of this paper are
-generated from the raw result files by a single script, so no number is transcribed by
-hand. Correctness is machine-checked at three levels: (i) bound admissibility is verified
+generated from the canonical \texttt{v1.1-submission-results} data; narrative numerical
+summaries are generated from the same files. The release records a clean source export,
+locked package versions, execution logs and SHA-256 hashes of sources and results.
+Archived CSVs are excluded from manuscript generation. A fresh interpreter rechecks
+search counters, budget identities, front equality and statistical summaries. Wall times
+and deployment measurements are not expected to reproduce bit for bit. Correctness is machine-checked at three levels: (i) bound admissibility is verified
 \emph{exhaustively} on S1, i.e.\ for every prefix and every completion of that prefix
 across the three workloads; (ii) for every pruned prefix, all of its completions are
 enumerated and the claim of the corresponding proposition is verified directly, on S1 and

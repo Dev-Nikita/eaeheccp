@@ -1,0 +1,32 @@
+\documentclass[preprint,11pt,3p]{elsarticle}
+\usepackage{booktabs,multirow,amsmath,graphicx}
+\usepackage[hidelinks]{hyperref}
+\renewcommand{\thetable}{S\arabic{table}}
+\begin{document}
+\section*{Supplementary material: HCA-DSE}
+Full budget sweeps and validation subsets accompanying the main manuscript.
+All values are generated from the same result CSVs as the main-text summaries.
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S2. Medians over 20 seeds.}
+\input{tables/baselines_S2}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S3. Medians over 20 seeds.}
+\input{tables/baselines_S3}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full S3 statistical comparison: one-sided Mann--Whitney test for larger NSGA-II hypervolume and Cliff's $\delta$. Unadjusted $p$-values.}
+\input{tables/stats}
+\end{table}
+\begin{table}[!htbp]\centering
+\caption{Testbed validation against measured $p_{50}$, including utilisation and reproducibility subsets. Pair agreement is a fraction; undefined values (no eligible pairs) are shown as --.}
+\input{tables/testbed}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full order/queue ablation on S1--S3. All configurations preserve the unrounded exhaustive front.}
+\input{tables/order_full}
+\end{table}
+\end{document}

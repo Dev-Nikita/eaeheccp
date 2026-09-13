@@ -29,7 +29,7 @@ $\LB_i$ is admissible for objective $f_i$ if
 $\LB_i(p)\le f_i(x)$ for every partial architecture $p$ and every $x\in\C(p)$.
 \end{definition}
 
-Exact exploration methods that prune partial solutions assume that the objectives are
+The partial-cost construction discussed by Neubauer et al. assumes that objectives are
 \emph{assignment monotonous}, i.e.\ that every assignment can only increase the objective,
 so that the partial cost is itself a bound~\cite{neubauer2018exact}. The waiting term of
 \eqref{eq:latency} violates this assumption: it depends on $\rho_t$, which by
@@ -52,11 +52,14 @@ definition of the minimum. Summing over $t\in T_i$ yields $\LB_i(p)\le f_i(x)$.
 
 The minima are taken \emph{independently per term}, so the combination of values that
 realises them need not correspond to any single completion; the bound is therefore
-optimistic but valid. Every term of \eqref{eq:latency}--\eqref{eq:netvol} is monotone in
-each of its free variables --- service time decreases in $C$, transfer time decreases in
-$B$, static energy and cost increase in the node count, network volume increases in $r$
---- so each $\underline{\varphi}_t(p)$ is attained at a domain endpoint and is obtained
-from a table of precomputed domain extrema in $O(1)$ time rather than by search.
+optimistic but valid. The implementation uses domain extrema for service, communication,
+static energy and cost, and minima of class-specific power-to-capacity ratios
+for dynamic energy. Categorical policies are enumerated over their small
+reachable set; they have no meaningful monotone endpoint order. Independent
+extrema can relax a term further than its exact minimum, which remains safe.
+The queueing contribution is bounded by zero until its determinants are fixed.
+Domain aggregates are precomputed and repeated class-dependent terms cached;
+cache misses can still require scans of reachable classes or policies.
 
 \begin{lemma}[Exactness on determined terms]
 \label{lem:exact}
@@ -72,17 +75,16 @@ Lemma~\ref{lem:relax} applies unchanged.
 
 \begin{remark}[Why the variable order matters]
 \label{rem:order}
-The order $v_1,\dots,v_k$ places the determinants of tier utilisation --- node counts,
-node classes, replication factor and policy --- before the remaining variables. As soon
-as they are assigned, the waiting term
-\begin{equation*}
-W_t=\frac{w_i}{C_t}\cdot\frac{\rho_t}{2\,(1-\rho_t)}
-\end{equation*}
-is constant on $\C(p)$ and enters the bound
-\emph{exactly} by Lemma~\ref{lem:exact}, instead of being relaxed to its trivial bound
-$0$. This is what makes a contention-dependent objective usable for safe pruning without
-assignment monotonicity. If the determinants are fixed and $\rho_t\ge1$, no completion has
-finite latency and $\LB_L(p)=\infty$, which is admissible.
+Once all determinants of a tier's waiting contribution are assigned,
+that contribution is constant on $\C(p)$ and can enter the bound exactly by
+Lemma~\ref{lem:exact}; before then, zero is admissible for stable completions.
+If a determined used tier has $\rho_t\ge1$, its latency is infinite.
+The default order O1 is $(n_e,\kappa_e,n_g,\kappa_g,\ell,\kappa_c,r,\pi)$.
+Policy is assigned last, so its exact queueing contribution becomes available only at
+depth eight. We separately test O2,
+$(n_e,\kappa_e,n_g,\kappa_g,r,\pi,\ell,\kappa_c)$, which can fix edge and gateway
+queueing determinants on incomplete designs. Section~\ref{sec:order} separates the
+benefit of this term from the effect of changing traversal order.
 \end{remark}
 
 \subsection{Pruning rules}
@@ -207,9 +209,11 @@ Algorithm~\ref{alg:hca} equals the true Pareto front:
 $\mathcal{P}^{\mathrm{HCA}}=\PS$.
 \end{theorem}
 \begin{proof}
-$(\subseteq)$ Every returned vector is $F(x)$ of an evaluated $x\in\F_\sigma$ and survives
-non-dominated filtering; a dominating architecture would itself have been evaluated or
-pruned only by Proposition~\ref{prop:dom}, which is excluded by that proposition.
+$(\subseteq)$ Every returned vector is feasible. If a returned vector
+were dominated by any feasible vector, finiteness of $\X$ implies that it is
+dominated by a Pareto-optimal vector. The following argument shows that every
+Pareto-optimal vector is evaluated; it would therefore remove the dominated
+vector during final filtering, a contradiction.
 
 $(\supseteq)$ Let $u\in\PS$ and let $x\in\F_\sigma$ with $F(x)=u$. The traversal is a
 prefix tree, so $x$ is reached through the unique chain
@@ -222,9 +226,9 @@ the final filtering.
 \end{proof}
 
 \begin{remark}[Duplicates]
-The theorem is stated in objective space. If two distinct architectures share an
-objective vector, dominance pruning may remove one of them; the front is unaffected but
-the duplicate solution is lost. All experiments therefore compare sets of objective
+The theorem is stated in objective space. The strict dominance rule does not prune a design merely because its
+objective vector equals an archived vector. A separate duplicate-removal step may
+retain one representative per vector without changing the front. All experiments therefore compare sets of objective
 vectors.
 \end{remark}
 
@@ -234,18 +238,23 @@ the traversal order affects pruning efficiency but never correctness.
 \end{remark}
 
 \subsection{Complexity}
-Let $C_E$ be the cost of one full evaluation, $C_P$ the cost of computing the bounds at
-one tree node, $N$ the number of visited partial states, $N_E$ the number of full
-evaluations and $|A|$ the archive size. Then
+Let $C_E$ be the cost of a full evaluation, $C_P$ the cost of a bound computation,
+$N_B$ the number of checked prefixes, $N_E$ the number of full evaluations and $|A|$
+the maximum archive size. The search performs
 \begin{equation}
-T_{\mathrm{exh}}=O\big(|\X|\,C_E\big),\qquad
-T_{\mathrm{HCA}}=O\big(N(C_P+n|A|)+N_E\,C_E\big),
+T_{\mathrm{HCA}}=O\big(N_B(C_P+n|A|)+N_E C_E\big).
 \label{eq:complexity}
 \end{equation}
-and pruning is profitable when
+For measured cost projections we use $T_H=O_H+N_E C_E$ and
+$T_X=O_X+N_X C_E$, where $N_X$ counts structurally valid designs evaluated by
+exhaustive search, and $O_H,O_X$ are the respective measured non-evaluation overheads.
+Provided $N_X>N_E$, the break-even condition is
 \begin{equation}
-C_E \;>\; \frac{N\,(C_P+n|A|)}{|\X|-N_E}.
+C_E > \frac{O_H-O_X}{N_X-N_E}.
 \label{eq:breakeven}
 \end{equation}
-Section~\ref{sec:results} measures the right-hand side and shows that it lies in the
-microsecond range, and that $N\ll|\X|$, so the Cartesian product is never materialised.
+A negative threshold means HCA-DSE is already favoured at zero evaluator cost in this
+linear model. Using $|\X|$ in place of $N_X$ would incorrectly charge exhaustive search
+for structurally rejected designs. Expanded partial states $N$, reported separately,
+exclude branches rejected before recursion; $N_B$ counts their bound checks as well.
+The Cartesian product is never materialised by HCA-DSE.

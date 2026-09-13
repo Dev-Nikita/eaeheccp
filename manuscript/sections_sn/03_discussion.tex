@@ -21,9 +21,10 @@ utilisation and utilisation is fixed jointly by several decisions. The contribut
 is a way to keep exactness without that precondition: relax each additive term separately
 over the domains still reachable, and order the decisions so that the contention term
 stops being relaxed as early as possible. The mechanism is not specific to the template
-studied here. It applies wherever an objective decomposes into non-negative terms that are
-individually monotone in the free variables and where a subset of decisions determines a
-load-dependent term. Deployment problems of that shape are common: placement and scaling
+studied here. Formally, it applies whenever admissible term-wise relaxations can be constructed and a
+subset of the architectural decisions determines the load-dependent terms. Empirical
+transfer to a structurally different architecture template has not been demonstrated
+here, so we make no empirical generality claim beyond the evaluated template. Deployment problems of that shape are common: placement and scaling
 across a computing continuum\cite{filippini2026replica,predictive2026}, partitioned
 inference pipelines whose accuracy and robustness depend on where each stage
 runs\cite{guo2023,guo2025}, and energy-driven co-design of cloud--edge
@@ -46,7 +47,7 @@ would be strictly better than either component alone.
 
 Three limits apply to the results reported here. First, when the evaluator is cheap the pruning
 overhead is comparable to the evaluation it avoids and the wall-clock benefit largely
-disappears --- the measured speed-up with a closed-form evaluator is $1.32$--$3.15\times$
+disappears --- the measured speed-up with the closed-form evaluator is $\AnalyticalSpeedup\times$
 --- so the method should be chosen on evaluator cost, not on space size. Second, the
 guarantee is only as good as the bounds: a bound that cannot be proven admissible must
 not be used, because an inadmissible bound silently converts an exact method into an

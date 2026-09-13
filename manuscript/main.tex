@@ -13,6 +13,12 @@
 \usepackage{xcolor}
 \usepackage{url}
 \usepackage[section]{placeins}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{5}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
 \usepackage[hidelinks]{hyperref}
 
 \theoremstyle{plain}
@@ -34,6 +40,8 @@
 
 \journal{Journal of Systems Architecture}
 
+\input{generated_numbers}
+
 \begin{document}
 
 \begin{frontmatter}
@@ -42,8 +50,8 @@
 Heterogeneous Distributed Cyber-Physical Systems}
 
 \author[lp]{Nikita Tarasov}
-\author[lp]{Vasyl Tomyuk}
 \ead{dev.nikita@outlook.com}
+\author[lp]{Vasyl Tomyuk}
 \address[lp]{Lviv Polytechnic National University, Lviv, Ukraine}
 
 \begin{abstract}
@@ -56,26 +64,23 @@ expensive to evaluate, so exhaustive exploration is impractical while population
 search returns approximate fronts without guarantees. This paper presents HCA-DSE, a
 hierarchical constraint-aware design-space exploration method that discards structurally
 ill-formed, provably infeasible and provably dominated regions of the architecture space
-\emph{before} any full design-point evaluation. Its central technical ingredient is a
-family of admissible objective bounds for \emph{contention-dependent} objectives: the
+without fully evaluating each discarded candidate. Its central technical ingredient is a
+family of objective-specific admissible relaxations for a finite heterogeneous edge--cloud CPS model with \emph{contention-dependent} objectives: the
 end-to-end latency of a distributed cyber-physical system depends on tier utilisation,
-which is not determined by any single design decision, so the assignment-monotonicity
-assumed by existing exact exploration methods does not hold. We prove that the resulting
+which is not determined by any single design decision, so a sum of assigned decision costs is not by itself an admissible bound. We prove that the resulting
 pruning is safe and that the exact Pareto front is preserved, and we verify both the
-bound admissibility and the front equality exhaustively on reference spaces. On four
-design-space scales, three workload classes and spaces of up to $8.3\times10^{7}$
-candidate architectures, HCA-DSE performs 26--61 full evaluations instead of $10^{3}$ to
-$10^{7}$, preserves the exhaustive Pareto front exactly (recall and precision of $1.0$),
-and visits fewer than $2\times10^{-4}$ of the candidates while never materialising the
-design space. Budget-matched NSGA-II requires 1000 evaluations to reach a median Pareto
-recall of $0.50$--$0.91$. An evaluation-cost analysis places the measured break-even
-evaluator cost at $1$--$3\,\mu\mathrm{s}$ on the evaluated hardware and design spaces;
-using the measured $19.4$\,ms cost of a discrete-event evaluator, the cost model
-projects speed-ups of up to $558\times$.
-Finally, the analytical model is validated against a containerised edge--gateway--cloud
-testbed with network shaping: over 36 architectures and 108 measured runs, the model
-orders architectures consistently with the measurements in $98\%$ of the pairs it
-separates by more than $25\%$.
+bound admissibility and the front equality exhaustively on reference spaces. Across four design-space scales and a scalability sweep up to $8.3\times10^{7}$
+candidate architectures, the default method performs $\EvalRange$ full evaluations.
+It preserves the exhaustive analytical Pareto front on the reference spaces S1--S3;
+exactness on the largest spaces rests on the bound proof. Budget-matched NSGA-II attains
+median Pareto recall of $\BaselineRecallRange$ at 1000 actual evaluator calls.
+An evaluation-cost model anchored at a measured DES cost of $\DesCostMs$\,ms projects
+speed-ups up to $\ProjectionMax\times$; this is not an end-to-end DES search measurement.
+We additionally isolate variable-order and queue-bound effects and compare against an
+exact finite-table SMT baseline. An independent containerised validation covers 36
+architectures and 108 runs with the model frozen. For architecture pairs separated by
+more than $25\%$ in predicted latency, agreement with measured mean-latency order is
+$\WithinAgreementRange\%$ within workloads ($\PooledAgreement\%$ pooled).
 \end{abstract}
 
 \begin{keyword}
@@ -97,7 +102,6 @@ design automation
 \input{sections/09_conclusion}
 
 \FloatBarrier
-\clearpage
 \section*{Data availability}
 The complete implementation, all experiment scripts, the testbed and every result file
 required to regenerate the figures and tables of this paper are available in the

@@ -110,7 +110,17 @@ WORKLOADS = {
 # Design space
 # ----------------------------------------------------------------------------
 
-VAR_ORDER = ["n_e", "edge_cls", "n_g", "gw_cls", "link_cls", "cloud_cls", "rep", "policy"]
+# Canonical traversal order: the determinants of tier utilisation (node counts, node
+# classes, replication factor and placement policy) are assigned before the remaining
+# variables, so that the contention-dependent waiting term becomes exactly computable on
+# incomplete designs (Lemma "exactness on determined terms").
+VAR_ORDER = ["n_e", "edge_cls", "n_g", "gw_cls", "rep", "policy", "link_cls", "cloud_cls"]
+
+# Alternative order used only as a comparison point in the order ablation: the utilisation
+# determinants `rep` and `policy` are assigned last, so the waiting term stays relaxed to
+# zero on every incomplete design.
+ORDER_DETERMINANTS_LAST = ["n_e", "edge_cls", "n_g", "gw_cls", "link_cls", "cloud_cls",
+                           "rep", "policy"]
 
 @dataclass
 class DesignSpace:
