@@ -147,8 +147,8 @@ continuum\cite{kouloumpris2024optimization,kouloumpris2026reliability}.
 
 The methods in that family that are closest to our problem share one working
 assumption: that each decision can only add to the objective, so that a partially
-specified design already carries a valid lower bound on all its completions. The dominant objective in a distributed cyber-physical
-system violates it. End-to-end latency contains a waiting term that depends on the
+specified design already carries a valid lower bound on all its completions. A central objective in latency-sensitive distributed
+cyber-physical systems violates it. End-to-end latency contains a waiting term that depends on the
 utilisation of a tier, and utilisation is fixed only jointly, by the number of nodes,
 their class, the replication factor and the placement policy at once. Adding a node
 lowers it. There is therefore no monotone accumulation to bound, and the guarantee that
@@ -171,9 +171,10 @@ returns wherever exhaustive enumeration is still feasible. An independent contai
 edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
 that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
-within a workload. We report equally clearly where the approach does not help: when the evaluator
-is cheap, when no admissible bound can be derived, and near saturation, where neither the
-model nor the deployment is stable.
+within a workload. We report equally clearly where the gains shrink or the method does not apply: the
+advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
+bounded by the overhead of the search itself; no admissible bound may be available at
+all; and near saturation neither the model nor the deployment is stable.
 %% ---------------------------------------------------------------- Fig. 1
 \begin{figure*}[!htbp]
 \centering
@@ -313,8 +314,9 @@ We measured the overhead of the exploration itself and the cost of one design-po
 evaluation for two evaluators, and projected the resulting speed-up
 (Fig.~\ref{fig:ce:crossover}).
 %
-S2: the break-even threshold is $-6.14\text{--}-0.19\,\mu$s; projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
-S3: the break-even threshold is $-3.95\text{--}-2.14\,\mu$s; projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
+No positive break-even evaluation cost was observed on either scale: with the closed-form evaluator HCA-DSE is already faster than exhaustive enumeration, so the linear crossover model places the threshold below zero and the projections below are gains that grow with evaluator cost rather than gains that start at one.
+S2: projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
+S3: projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
 neither exploration strategy was executed end to end with DES in the inner loop.
 The measured analytical-evaluator speed-up across S2/S3 is $2.58\text{--}4.96\times$. These hardware- and implementation-specific values do not establish
@@ -326,7 +328,7 @@ it, and cannot certify what is missing (Fig.~\ref{fig:ce:hv}, Table~\ref{tab:ce:
 %
 \RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. S2: at $B=1000$, NSGA-II median recall is $0.900\text{--}0.944$ and median HV ratio is $0.999\text{--}1.000$; random-search median recall is $0.160\text{--}0.188$.
 S3: at $B=1000$, NSGA-II median recall is $0.645\text{--}0.741$ and median HV ratio is $0.969\text{--}0.991$; random-search median recall is $0.000\text{--}0.018$.
-On S3 at $B=500/1000$, 4 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $0.000\text{--}0.168$ and Cliff\textquotesingle{}s $\delta$ from $0.180\text{--}0.800$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
+On S3 at $B=500/1000$, 4 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $<0.001\text{--}0.168$ and Cliff\textquotesingle{}s $\delta$ from $0.180\text{--}0.800$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
 All 960 stochastic runs satisfy $N_E=B$ and proposals $=N_E+$ structural rejections.
 This accounting includes infeasible full evaluations. \RefHvFig{} shows
 seed-level HV distributions; Supplementary Tables S1--S3 retain all budgets.
@@ -539,10 +541,12 @@ physical deployment should spend its time. Nothing in the method requires the an
 model to be the final word, and an evaluator-centric methodology plugged in behind it
 would be strictly better than either component alone.
 
-Three limits apply to the results reported here. First, when the evaluator is cheap the pruning
-overhead is comparable to the evaluation it avoids and the wall-clock benefit largely
-disappears --- the measured speed-up with the closed-form evaluator is $\AnalyticalSpeedup\times$
---- so the method should be chosen on evaluator cost, not on space size. Second, the
+Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
+space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
+$\AnalyticalSpeedup\times$; the projected gains against the discrete-event evaluator are two
+to three orders of magnitude larger. As the evaluator gets cheaper the search overhead
+becomes the dominant term and the advantage narrows towards the ratio of overheads, so
+the method should be chosen on evaluator cost rather than on space size. Second, the
 guarantee is only as good as the bounds: a bound that cannot be proven admissible must
 not be used, because an inadmissible bound silently converts an exact method into an
 approximate one with no signal in the output. Third, near saturation the design-time

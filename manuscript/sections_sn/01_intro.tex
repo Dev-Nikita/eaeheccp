@@ -50,8 +50,8 @@ continuum\cite{kouloumpris2024optimization,kouloumpris2026reliability}.
 
 The methods in that family that are closest to our problem share one working
 assumption: that each decision can only add to the objective, so that a partially
-specified design already carries a valid lower bound on all its completions. The dominant objective in a distributed cyber-physical
-system violates it. End-to-end latency contains a waiting term that depends on the
+specified design already carries a valid lower bound on all its completions. A central objective in latency-sensitive distributed
+cyber-physical systems violates it. End-to-end latency contains a waiting term that depends on the
 utilisation of a tier, and utilisation is fixed only jointly, by the number of nodes,
 their class, the replication factor and the placement policy at once. Adding a node
 lowers it. There is therefore no monotone accumulation to bound, and the guarantee that
@@ -74,6 +74,7 @@ returns wherever exhaustive enumeration is still feasible. An independent contai
 edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
 that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
-within a workload. We report equally clearly where the approach does not help: when the evaluator
-is cheap, when no admissible bound can be derived, and near saturation, where neither the
-model nor the deployment is stable.
+within a workload. We report equally clearly where the gains shrink or the method does not apply: the
+advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
+bounded by the overhead of the search itself; no admissible bound may be available at
+all; and near saturation neither the model nor the deployment is stable.

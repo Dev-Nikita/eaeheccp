@@ -184,7 +184,10 @@ T_{\mathrm{exh}}=O\big(|\X|\,C_E\big),\qquad
 T_{\mathrm{HCA}}=O\big(N(C_P+n|A|)+N_E\,C_E\big),
 \end{equation}
 so pruning is profitable when $C_E>N(C_P+n|A|)/(|\X|-N_E)$. The right-hand side is
-measured rather than assumed in the main text.
+measured rather than assumed. In the runs reported here it is negative on every scale and
+workload, because the total search overhead $N(C_P+n|A|)$ is already smaller than the
+overhead of enumerating the space: there is no positive evaluation cost below which
+exhaustive enumeration wins, and the advantage grows from there with $C_E$.
 
 \section{Supplementary Note 2: full evaluation model}\label{snote2}
 

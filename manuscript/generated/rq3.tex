@@ -1,6 +1,7 @@
 \input{generated/refdefs}%
-S2: the break-even threshold is $-6.14\text{--}-0.19\,\mu$s; projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
-S3: the break-even threshold is $-3.95\text{--}-2.14\,\mu$s; projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
+No positive break-even evaluation cost was observed on either scale: with the closed-form evaluator HCA-DSE is already faster than exhaustive enumeration, so the linear crossover model places the threshold below zero and the projections below are gains that grow with evaluator cost rather than gains that start at one.
+S2: projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
+S3: projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
 neither exploration strategy was executed end to end with DES in the inner loop.
 The measured analytical-evaluator speed-up across S2/S3 is $2.58\text{--}4.96\times$. These hardware- and implementation-specific values do not establish

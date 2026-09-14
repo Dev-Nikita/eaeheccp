@@ -25,10 +25,20 @@ macros={'EvalRange':ran(int(r['evals']) for r in e1+e5),'SthreeEvalRange':ran(in
 Path('manuscript/generated_numbers.tex').write_text('\n'.join('\\newcommand{\\'+k+'}{'+v+'}' for k,v in macros.items())+'\n')
 write('rq1',r'The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing '+ran((100*(1-int(r['evals'])/int(r['raw'])) for r in s3),2)+r'\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of '+ran((100*(1-int(r['evals'])/int(r['raw'])) for r in s4),2)+r'\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.')
 lines=[]
+all_thresholds=[]
 for sc in ['S2','S3']:
  d=[r for r in proj if r['scale']==sc]
  thresholds=[1e6*(float(r['overhead_hca'])-float(r['overhead_exh']))/(int(r['N_exh'])-int(r['N_hca'])) for r in d]
- lines.append(sc+': the break-even threshold is $'+ran(thresholds,2)+r'\,\mu$s; projected speed-up at the measured DES cost is $'+ran((float(r['speedup']) for r in d),1)+r'\times$, with asymptotic evaluation-count ratios of $'+ran((int(r['N_exh'])/int(r['N_hca']) for r in d),1)+r'\times$.')
+ all_thresholds+=thresholds
+ lines.append(sc+': projected speed-up at the measured DES cost is $'+ran((float(r['speedup']) for r in d),1)+r'\times$, with asymptotic evaluation-count ratios of $'+ran((int(r['N_exh'])/int(r['N_hca']) for r in d),1)+r'\times$.')
+# The linear crossover model puts the break-even per-evaluation cost below zero on every
+# scale/workload here, i.e. there is no positive threshold to report: search overhead is
+# already lower than the overhead of enumerating the space with the closed-form evaluator.
+assert max(all_thresholds) < 0, 'a positive break-even threshold reappeared: reword this claim'
+lines.insert(0,'No positive break-even evaluation cost was observed on either scale: with the '
+ 'closed-form evaluator HCA-DSE is already faster than exhaustive enumeration, so the '
+ 'linear crossover model places the threshold below zero and the projections below are '
+ 'gains that grow with evaluator cost rather than gains that start at one.')
 write('rq3','\n'.join(lines)+r''' The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
 neither exploration strategy was executed end to end with DES in the inner loop.
@@ -40,7 +50,10 @@ for sc in ['S2','S3']:
  randomrec=[st.median(float(r['recall']) for r in e3 if r['scale']==sc and r['workload']==w and r['method']=='random' and r['budget']=='1000') for w in wl]
  lines.append(sc+': at $B=1000$, NSGA-II median recall is $'+ran((float(r['nsga2_recall_med']) for r in d),3)+r'$ and median HV ratio is $'+ran((float(r['nsga2_hv_med']) for r in d),3)+r'$; random-search median recall is $'+ran(randomrec,3)+r'$.')
 d=[r for r in e8 if r['scale']=='S3' and r['budget'] in ['500','1000']];sig=sum(float(r['p_nsga2_gt_random'])<.05 for r in d)
-lines.append('On S3 at $B=500/1000$, '+str(sig)+r' of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $'+ran((float(r['p_nsga2_gt_random']) for r in d),3)+r'$ and Cliff\textquotesingle{}s $\delta$ from $'+ran((float(r['cliffs_delta']) for r in d),3)+r'$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied.')
+pvals=[float(r['p_nsga2_gt_random']) for r in d]
+plo=('<0.001' if min(pvals)<0.0005 else f"{min(pvals):.3f}")
+prange=plo+r'\text{--}'+f"{max(pvals):.3f}"
+lines.append('On S3 at $B=500/1000$, '+str(sig)+r' of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $'+prange+r'$ and Cliff\textquotesingle{}s $\delta$ from $'+ran((float(r['cliffs_delta']) for r in d),3)+r'$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied.')
 write('rq4',r'\RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. '+'\n'.join(lines)+r''' HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
 All 960 stochastic runs satisfy $N_E=B$ and proposals $=N_E+$ structural rejections.
 This accounting includes infeasible full evaluations. \RefHvFig{} shows

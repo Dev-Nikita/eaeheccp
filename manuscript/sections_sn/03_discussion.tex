@@ -43,10 +43,12 @@ physical deployment should spend its time. Nothing in the method requires the an
 model to be the final word, and an evaluator-centric methodology plugged in behind it
 would be strictly better than either component alone.
 
-Three limits apply to the results reported here. First, when the evaluator is cheap the pruning
-overhead is comparable to the evaluation it avoids and the wall-clock benefit largely
-disappears --- the measured speed-up with the closed-form evaluator is $\AnalyticalSpeedup\times$
---- so the method should be chosen on evaluator cost, not on space size. Second, the
+Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
+space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
+$\AnalyticalSpeedup\times$; the projected gains against the discrete-event evaluator are two
+to three orders of magnitude larger. As the evaluator gets cheaper the search overhead
+becomes the dominant term and the advantage narrows towards the ratio of overheads, so
+the method should be chosen on evaluator cost rather than on space size. Second, the
 guarantee is only as good as the bounds: a bound that cannot be proven admissible must
 not be used, because an inadmissible bound silently converts an exact method into an
 approximate one with no signal in the output. Third, near saturation the design-time
