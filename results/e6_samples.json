@@ -1,0 +1,2522 @@
+[
+  {
+    "workload": "telemetry",
+    "design_index": 0,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.03580545700881673,
+      0.03602371809516501,
+      0.035636593666426304,
+      0.0362219568811648,
+      0.03660172882239362
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 1,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.035505457008816965,
+      0.03572371809516546,
+      0.035336593666426656,
+      0.035921956881165076,
+      0.03630172882239393
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 2,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.03149668214958124,
+      0.03172077740437568,
+      0.031335097270993185,
+      0.03191750452590101,
+      0.03229075890862115
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 3,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.03119668214958147,
+      0.03142077740437586,
+      0.03103509727099328,
+      0.03161750452590124,
+      0.03199075890862137
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 4,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02681706425146815,
+      0.026894089665325097,
+      0.026797168202422252,
+      0.026946345678155126,
+      0.026926525968921356
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 5,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.026517064251467902,
+      0.02659408966532486,
+      0.026497168202421855,
+      0.026646345678154732,
+      0.026626525968921042
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 6,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.023657236572248396,
+      0.023686182870060277,
+      0.02363707766376715,
+      0.02365999922643135,
+      0.02364724366160099
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 7,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.023332505803016712,
+      0.023361618767495325,
+      0.023314500740689345,
+      0.023336345380276544,
+      0.02332328212313858
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 8,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.023159406465226302,
+      0.023161840884563047,
+      0.02314400367488825,
+      0.023143809605862205,
+      0.023146143313691858
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 9,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.022833738472253676,
+      0.02283670732508141,
+      0.022822295009471166,
+      0.022821901299072505,
+      0.022823310818848683
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 10,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.013589509060595245,
+      0.013689921886737596,
+      0.013530265164330516,
+      0.01378621436343124,
+      0.01372730247695185
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 11,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.006548819033190284,
+      0.006572488096584034,
+      0.006542593885472488,
+      0.006557792200404278,
+      0.006551117453078423
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 12,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.012886257237964695,
+      0.01297933980860498,
+      0.012801422632296852,
+      0.013071917189050802,
+      0.01301540921493185
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 13,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.005708039396800285,
+      0.005725093752410652,
+      0.005692183528572115,
+      0.0057095298092388795,
+      0.005708414690749317
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 14,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.005702333426451603,
+      0.0057194209494493475,
+      0.005686919432341357,
+      0.005704312443002987,
+      0.005706298923914028
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 15,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.03288549805798436,
+      0.0329250301214379,
+      0.03286690180239672,
+      0.03292519948731889,
+      0.032898828063305574
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 16,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.03258549805798463,
+      0.03262503012143827,
+      0.03256690180239699,
+      0.03262519948731912,
+      0.0325988280633058
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 17,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.015883136358269993,
+      0.01593249444275604,
+      0.015846083464222636,
+      0.016023474207730606,
+      0.015920534116239518
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 18,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.009942569659499622,
+      0.010016078621129186,
+      0.009924822332893412,
+      0.010088316543538596,
+      0.010030264347431109
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 19,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.015136831736322938,
+      0.015210333919465007,
+      0.01513206712715305,
+      0.015325792491954461,
+      0.015254923843424908
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 20,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.017515309606572136,
+      0.017517093161592858,
+      0.017513609465570085,
+      0.017513778765966177,
+      0.017513966096604414
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 21,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.03232473657224635,
+      0.03234733671621222,
+      0.03231739817658569,
+      0.03232775563668576,
+      0.03232115391800923
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 22,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.0282343732940985,
+      0.028234580589806314,
+      0.028224287992377185,
+      0.028225547211159833,
+      0.028226705470646492
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 23,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.028464736572247528,
+      0.028487336716213292,
+      0.028457398176586827,
+      0.028467755636686954,
+      0.028461153918010424
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 24,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-low",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.03149401444245278,
+      0.03169825048054988,
+      0.031328729580777835,
+      0.031921429287908296,
+      0.03227892795640648
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 25,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.026517064251467902,
+      0.02659408966532486,
+      0.026497168202421855,
+      0.026646345678154732,
+      0.026626525968921042
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 26,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.032021477189914965,
+      0.0320214895463941,
+      0.0320109546590455,
+      0.032012414387279135,
+      0.032013467812751356
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 27,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.012141263983732317,
+      0.012399075384132473,
+      0.012170827723624296,
+      0.012646893684409006,
+      0.012612051050168093
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 28,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.028709265458301457,
+      0.02870875012952322,
+      0.028701517677030556,
+      0.028702352118239554,
+      0.02870356447444791
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 29,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-low",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.035427996038122835,
+      0.035465038170619495,
+      0.03539624255696185,
+      0.03551952817522885,
+      0.035483594811819265
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 30,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02635565964620851,
+      0.026404638021548035,
+      0.026306819967565027,
+      0.026499018119887974,
+      0.026429127673116573
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 31,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.029958069905580257,
+      0.029980670049545997,
+      0.029950731509919438,
+      0.02996108897001965,
+      0.029954487251343063
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 32,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.026785115633231212,
+      0.02681264238905403,
+      0.026778379797295686,
+      0.026792356717406606,
+      0.02678733820414024
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 33,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.014866914136203337,
+      0.014866827132834572,
+      0.014866692654090742,
+      0.014866901209851112,
+      0.014866796431279083
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 34,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.03103127200373911,
+      0.031030623149695586,
+      0.031023230778917985,
+      0.031024116856108497,
+      0.03102484507103797
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 35,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-low",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02820944445100745,
+      0.02821023357820088,
+      0.028198986610712122,
+      0.02820088647533725,
+      0.028201300423488902
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 36,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.029034373294097637,
+      0.029034533488029382,
+      0.02902428799237621,
+      0.029025547211159002,
+      0.02902670547064553
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 37,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.014419972421359633,
+      0.014432649335726681,
+      0.01439382326230183,
+      0.014433045440816639,
+      0.014415520301322147
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 38,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.017864097128465702,
+      0.01788994297544767,
+      0.017862328669228933,
+      0.01786508224971075,
+      0.017861918178668012
+    ]
+  },
+  {
+    "workload": "telemetry",
+    "design_index": 39,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.030236583283372122,
+      0.030317185378163698,
+      0.03024025094790637,
+      0.0302755062194472,
+      0.030263317335326834
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 0,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.027189149043222754,
+      0.027366362350289268,
+      0.027163734462107854,
+      0.027463234315137877,
+      0.027560267482691282
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 1,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.027054149043222755,
+      0.027231362350289258,
+      0.027028734462107833,
+      0.027328234315137877,
+      0.027425267482691282
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 2,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02374546540713991,
+      0.02376726293901443,
+      0.023739611604904523,
+      0.023752446065484125,
+      0.023746121842776663
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 3,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.02361046540713988,
+      0.02363226293901442,
+      0.023604611604904523,
+      0.023617446065484122,
+      0.023611121842776635
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 4,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.022404696176370836,
+      0.022424730887732534,
+      0.022394675707468847,
+      0.022409593501381688,
+      0.02240086543252038
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 5,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.022269696176370854,
+      0.02228973088773259,
+      0.022259675707468885,
+      0.022274593501381768,
+      0.022265865432520425
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 6,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02209177334227192,
+      0.022092632145140335,
+      0.022084539952973468,
+      0.022085278780036632,
+      0.02208449586095947
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 7,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.02194613403561797,
+      0.02194755438037192,
+      0.021940276525338913,
+      0.021941306000936356,
+      0.021939525712734897
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 8,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.011135044736110137,
+      0.01122342160542483,
+      0.01115243736953065,
+      0.011339937127984725,
+      0.011308439637839722
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 9,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.0073490323703049865,
+      0.007470082819534823,
+      0.007333473983867953,
+      0.007579472107400314,
+      0.00752111727403272
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 10,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.010653698509374428,
+      0.010735771396062091,
+      0.010664677940140109,
+      0.010848878052833355,
+      0.010780478878340976
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 11,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.00682627629347953,
+      0.006932202518518146,
+      0.006828001934285293,
+      0.00706300442345383,
+      0.0070019591046077065
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 12,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.005077849807887151,
+      0.005097591356411297,
+      0.005070390181245573,
+      0.005082452606463983,
+      0.005077543235724279
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 13,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.004332550937698437,
+      0.004338102773621275,
+      0.0043288440166581186,
+      0.00433151983051629,
+      0.004331948496080384
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 14,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.004323269227532619,
+      0.004329936841390183,
+      0.004320162389357809,
+      0.004324274755786612,
+      0.004324766630017679
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 15,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.028673520846945362,
+      0.028696062052964776,
+      0.028661731521872746,
+      0.028687723401054233,
+      0.028678020868759847
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 16,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.028538520846945286,
+      0.02856106205296466,
+      0.02852673152187264,
+      0.028552723401054147,
+      0.02854302086875976
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 17,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.006502615406543813,
+      0.006527827724703044,
+      0.006499614941584471,
+      0.006519021578839443,
+      0.00650731868705009
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 18,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.00430584307732587,
+      0.004305842551575597,
+      0.004301015113105837,
+      0.004301342522704952,
+      0.004302208052135006
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 19,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.004285032184345397,
+      0.0042863413087569175,
+      0.004284048675899084,
+      0.004284545749857635,
+      0.004284665197640044
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 20,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-low",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.027685322800366046,
+      0.027685372936623025,
+      0.02768450398986155,
+      0.02768409976103639,
+      0.027684582013905935
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 21,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.025431741824339462,
+      0.025455797392198415,
+      0.025421295482640868,
+      0.02544723473405389,
+      0.025438621273311122
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 22,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.024676989392351453,
+      0.024696838524862715,
+      0.02467028257882828,
+      0.02468223878034373,
+      0.024677258023839882
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 23,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.015498458916568066,
+      0.015544386441363807,
+      0.01552355105644759,
+      0.015688844916953312,
+      0.015620226847151216
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 24,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.02389334018507785,
+      0.02389565692356184,
+      0.023888969072721696,
+      0.023889834468552678,
+      0.023888324480086844
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 25,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.025426616374113437,
+      0.025464393985858695,
+      0.025396065274683247,
+      0.025516964462858508,
+      0.02547444354647647
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 26,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02922469654552064,
+      0.02924452531274441,
+      0.029210989314230454,
+      0.029238887034394943,
+      0.029229902481175397
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 27,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.026444040276103437,
+      0.026463913222454394,
+      0.026437282578827576,
+      0.026449238780343037,
+      0.026444258023839158
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 28,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.011921743107865663,
+      0.011924574213051488,
+      0.011916661997508944,
+      0.011915076970450585,
+      0.011914307661791588
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 29,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.006700475459153991,
+      0.0066998228359406165,
+      0.006699007161004374,
+      0.0066992325948505285,
+      0.006697606935754214
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 30,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.006091076097925487,
+      0.006110924396847625,
+      0.006084314253007569,
+      0.006096343497060175,
+      0.006091290142310667
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 31,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.022269696176370854,
+      0.02228973088773259,
+      0.022259675707468885,
+      0.022274593501381768,
+      0.022265865432520425
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 32,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.02194613403561797,
+      0.02194755438037192,
+      0.021940276525338913,
+      0.021941306000936356,
+      0.021939525712734897
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 33,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.02403701731452546,
+      0.02403841908286937,
+      0.024031409517737908,
+      0.0240321796919215,
+      0.024031510009234317
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 34,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.006744737138272482,
+      0.0067487426907729174,
+      0.006737898158378934,
+      0.006742623835744709,
+      0.006740042913208326
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 35,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.027828438704277446,
+      0.027828228844346763,
+      0.02782457469978837,
+      0.027824735381795678,
+      0.02782552150016864
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 36,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.026018897645205385,
+      0.026018904352060054,
+      0.026017852251590007,
+      0.026017776599155645,
+      0.02601794310705296
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 37,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.01034731563650863,
+      0.010347432569625602,
+      0.010346717465848405,
+      0.010349406758789832,
+      0.010347497778703078
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 38,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.007525096322113393,
+      0.007584408765075081,
+      0.007509394254193884,
+      0.007638559895397076,
+      0.007584586351453268
+    ]
+  },
+  {
+    "workload": "control",
+    "design_index": 39,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.0283844979893559,
+      0.028385259491742643,
+      0.028377498397175776,
+      0.028378352560827776,
+      0.028378557484544653
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 0,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.09295910632813693,
+      0.09590170940197823,
+      0.09225145764256754,
+      0.09763057436267057,
+      0.09952090440800075
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 1,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.0890591063281382,
+      0.09200170940197926,
+      0.08835145764256866,
+      0.09373057436267163,
+      0.09562090440800122
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 2,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.07691254990480668,
+      0.07825323508462166,
+      0.07689641149363782,
+      0.0792859212006934,
+      0.0794239064295757
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 3,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.07301254990480795,
+      0.07435323508462273,
+      0.0729964114936389,
+      0.07538592120069498,
+      0.07552390642957656
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 4,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.07929963996731773,
+      0.08035027168125762,
+      0.07888253838730842,
+      0.08124376371522113,
+      0.08159721195078579
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 5,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.07539963996731769,
+      0.07645027168125801,
+      0.07498253838730921,
+      0.07734376371522154,
+      0.07769721195078597
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 6,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.048400685616918675,
+      0.0487455584150302,
+      0.04821853424792921,
+      0.048526213454867725,
+      0.04851776399089967
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 7,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.048322700846006796,
+      0.04865985574296043,
+      0.04813877444345007,
+      0.0484816339977933,
+      0.04843136969104968
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 8,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-low",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.07162665492420321,
+      0.07311639510974542,
+      0.07162695963491193,
+      0.07388120862455698,
+      0.07409137390384282
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 9,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04632944423323802,
+      0.046451384923013005,
+      0.04624113184063788,
+      0.046357951848921664,
+      0.04629836916514599
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 10,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04616497199284328,
+      0.04630098904140055,
+      0.04610029850698825,
+      0.04620961867792303,
+      0.046144815344946216
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 11,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04589911308379434,
+      0.04589680257544847,
+      0.0458413852374708,
+      0.04585449708614393,
+      0.04586012447851651
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 12,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04566536484379248,
+      0.04567248797117407,
+      0.04564698219075132,
+      0.04566829309358459,
+      0.04566298651129664
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 13,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04588208705424308,
+      0.045879307880641866,
+      0.045834954552118334,
+      0.045839470092944444,
+      0.045847756346623
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 14,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04564135425223869,
+      0.04564647570890287,
+      0.04564033165012596,
+      0.0456408959900015,
+      0.04564299935479426
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 15,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.04563333333333326,
+      0.04563333333333359,
+      0.04563333333333363,
+      0.04563344165719354,
+      0.04563430216475987
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 16,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.1304150610501372,
+      0.13183223774772979,
+      0.13042557052143308,
+      0.13264121883981542,
+      0.132891373903843
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 17,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.11986134460098757,
+      0.12152345218369179,
+      0.11912979166934587,
+      0.12451916187123739,
+      0.1269876442847443
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 18,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.05057776277989355,
+      0.050866532140505176,
+      0.050485910027928696,
+      0.050763735853778254,
+      0.05071778663024293
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 19,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.07301254990480795,
+      0.07435323508462273,
+      0.0729964114936389,
+      0.07538592120069498,
+      0.07552390642957656
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 20,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.05539716028999895,
+      0.05560141690225901,
+      0.05532899288953891,
+      0.055451986402170826,
+      0.05539677089845237
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 21,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.056191628773715155,
+      0.0563910482012006,
+      0.05612442341138562,
+      0.056243082955333534,
+      0.0561955386063881
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 22,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 3,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.06270449232387541,
+      0.0631895364609968,
+      0.062409803941653186,
+      0.06363750979056802,
+      0.06331435933500852
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 23,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.0836413542522364,
+      0.08365234266031495,
+      0.08364050296950794,
+      0.0836511572049719,
+      0.0836428507797205
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 24,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.3572792563421112,
+      0.3160074819482129,
+      0.31524922903623975,
+      0.3097961590208352,
+      0.3508321430881512
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 25,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.3419798791639778,
+      0.3006885728827655,
+      0.2976740854039615,
+      0.29302776028849736,
+      0.3358034497688319
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 26,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.2338653557231142,
+      0.23500190374897928,
+      0.23466352035732607,
+      0.23834557030748485,
+      0.23674793816374237
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 27,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.11990602210842807,
+      0.121538658921874,
+      0.11912161696079515,
+      0.12457560319770081,
+      0.12707210788417483
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 28,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.1049305090325533,
+      0.10713145257208181,
+      0.10472444324220169,
+      0.10708682853434393,
+      0.10781435012337841
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 29,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-low",
+      "n_g": 2,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.40144788631816175,
+      0.3592417166151652,
+      0.36062066614777794,
+      0.3545474157012393,
+      0.3911811007826803
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 30,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.05465893207712144,
+      0.05493431319670844,
+      0.05446063736361113,
+      0.054812618795553894,
+      0.05472635108892897
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 31,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "edge-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.09021289409122123,
+      0.09064483646929095,
+      0.09005568507658644,
+      0.09118310088826413,
+      0.09072257377319773
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 32,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-high",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.0890591063281382,
+      0.09200170940197926,
+      0.08835145764256866,
+      0.09373057436267163,
+      0.09562090440800122
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 33,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.20940609803789015,
+      0.21156579412289628,
+      0.20917478886398727,
+      0.21233711212302392,
+      0.21237340848311043
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 34,
+    "design": {
+      "n_e": 4,
+      "edge_cls": "edge-med",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 2,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.09115592765358814,
+      0.09260506519586903,
+      0.09113856432148722,
+      0.0933751602862428,
+      0.09368716958246522
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 35,
+    "design": {
+      "n_e": 3,
+      "edge_cls": "edge-low",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "cloud-first",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.09295910632813693,
+      0.09590170940197823,
+      0.09225145764256754,
+      0.09763057436267057,
+      0.09952090440800075
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 36,
+    "design": {
+      "n_e": 12,
+      "edge_cls": "edge-med",
+      "n_g": 4,
+      "gw_cls": "gw-high",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.08801506105013707,
+      0.0894322377477295,
+      0.0880255705214334,
+      0.09024121883981594,
+      0.09049137390384303
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 37,
+    "design": {
+      "n_e": 6,
+      "edge_cls": "edge-med",
+      "n_g": 1,
+      "gw_cls": "gw-high",
+      "rep": 3,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.08801506105013707,
+      0.0894322377477295,
+      0.0880255705214334,
+      0.09024121883981594,
+      0.09049137390384303
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 38,
+    "design": {
+      "n_e": 2,
+      "edge_cls": "edge-high",
+      "n_g": 2,
+      "gw_cls": "gw-high",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "fast",
+      "cloud_cls": "cloud-high"
+    },
+    "mean_by_seed": [
+      0.07539963996731769,
+      0.07645027168125801,
+      0.07498253838730921,
+      0.07734376371522154,
+      0.07769721195078597
+    ]
+  },
+  {
+    "workload": "sensing",
+    "design_index": 39,
+    "design": {
+      "n_e": 8,
+      "edge_cls": "edge-high",
+      "n_g": 4,
+      "gw_cls": "gw-low",
+      "rep": 1,
+      "policy": "balanced",
+      "link_cls": "standard",
+      "cloud_cls": "cloud-med"
+    },
+    "mean_by_seed": [
+      0.35087987916398194,
+      0.30958857288276703,
+      0.30657408540396397,
+      0.3019277602885,
+      0.3447034497688342
+    ]
+  }
+]

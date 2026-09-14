@@ -4,7 +4,7 @@ or to the raw result CSVs. Prints anything that is only typed by hand."""
 import re, glob, os, sys
 
 M = "manuscript"
-PROSE = sorted(glob.glob(f"{M}/sections_sn/*.tex") + glob.glob(f"{M}/sections_ce/*.tex"))
+PROSE = sorted(glob.glob(f"{M}/sections_sn/*.tex"))
 SOURCES = sorted(glob.glob(f"{M}/generated/*.tex") + glob.glob(f"{M}/tables/*.tex")
                  + [f"{M}/generated_numbers.tex"] + glob.glob("results/*.csv"))
 

@@ -4,3 +4,16 @@ __pycache__/
 
 .DS_Store
 *.zip
+
+.venv/
+results/*.log
+*.aux
+*.log
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.out
+*.spl
+*.synctex.gz
+!manuscript/sn-manuscript/main.bbl

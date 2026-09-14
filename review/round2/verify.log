@@ -1,7 +1,0 @@
-.venv/bin/python experiments/verify_run.py results/v1.1-submission-results/data
-Fresh-process E1 counters and funnel conservation: PASS
-960 stochastic runs: full-call budgets and 24 statistical comparisons: PASS
-Exactness, cost projection and persisted DES timing: PASS
-HCADSE_RESULTS=results/v1.1-submission-results/data .venv/bin/python experiments/verify_manuscript_numbers.py
-Generated numerical claims from results/v1.1-submission-results/data
-Sealed source/data hashes and regenerated numerical prose: PASS

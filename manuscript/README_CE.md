@@ -1,29 +1,23 @@
 # Версия под Communications Engineering (Nature Portfolio)
 
-`main.tex` — версия под Journal of Systems Architecture, **не тронута**.
-`main_ce.tex` — версия под Communications Engineering. Общие ресурсы (figures/,
-tables/, generated_numbers.tex, refs.bib) используются обеими версиями, поэтому
-пересчёт результатов автоматически обновляет обе.
+В репозитории две действующие версии статьи:
 
-Сборка:
+- `main.tex` + `sections/` + `supplement.tex` — Journal of Systems Architecture
+  (elsarticle), **не тронута**, лежит на всякий случай;
+- `sn_main.tex` + `sections_sn/` + `supplement_sn.tex` — Communications Engineering,
+  свёрстана официальным шаблоном Springer Nature. Готовый пакет подачи —
+  `manuscript/sn-manuscript/` (генерируется скриптом, см. ниже).
 
-```bash
-cd manuscript
-pdflatex main_ce && bibtex main_ce && pdflatex main_ce && pdflatex main_ce
-pdflatex supplement_ce && pdflatex supplement_ce
-```
-
-Структура CE-версии: Introduction -> Results -> Discussion -> Methods -> back matter,
-как требует Nature Portfolio. Текст основной части (без Methods) ~2 400 слов при лимите
-5 000; display items ровно 10 (7 рисунков + 3 таблицы) при лимите 10.
-Всё остальное — в `supplement_ce.tex`: Supplementary Note 1 (полные доказательства),
-Supplementary Note 2 (полная модель) и Supplementary Tables S1-S13.
+Общие ресурсы (`figures/`, `tables/`, `generated/`, `generated_numbers.tex`,
+`refs.bib`) используются обеими версиями, поэтому пересчёт результатов обновляет обе.
+Промежуточная elsarticle-версия под CE (`main_ce.tex`, `sections_ce/`,
+`supplement_ce.tex`) удалена как устаревшая — она осталась в истории git.
 
 ## Вариант в шаблоне Springer Nature (sn-jnl)
 
 `sn_main.tex` + `supplement_sn.tex` — та же CE-версия, свёрстанная официальным
 шаблоном Springer Nature (`sn-jnl.cls`, стиль ссылок `sn-nature.bst`; оба файла
-скопированы в `manuscript/`, папка `sn-article-template/` осталась нетронутой).
+скопированы в `manuscript/`, скачанная папка шаблона удалена как дубликат).
 
 ```bash
 cd manuscript
@@ -31,8 +25,8 @@ pdflatex sn_main && bibtex sn_main && pdflatex sn_main && pdflatex sn_main
 pdflatex supplement_sn && pdflatex supplement_sn
 ```
 
-Текст берётся из `sections_sn/` — это копии `sections_ce/` со снятыми звёздочками в
-заголовках (в шаблоне SN разделы нумеруются) плюс вынесенные в отдельные файлы
+Текст берётся из `sections_sn/`: разделы без звёздочек (в шаблоне SN они нумеруются)
+плюс вынесенные в отдельные файлы
 display items: `fig1.tex`, `tab1.tex`, `displays.tex`. Рисунки, таблицы, числа и
 библиография общие со всеми версиями.
 
@@ -63,3 +57,9 @@ resizebox.
 
 Файлы: `COVER_LETTER_CE.md` (новое письмо), `COVER_LETTER.md` (старое, под JSA),
 `HIGHLIGHTS.txt` (нужен только для JSA — Nature Portfolio highlights не просит).
+
+## Пакет подачи
+
+`python3 experiments/make_submission_package.py` собирает `manuscript/sn-manuscript/`:
+`main.tex` и `supplement.tex` со всеми развёрнутыми `\input`, `refs.bib`, `main.bbl`,
+`sn-jnl.cls`, `sn-nature.bst`, `figures/`. Именно эту папку загружать в редакцию.

@@ -1,6 +1,6 @@
 %% Communications Engineering (Nature Portfolio) submission, typeset with the
 %% Springer Nature sn-jnl class. The Elsevier-format versions main.tex (JSA) and
-%% main_ce.tex are kept unchanged; this file shares the same figures, tables,
+%% main.tex (Elsevier/JSA version) is kept unchanged; this file shares the same figures, tables,
 %% generated numbers and bibliography, so recomputing results updates all of them.
 \documentclass[pdflatex,sn-nature,lineno]{sn-jnl}
 
@@ -26,16 +26,16 @@
 \newcommand{\PS}{\mathcal{P}^{\star}}
 \newcommand{\LB}{\mathit{LB}}
 
-\newcommand{\EvalRange}{16\text{--}61}
-\newcommand{\SthreeEvalRange}{41\text{--}50}
-\newcommand{\SfourEvalRange}{51\text{--}55}
-\newcommand{\DesCostMs}{32.8}
-\newcommand{\ProjectionMax}{771}
-\newcommand{\BaselineRecallRange}{0.50\text{--}0.93}
+\newcommand{\EvalRange}{16\text{--}63}
+\newcommand{\SthreeEvalRange}{43\text{--}56}
+\newcommand{\SfourEvalRange}{52\text{--}62}
+\newcommand{\DesCostMs}{33.6}
+\newcommand{\ProjectionMax}{758}
+\newcommand{\BaselineRecallRange}{0.65\text{--}0.94}
 \newcommand{\WithinAgreementRange}{88.6\text{--}91.3}
 \newcommand{\PooledAgreement}{97.8}
-\newcommand{\MaxStates}{16\,780}
-\newcommand{\AnalyticalSpeedup}{1.32\text{--}3.15}
+\newcommand{\MaxStates}{18\,082}
+\newcommand{\AnalyticalSpeedup}{2.58\text{--}4.96}
 
 \raggedbottom
 
@@ -293,7 +293,7 @@ from this property; the statements and proofs are in Methods and Supplementary N
 
 \subsection{Expensive evaluations become the scarce resource that is actually spent}
 %
-The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing 99.90\text{--}99.92\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of 99.98\text{--}99.99\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.
+The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing 99.89\text{--}99.92\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of 99.98\text{--}99.98\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.
 The composition of the funnel differs by workload: for data-intensive sensing the
 feasibility bounds remove the largest share, whereas for telemetry dominance pruning does
 most of the work, reflecting which constraint binds in each regime.
@@ -305,7 +305,7 @@ identical to the exhaustive Pareto front, with recall and precision of $1.0$
 partial designs against all their completions --- and for every pruned partial design all
 completions were enumerated and checked against the claim of the rule that discarded it.
 %
-The finite-table Z3 baseline recovers the same unrounded analytical front in all six S1/S2 cases (\RefSolverTab{}). It consumes 1080 evaluator calls on S1 and 3888 on S2, because the whole structurally valid relation must be built before solving. Total observed runtime is $0.166\text{--}3.319$\,s, including table construction. This establishes an executable exact solver comparison, but does not compare HCA-DSE with a compact symbolic formulation that can avoid evaluator calls.
+The finite-table Z3 baseline recovers the same unrounded analytical front in all six S1/S2 cases (\RefSolverTab{}). It consumes 1080 evaluator calls on S1 and 3888 on S2, because the whole structurally valid relation must be built before solving. Total observed runtime is $0.217\text{--}4.696$\,s, including table construction. This establishes an executable exact solver comparison, but does not compare HCA-DSE with a compact symbolic formulation that can avoid evaluator calls.
 
 \subsection{The saving converts into time when evaluation is expensive}
 Whether fewer evaluations translate into less time depends on what an evaluation costs.
@@ -313,20 +313,20 @@ We measured the overhead of the exploration itself and the cost of one design-po
 evaluation for two evaluators, and projected the resulting speed-up
 (Fig.~\ref{fig:ce:crossover}).
 %
-S2: the break-even threshold is $1.25\text{--}2.55\,\mu$s; projected speed-up at the measured DES cost is $86.4\text{--}146.7\times$, with asymptotic evaluation-count ratios of $88.4\text{--}149.5\times$.
-S3: the break-even threshold is $-1.02\text{--}0.40\,\mu$s; projected speed-up at the measured DES cost is $638.2\text{--}771.1\times$, with asymptotic evaluation-count ratios of $691.2\text{--}842.9\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
+S2: the break-even threshold is $-6.14\text{--}-0.19\,\mu$s; projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
+S3: the break-even threshold is $-3.95\text{--}-2.14\,\mu$s; projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
 neither exploration strategy was executed end to end with DES in the inner loop.
-The measured analytical-evaluator speed-up across S2/S3 is $1.32\text{--}3.15\times$. These hardware- and implementation-specific values do not establish
+The measured analytical-evaluator speed-up across S2/S3 is $2.58\text{--}4.96\times$. These hardware- and implementation-specific values do not establish
 simulator-level Pareto exactness or a universal crossover cost.
 
 \subsection{Guarantees at a fraction of a stochastic search budget}
 Under matched evaluation budgets, NSGA-II approaches the exact front but does not reach
 it, and cannot certify what is missing (Fig.~\ref{fig:ce:hv}, Table~\ref{tab:ce:base}).
 %
-\RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. S2: at $B=1000$, NSGA-II median recall is $0.800\text{--}0.926$ and median HV ratio is $0.999\text{--}1.000$; random-search median recall is $0.240\text{--}0.259$.
-S3: at $B=1000$, NSGA-II median recall is $0.500\text{--}0.741$ and median HV ratio is $0.946\text{--}0.984$; random-search median recall is $0.000\text{--}0.032$.
-On S3 at $B=500/1000$, 0 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $0.057\text{--}0.338$ and Cliff\textquotesingle{}s $\delta$ from $0.080\text{--}0.295$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
+\RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. S2: at $B=1000$, NSGA-II median recall is $0.900\text{--}0.944$ and median HV ratio is $0.999\text{--}1.000$; random-search median recall is $0.160\text{--}0.188$.
+S3: at $B=1000$, NSGA-II median recall is $0.645\text{--}0.741$ and median HV ratio is $0.969\text{--}0.991$; random-search median recall is $0.000\text{--}0.018$.
+On S3 at $B=500/1000$, 4 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $0.000\text{--}0.168$ and Cliff\textquotesingle{}s $\delta$ from $0.180\text{--}0.800$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
 All 960 stochastic runs satisfy $N_E=B$ and proposals $=N_E+$ structural rejections.
 This accounting includes infeasible full evaluations. \RefHvFig{} shows
 seed-level HV distributions; Supplementary Tables S1--S3 retain all budgets.
@@ -338,12 +338,12 @@ bounds exist.
 
 \subsection{The mechanism scales because the space is never built}
 %
-The scalability sweep (\RefScalSite{}) covers raw spaces from $1.3\times10^3$ to $8.3\times10^7$ candidates. Across the sweep, expanded partial states never exceed $16780$; full evaluations range from $18\text{--}61$. The largest observed runtime is $3.98$\,s, measured with Python memory tracing enabled, and peak traced allocations are $99.6$\,KiB. This is traced Python memory during search, not process RSS or total interpreter memory. Exhaustive front equality is not checked for these larger spaces.
+The scalability sweep (\RefScalSite{}) covers raw spaces from $1.3\times10^3$ to $8.3\times10^7$ candidates. Across the sweep, expanded partial states never exceed $18082$; full evaluations range from $18\text{--}63$. The largest observed runtime is $5.52$\,s, measured with Python memory tracing enabled, and peak traced allocations are $75.3$\,KiB. This is traced Python memory during search, not process RSS or total interpreter memory.
 Exhaustive front equality cannot be checked at these sizes and is not claimed there.
 
 Two internal ablations show where the reduction comes from.
 %
-The layer ablation on S3 (\RefAblationSite{}) separates the contributions of the three pruning layers. Structural pruning alone leaves $34\,560$ full evaluations. Structural plus feasibility bounds leave $7025\text{--}12700$, while structural plus dominance bounds leave $322\text{--}415$. Combining all layers leaves $\SthreeEvalRange$. Every variant preserves the exhaustive analytical front; the separate layers contribute complementary reductions on these spaces.
+The layer ablation on S3 (\RefAblationSite{}) separates the contributions of the three pruning layers. Structural pruning alone leaves $34\,560$ full evaluations. Structural plus feasibility bounds leave $7025\text{--}12700$, while structural plus dominance bounds leave $328\text{--}412$. Combining all layers leaves $\SthreeEvalRange$. Every variant preserves the exhaustive analytical front; the separate layers contribute complementary reductions on these spaces.
 The layers are complementary, because feasibility pruning removes exactly the sub-trees in
 which the dominance test would otherwise be repeated (Supplementary Table~S6). Toggling
 the contention-aware term of the bound while holding the traversal order fixed isolates
@@ -424,35 +424,35 @@ full evaluations; the full budget sweep is in Supplementary Tables~S1--S3.}
 scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \midrule
 
-\multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.044 \\
- & & random ($B$=1000) & 1000 & 0.259 & 0.927 & 0.0388 & 0.014 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.926 & 0.999 & 0.0002 & 0.147 \\
- & & \textbf{HCA-DSE} & \textbf{44} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.036 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.060 \\
+ & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.017 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.184 \\
+ & & \textbf{HCA-DSE} & \textbf{50} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.017 \\
 \midrule
-\multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.042 \\
- & & random ($B$=1000) & 1000 & 0.240 & 0.922 & 0.0377 & 0.014 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.800 & 0.999 & 0.0030 & 0.160 \\
- & & \textbf{HCA-DSE} & \textbf{37} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.035 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.050 \\
+ & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.017 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.197 \\
+ & & \textbf{HCA-DSE} & \textbf{39} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.015 \\
 \midrule
-\multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.029 \\
- & & random ($B$=1000) & 1000 & 0.250 & 0.897 & 0.0626 & 0.010 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.875 & 1.000 & 0.0017 & 0.182 \\
- & & \textbf{HCA-DSE} & \textbf{26} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.016 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.035 \\
+ & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.012 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.235 \\
+ & & \textbf{HCA-DSE} & \textbf{26} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.012 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.308 \\
- & & random ($B$=1000) & 1000 & 0.032 & 0.732 & 0.1147 & 0.011 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.500 & 0.946 & 0.0454 & 0.145 \\
- & & \textbf{HCA-DSE} & \textbf{50} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.138 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.354 \\
+ & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.013 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.199 \\
+ & & \textbf{HCA-DSE} & \textbf{56} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.063 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.265 \\
- & & random ($B$=1000) & 1000 & 0.000 & 0.725 & 0.1189 & 0.010 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.984 & 0.0236 & 0.147 \\
- & & \textbf{HCA-DSE} & \textbf{41} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.125 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.323 \\
+ & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.012 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.209 \\
+ & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.065 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.266 \\
- & & random ($B$=1000) & 1000 & 0.000 & 0.658 & 0.1569 & 0.010 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.951 & 0.1677 & 0.175 \\
- & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.085 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.356 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.012 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.218 \\
+ & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.074 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -511,8 +511,8 @@ The reason this works is narrower than "pruning works" and should be stated prec
 Safe pruning of partial designs is an established idea in embedded system
 synthesis\cite{neubauer2018exact,lukasiewycz2008symbolic} and in multi-objective search
 more generally\cite{mandow2010namoa,paretopruning2022}. Its usual precondition ---
-objectives that accumulate monotonically with each decision --- fails for the objective
-that dominates distributed cyber-physical systems, because latency depends on tier
+objectives that accumulate monotonically with each decision --- fails for a central objective in
+latency-sensitive distributed cyber-physical systems, because latency depends on tier
 utilisation and utilisation is fixed jointly by several decisions. The contribution here
 is a way to keep exactness without that precondition: relax each additive term separately
 over the domains still reachable, and order the decisions so that the contention term
@@ -524,9 +524,7 @@ here, so we make no empirical generality claim beyond the evaluated template. De
 across a computing continuum\cite{filippini2026replica,predictive2026}, partitioned
 inference pipelines whose accuracy and robustness depend on where each stage
 runs\cite{guo2023,guo2025}, and energy-driven co-design of cloud--edge
-serving\cite{cloud2026coopt}. Demonstrating that transfer on a structurally different
-template is the natural next step, and we make no claim of generality beyond the template
-evaluated here.
+serving\cite{cloud2026coopt}. Demonstrating that transfer is the natural next step.
 
 The exactness provided here has a precise scope. The guarantee is that the method returns the exact Pareto front of the
 analytical model; it says nothing about the model itself. A design-time method can be
@@ -725,10 +723,11 @@ reviewed the manuscript. Both authors approved the final version and take respon
 for its content.
 
 \bmhead{Use of AI tools}
-Large language model assistants were used to help draft and revise manuscript text and to
-assist with software implementation. All text, code and results were checked and edited by
-the authors, who take full responsibility for the content; no AI tool is listed as an
-author, and no AI tool generated or altered experimental data.
+ChatGPT (OpenAI) was used for language editing of author-written text: grammar, wording
+and readability. It was not used to generate the study design, the method, the software,
+the experiments, the results or their interpretation, and it did not generate or alter any
+data. All edited text was reviewed by the authors, who take full responsibility for the
+content of this manuscript. No AI tool is listed as an author.
 
 \bmhead{Funding}
 The authors received no specific funding for this work.

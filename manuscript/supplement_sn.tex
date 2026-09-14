@@ -72,9 +72,10 @@ contains $x$. Summing over $t\in T_i$ gives $\LB_i(p)\le\sum_t\varphi_t(x)=f_i(x
 \end{proof}
 
 The minima are taken independently per term, so the combination of values realising them
-need not correspond to any single completion; the bound is optimistic but valid. Every
-term of the model is monotone in each of its free variables, so each minimum is attained
-at a domain endpoint and is read from a table of precomputed extrema in constant time.
+need not correspond to any single completion; the bound is optimistic but valid. Because the
+decision domains are finite, the minimum of each term over the reachable domain is
+precomputed exactly and read from a table in constant time; for ordered scalar domains
+the minimum is attained at a domain endpoint, which is how the table is built.
 
 \begin{theorem}[Exactness on determined terms]\label{sthm:exact}
 Let $\mathrm{supp}(\varphi_t)$ be the set of variables $\varphi_t$ depends on. If

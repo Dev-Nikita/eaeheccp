@@ -1,6 +1,6 @@
 # Чек-лист перед подачей в Communications Engineering
 
-Статус на 2026-09-13. Отмечайте по мере закрытия.
+Статус на 2026-09-14. Отмечайте по мере закрытия.
 
 ## Готово
 - [x] структура Introduction → Results → Discussion → Methods → Declarations → References;
@@ -9,6 +9,8 @@
 - [x] нумерация строк (опция класса `lineno`);
 - [x] Declarations: Data availability, Code availability, Author contributions, Funding,
       Competing interests;
+- [x] SI и main говорят одно и то же про минимумы термов (конечные домены -> точный
+      предподсчёт; endpoint только для упорядоченных скалярных доменов);
 - [x] 41 цитируемый источник, у конференций видно venue (исправлена функция
       `format.in.ed.booktitle` в `sn-nature.bst`, из-за которой BibTeX падал и ссылки
       выводились как `???`);
@@ -19,8 +21,10 @@
       availability и Code availability; ORCID обоих авторов — в титульном блоке;
 - [x] добавлено заявление «Use of AI tools» (только языковая правка, без генерации
       содержания, кода или результатов);
-- [x] канонический порядок переменных в коде и в тексте совпадает (determinants-early);
-      все числа main и SI пересчитаны из одного набора результатов;
+- [x] канонический порядок переменных совпадает в коде, тексте, таблицах main, S6/S7/S11
+      и на рисунках: весь набор e1-e8, e10, e11 пересчитан заново (determinants-early),
+      Table 2 = 43-56 на S3, ablation и funnel из того же прогона;
+- [x] дискретные счётчики воспроизвелись в двух средах (Python 3.10 и 3.11) бит-в-бит;
 - [x] чистая папка подачи `manuscript/sn-manuscript/`: main.tex, supplement.tex,
       refs.bib, sn-jnl.cls, sn-nature.bst, figures/ — все \input развёрнуты,
       генерируется `python3 experiments/make_submission_package.py`;
