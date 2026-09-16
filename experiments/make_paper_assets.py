@@ -114,8 +114,8 @@ for scale in ("S2", "S3"):
                             f"{st.median(float(r['hv_ratio']) for r in s):.3f} & "
                             f"{st.median(float(r['igd_plus']) for r in s):.4f} & "
                             f"{st.median(float(r['runtime']) for r in s):.3f}" + r" \\")
-        rows.append(f" & & \\textbf{{HCA-DSE}} & \\textbf{{{h['n_eval']}}} & "
-                    f"\\textbf{{1.000}} & \\textbf{{1.000}} & \\textbf{{0.0000}} & "
+        rows.append(f" & & \\textbf{{HCA-DSE}} & {h['n_eval']} & "
+                    f"1.000 & 1.000 & 0.0000 & "
                     f"{float(h['runtime']):.3f}" + r" \\")
         rows.append(r"\midrule")
 tab("baselines", "\n".join(rows[:-1]).replace(",", r"\,"), colspec="lllrrrrr",

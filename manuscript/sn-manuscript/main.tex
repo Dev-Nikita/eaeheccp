@@ -84,11 +84,11 @@ that exact exploration remains achievable for such objectives. Bounds obtained b
 relaxing each term of an objective separately, combined with a decision order that makes
 the queueing term exactly computable on incomplete designs, allow provably safe
 elimination of infeasible and dominated regions before any evaluation. On spaces of up to
-$8.3\times10^{7}$ architectures, the method calls the expensive evaluator $\EvalRange$
-times and returns the exact set of optimal trade-offs wherever exhaustive enumeration can
-confirm it. In an independent containerised deployment with the model frozen beforehand,
-the predicted ordering matches the measured ordering for $\WithinAgreementRange\%$ of
-clearly separated architecture pairs.}
+8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the expensive
+evaluator \EvalRange{} times and returns the exact set of optimal trade-offs wherever
+exhaustive enumeration can confirm it. In an independent containerised deployment with the
+model frozen beforehand, the predicted ordering matches the measured ordering for
+\WithinAgreementRange\% of clearly separated architecture pairs.}
 
 \keywords{architecture exploration, cyber-physical systems, edge computing,
 multi-objective optimisation, design automation}
@@ -271,8 +271,8 @@ CompDSE\cite{saadatmand2025compdse} & 2025 & industrial dCPS & perf. & --- & non
   traces \\
 Kouloumpris et al.\cite{kouloumpris2026reliability} & 2026 & edge/hub/cloud & 2 &
   yes (BILP) & solver & no & case study \\
-\textbf{This work} & 2026 & heterogeneous edge--cloud CPS & \textbf{4} & \textbf{yes} &
-  \textbf{bounds} & \textbf{yes} & \textbf{yes} \\
+\textbf{This work} & 2026 & heterogeneous edge--cloud CPS & 4 & yes &
+  bounds & yes & yes \\
 \bottomrule
 \end{tabular}}
 \end{table*}
@@ -429,32 +429,32 @@ scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.060 \\
  & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.017 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.184 \\
- & & \textbf{HCA-DSE} & \textbf{50} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.017 \\
+ & & \textbf{HCA-DSE} & 50 & 1.000 & 1.000 & 0.0000 & 0.017 \\
 \midrule
 \multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.050 \\
  & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.017 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.197 \\
- & & \textbf{HCA-DSE} & \textbf{39} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.015 \\
+ & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.015 \\
 \midrule
 \multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.035 \\
  & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.012 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.235 \\
- & & \textbf{HCA-DSE} & \textbf{26} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.012 \\
+ & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.012 \\
 \midrule
 \multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.354 \\
  & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.013 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.199 \\
- & & \textbf{HCA-DSE} & \textbf{56} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.063 \\
+ & & \textbf{HCA-DSE} & 56 & 1.000 & 1.000 & 0.0000 & 0.063 \\
 \midrule
 \multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.323 \\
  & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.012 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.209 \\
- & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.065 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.065 \\
 \midrule
 \multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.356 \\
  & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.012 \\
  & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.218 \\
- & & \textbf{HCA-DSE} & \textbf{43} & \textbf{1.000} & \textbf{1.000} & \textbf{0.0000} & 0.074 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.074 \\
 \bottomrule
 \end{tabular}}
 \end{table}
