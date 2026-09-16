@@ -54,7 +54,7 @@ def main():
     shutil.copyfile(M / "sn-nature.bst", OUT / "sn-nature.bst")
     shutil.copyfile(M / "refs.bib", OUT / "refs.bib")
     # names produced by earlier versions of this script; remove if still around
-    for stale_name in ("refs_sn.bib", "sn_main.tex", "supplement_sn.tex"):
+    for stale_name in ("refs_sn.bib", "sn_main.tex", "supplement_sn.tex", ".DS_Store"):
         if (OUT / stale_name).exists():
             (OUT / stale_name).unlink()
     figures = OUT / "figures"

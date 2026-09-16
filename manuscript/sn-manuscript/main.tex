@@ -62,8 +62,8 @@
 exploration for heterogeneous edge--cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
-\author[1]{\fnm{Vasyl} \sur{Tomyuk}}\email{vasyl.a.tomiuk@lpnu.ua}
-%% ORCID: N. Tarasov 0000-0003-1870-3436; V. Tomyuk 0000-0003-4999-7019
+\author[1]{\fnm{Roman} \sur{Zinko}}\email{roman.v.zinko@lpnu.ua}
+%% ORCID: N. Tarasov 0000-0003-1870-3436; R. Zinko 0000-0002-3275-8188
 
 \affil*[1]{\orgdiv{Institute of Computer Science and Information Technologies},
 \orgname{Lviv Polytechnic National University}, \orgaddress{\street{S. Bandery St. 12},
@@ -84,7 +84,7 @@ that exact exploration remains achievable for such objectives. Bounds obtained b
 relaxing each term of an objective separately, combined with a decision order that makes
 the queueing term exactly computable on incomplete designs, allow provably safe
 elimination of infeasible and dominated regions before any evaluation. On spaces of up to
-$8.3\times10^{7}$ architectures the method calls the expensive evaluator $\EvalRange$
+$8.3\times10^{7}$ architectures, the method calls the expensive evaluator $\EvalRange$
 times and returns the exact set of optimal trade-offs wherever exhaustive enumeration can
 confirm it. In an independent containerised deployment with the model frozen beforehand,
 the predicted ordering matches the measured ordering for $\WithinAgreementRange\%$ of
@@ -328,7 +328,7 @@ it, and cannot certify what is missing (Fig.~\ref{fig:ce:hv}, Table~\ref{tab:ce:
 %
 \RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. S2: at $B=1000$, NSGA-II median recall is $0.900\text{--}0.944$ and median HV ratio is $0.999\text{--}1.000$; random-search median recall is $0.160\text{--}0.188$.
 S3: at $B=1000$, NSGA-II median recall is $0.645\text{--}0.741$ and median HV ratio is $0.969\text{--}0.991$; random-search median recall is $0.000\text{--}0.018$.
-On S3 at $B=500/1000$, 4 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $<0.001\text{--}0.168$ and Cliff\textquotesingle{}s $\delta$ from $0.180\text{--}0.800$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
+On S3 at $B=500/1000$, 4 of the six exploratory one-sided comparisons have unadjusted $p<0.05$; individual unadjusted $p$-values range from $<0.001$ to $0.168$ and Cliff\textquotesingle{}s $\delta$ from $0.180\text{--}0.800$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied. HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
 All 960 stochastic runs satisfy $N_E=B$ and proposals $=N_E+$ structural rejections.
 This accounting includes infeasible full evaluations. \RefHvFig{} shows
 seed-level HV distributions; Supplementary Tables S1--S3 retain all budgets.
@@ -721,8 +721,8 @@ every display item from the raw results are archived in the same Zenodo record,
 
 \bmhead{Author contributions}
 N.T. (ORCID 0000-0003-1870-3436) designed the method, implemented the software and the
-deployment, ran the experiments and wrote the manuscript. V.T. (ORCID
-0000-0003-4999-7019) contributed to the system model and the experimental design and
+deployment, ran the experiments and wrote the manuscript. R.Z. (ORCID
+0000-0002-3275-8188) contributed to the system model and the experimental design and
 reviewed the manuscript. Both authors approved the final version and take responsibility
 for its content.
 

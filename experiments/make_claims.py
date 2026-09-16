@@ -53,7 +53,7 @@ d=[r for r in e8 if r['scale']=='S3' and r['budget'] in ['500','1000']];sig=sum(
 pvals=[float(r['p_nsga2_gt_random']) for r in d]
 plo=('<0.001' if min(pvals)<0.0005 else f"{min(pvals):.3f}")
 prange=plo+r'\text{--}'+f"{max(pvals):.3f}"
-lines.append('On S3 at $B=500/1000$, '+str(sig)+r' of the six exploratory one-sided comparisons have unadjusted $p<0.05$; $p$ ranges from $'+prange+r'$ and Cliff\textquotesingle{}s $\delta$ from $'+ran((float(r['cliffs_delta']) for r in d),3)+r'$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied.')
+lines.append('On S3 at $B=500/1000$, '+str(sig)+r' of the six exploratory one-sided comparisons have unadjusted $p<0.05$; individual unadjusted $p$-values range from $'+plo+r'$ to $'+f"{max(pvals):.3f}"+r'$ and Cliff\textquotesingle{}s $\delta$ from $'+ran((float(r['cliffs_delta']) for r in d),3)+r'$. The individual results are in \RefStatsTab{}; no correction for multiple comparisons is applied.')
 write('rq4',r'\RefBaselinesTab{} reports medians over 20 seeds, with budgets charged to actual full evaluator calls. '+'\n'.join(lines)+r''' HCA-DSE recovers the full analytical front on S3 with $\SthreeEvalRange$ evaluations.
 All 960 stochastic runs satisfy $N_E=B$ and proposals $=N_E+$ structural rejections.
 This accounting includes infeasible full evaluations. \RefHvFig{} shows
