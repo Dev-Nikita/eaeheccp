@@ -2,7 +2,7 @@
 directly from the result CSVs. No number in the paper is typed by hand."""
 import sys, os, csv, statistics as st, json
 from pathlib import Path
-RESULTS = Path(os.environ.get("HCADSE_RESULTS", "results/v1.1-submission-results/data"))
+RESULTS = Path(os.environ.get("HCADSE_RESULTS", "results/v1.2-canonical-order/data"))
 sys.path.insert(0, str(RESULTS.resolve().parent / "source"))
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt

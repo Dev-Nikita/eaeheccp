@@ -2,7 +2,7 @@
 import csv,json,os,statistics as st
 from pathlib import Path
 from scipy.stats import spearmanr
-R=Path(os.environ.get('HCADSE_RESULTS','results/v1.1-submission-results/data'))
+R=Path(os.environ.get('HCADSE_RESULTS','results/v1.2-canonical-order/data'))
 G=Path('manuscript/generated');G.mkdir(exist_ok=True)
 T=Path('manuscript/tables')
 def read(n):return list(csv.DictReader((R/n).open()))

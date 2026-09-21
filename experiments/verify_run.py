@@ -26,7 +26,7 @@ for x in read('e8_stats.csv'):
  delta=sum((u>v)-(u<v) for u in a for v in b)/400
  assert abs(delta-float(x['cliffs_delta']))<.00051
 print('960 stochastic runs: full-call budgets and 24 statistical comparisons: PASS')
-for n in ['e4_ablation.csv','e10_order.csv','e11_solver.csv']:
+for n in ['e4_ablation.csv','e10_order.csv','e11_solver.csv','e12_symbolic.csv']:
  assert all(x['exact']=='True' for x in read(n)),n
 for x in read('e2_costsweep.csv'):
  h=next(y for y in e1 if all(x[k]==y[k] for k in ['scale','workload']))

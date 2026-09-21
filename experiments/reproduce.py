@@ -8,12 +8,13 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--release',default='v1.1-submission-results');ap.add_argument('--testbed',type=Path);a=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--release',default='v1.2-canonical-order');ap.add_argument('--testbed',type=Path);a=ap.parse_args()
  release=ROOT/'results'/a.release
  if (release/'manifest.json').exists() or (release/'source').exists():raise SystemExit('Refusing to overwrite an existing run; choose a new --release')
  source=release/'source';source.mkdir(parents=True);(source/'results').mkdir();(release/'logs').mkdir(exist_ok=True)
  for folder in ['hcadse','experiments','tests','configs']:
-  shutil.copytree(ROOT/folder,source/folder,ignore=shutil.ignore_patterns('__pycache__'))
+  if (ROOT/folder).exists():
+   shutil.copytree(ROOT/folder,source/folder,ignore=shutil.ignore_patterns('__pycache__'))
  shutil.copytree(ROOT/'testbed',source/'testbed',ignore=shutil.ignore_patterns('run','run-round2','bin','__pycache__'))
  shutil.copyfile(ROOT/'requirements-lock.txt',source/'requirements-lock.txt')
  shutil.copyfile(ROOT/'Makefile',source/'Makefile')
@@ -23,7 +24,7 @@ def main():
  scripts=['tests/test_core.py','tests/test_regression.py','tests/test_pruning_safety.py','tests/test_revision.py',
  'experiments/e1_pruning.py','experiments/e2_costsweep.py','experiments/e3_baselines.py','experiments/e4_ablation.py',
  'experiments/e5_scalability.py','experiments/e6_simvalidation.py','experiments/e7_calibration.py','experiments/e8_stats.py',
- 'experiments/e10_order.py','experiments/e11_solver.py']
+ 'experiments/e10_order.py','experiments/e11_solver.py','experiments/e12_symbolic.py']
  for script in scripts:
   print('RUN',script,flush=True)
   with (release/'logs'/(Path(script).stem+'.log')).open('w') as log:
@@ -37,6 +38,9 @@ def main():
    subprocess.run([sys.executable,'testbed/analyze.py','--input',str(data/'e9_testbed_round2.csv'),
     '--designs','testbed/specs/designs.json','--tag',tag,'--metric',metric,'--output-dir',str(data),
     '--figure-dir',str(release/'validation-figures')],cwd=source,env=env,check=True)
+  # decision reliability needs the per-design deployment summary written just above
+  subprocess.run([sys.executable,'experiments/e13_reliability.py'],cwd=source,
+   env=dict(env,HCADSE_RESULTS=str(data)),check=True)
 
  manifest=dict(release=a.release,started_utc=start,finished_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
  python=sys.version,platform=platform.platform(),machine=platform.machine(),processor=platform.processor(),
