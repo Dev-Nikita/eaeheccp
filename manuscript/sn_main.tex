@@ -34,8 +34,8 @@
 
 \begin{document}
 
-\title[Exact architecture exploration for edge--cloud CPS]{Exact architecture
-exploration for heterogeneous edge--cloud cyber-physical systems}
+\title[Exact architecture exploration for edge and cloud systems]{Exact architecture
+exploration for heterogeneous edge and cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
 \author[1]{\fnm{Roman} \sur{Zinko}}\email{roman.v.zinko@lpnu.ua}
@@ -48,23 +48,23 @@ exploration for heterogeneous edge--cloud cyber-physical systems}
 \abstract{Deciding how many edge nodes and gateways a distributed cyber-physical system
 should have, which hardware and network classes to use, where each processing stage runs
 and how far it is replicated determines whether the system meets its deadline and what it
-costs to run. The number of candidate architectures grows into the millions, while a
-single candidate is evaluated by simulation that can take up to a minute, so the
-practical budget is the number of expensive evaluations an engineer can afford.
-Exhaustive search pays for every candidate; evolutionary search fits a budget but cannot
-say which trade-offs it missed; and the exact methods closest to this
-problem commonly exploit objectives that accumulate monotonically with each decision,
-which end-to-end latency does not, because it depends on the utilisation of a tier that
-several decisions fix jointly. Here we show
-that exact exploration remains achievable for such objectives. Bounds obtained by
-relaxing each term of an objective separately, combined with a decision order that makes
-the queueing term exactly computable on incomplete designs, allow provably safe
-elimination of infeasible and dominated regions before any evaluation. On spaces of up to
-8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the expensive
-evaluator \EvalRange{} times and returns the exact set of optimal trade-offs wherever
-exhaustive enumeration can confirm it. In an independent containerised deployment with the
-model frozen beforehand, the predicted ordering matches the measured ordering for
-\WithinAgreementRange\% of clearly separated architecture pairs.}
+costs. Candidate architectures number in the millions and simulating one can take up to a
+minute, so the practical budget is the number of expensive evaluations an engineer can
+afford. Evolutionary search fits such a
+budget but cannot say which trade-offs it missed, and exact partial-design pruning relies
+on objectives that grow monotonically as decisions are fixed. End-to-end latency does not,
+because it depends on the utilisation of a tier that several decisions fix jointly. We
+show that exact pruning remains possible for such contention-dependent objectives.
+Bounds obtained by relaxing each term of an objective separately, combined with a decision
+order that makes the queueing term exactly computable on incomplete designs, allow
+provably safe elimination of infeasible and dominated regions before any evaluation. On
+spaces of up to 8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the
+expensive evaluator \EvalRange{} times and returns the exact set of optimal trade-offs
+wherever exhaustive enumeration can confirm it. In an independent containerised deployment
+with the model frozen beforehand, predicted and measured orders of two architectures
+agreed for \WithinAgreementRange\% of pairs separated by more than 25\% and for
+\ReliabilityFifty{} pairs separated by more than 50\%. Analytical models can thus
+certify which architectures need no high-fidelity evaluation.}
 
 \keywords{architecture exploration, cyber-physical systems, edge computing,
 multi-objective optimisation, design automation}

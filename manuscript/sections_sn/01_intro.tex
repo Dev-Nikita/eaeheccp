@@ -20,8 +20,8 @@ but the price of one answer: for distributed cyber-physical systems a single des
 simulation, and an industrial methodology built on execution traces of a lithography
 machine reports up to a minute per design point while explicitly leaving the search
 strategy out of scope\cite{saadatmand2025compdse}. A survey of the area concludes that
-scalable exploration technology for such systems is "more or less
-non-existing"\cite{herget2022dse}, even though the workload and platform models it needs
+scalable exploration technology for such systems is ``more or less
+non-existing''\cite{herget2022dse}, even though the workload and platform models it needs
 can now be derived automatically from execution traces\cite{saadatmand2024workload}. The
 engineering context is active in the opposite direction: orchestration, placement and
 scaling across the edge--cloud continuum are the subject of a steady stream of recent
@@ -58,7 +58,10 @@ lowers it. There is therefore no monotone accumulation to bound, and the guarant
 makes exact pruning attractive does not transfer.
 
 Here we show that exact exploration is nevertheless achievable for these objectives, and
-that it makes expensive architecture evaluation tractable rather than merely faster. We
+that it makes expensive architecture evaluation tractable rather than merely faster. The
+contribution is not partial-design pruning as such, which is established, but a way to
+keep it exact for objectives that are not monotone under incremental assignment because
+they depend on resource contention fixed jointly by several decisions. We
 construct admissible bounds for contention-dependent objectives by relaxing each additive
 term of an objective independently over the domains still reachable, and by ordering the
 decisions so that the determinants of tier utilisation are fixed early --- at which point
@@ -74,7 +77,10 @@ returns wherever exhaustive enumeration is still feasible. An independent contai
 edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
 that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
-within a workload. We report equally clearly where the gains shrink or the method does not apply: the
+within a workload, and for \ReliabilityFifty{} pairs it separates by more than $50\%$:
+the larger the predicted advantage, the more the design decision can be trusted. The
+method is therefore best read as a certified screening stage that decides which
+architectures need never reach a simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
 advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
 bounded by the overhead of the search itself; no admissible bound may be available at
 all; and near saturation neither the model nor the deployment is stable.

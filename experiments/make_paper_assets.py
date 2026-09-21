@@ -338,9 +338,11 @@ cb1 = f.colorbar(sc1, ax=axs[1], pad=0.02)
 cb1.set_label("cost [units]", fontsize=6); cb1.ax.tick_params(labelsize=5)
 fig("pareto", f)
 
-# F: model vs measurement (Docker testbed)
+# F: model vs measurement (Docker testbed): (a) predicted vs measured, (b) how often the
+#    predicted order of two architectures is the measured order, by predicted separation
 d = R("results/e9_per_design_mean.csv")
-f, ax = plt.subplots(figsize=(3.2, 2.9))
+f, axs = plt.subplots(1, 2, figsize=(6.6, 2.8), gridspec_kw={"width_ratios": [1, 1.05]})
+ax = axs[0]
 for w, mk in zip(WL, "ov^"):
     lo = [r for r in d if r["workload"] == w and float(r["spread"]) < 1.5]
     hi = [r for r in d if r["workload"] == w and float(r["spread"]) >= 1.5]
@@ -355,7 +357,27 @@ ax.plot(lim, lim, "k--", lw=.7); ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(*lim); ax.set_ylim(*lim)
 ax.set_xlabel("measured mean latency [ms]")
 ax.set_ylabel("analytical latency [ms]")
-ax.set_title("open markers: repeat spread $\\geq 1.5\\times$", fontsize=6)
+ax.set_title("(a) open markers: repeat spread $\\geq 1.5\\times$", fontsize=6.5)
 ax.legend(fontsize=6)
+ax = axs[1]
+rel = R("results/e13_reliability.csv")
+for subset, ls, lab in (("all", "-", "all 36 architectures"), ("reproducible", "--", "repeat spread $<1.5\\times$")):
+    pts = [r for r in rel if r["subset"] == subset and r["workload"] == "pooled" and r["pairs"] != "0"]
+    x = [100 * float(r["threshold"]) for r in pts]; y = [100 * float(r["agreement"]) for r in pts]
+    lo_ = [100 * float(r["ci_low"]) for r in pts]; hi_ = [100 * float(r["ci_high"]) for r in pts]
+    ax.plot(x, y, ls, color="#023858", marker="o", ms=3, lw=1, label=lab)
+    if subset == "all":
+        ax.fill_between(x, lo_, hi_, color="#a6bddb", alpha=.45, lw=0)
+        for xi, yi, r in zip(x, y, pts):
+            off = {0: (0, 6), 25: (0, 6), 50: (-14, 3), 100: (0, -11)}.get(round(xi))
+            if off:
+                ax.annotate(f"n={r['pairs']}", (xi, yi), textcoords="offset points",
+                            xytext=off, ha="center", fontsize=5.5)
+ax.set_xlabel("predicted separation of the pair [%]")
+ax.set_ylabel("pairs ordered as predicted [%]")
+ax.set_ylim(60, 104); ax.set_xlim(-4, 104)
+ax.set_title("(b) n: architecture pairs; band: 95% Wilson interval", fontsize=6.5)
+ax.legend(fontsize=6, loc="lower right")
+f.tight_layout()
 fig("testbed", f)
 print("done")

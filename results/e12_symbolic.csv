@@ -1,0 +1,10 @@
+scale,workload,method,raw,full_evaluator_calls,table_entries,solver_checks,pareto,build_s,total_s,verification_calls,exact
+S1,telemetry,smt-factorised,1296,0,221,51,17,0.192,2.698,17,True
+S1,control,smt-factorised,1296,0,225,52,18,0.052,3.186,18,True
+S1,sensing,smt-factorised,1296,0,199,37,11,0.052,1.409,11,True
+S2,telemetry,smt-factorised,5832,0,529,76,27,0.102,10.634,27,True
+S2,control,smt-factorised,5832,0,537,76,25,0.085,13.812,25,True
+S2,sensing,smt-factorised,5832,0,469,54,16,0.103,6.757,16,True
+S3,telemetry,smt-factorised,51840,0,2384,93,31,0.382,170.184,31,True
+S3,control,smt-factorised,51840,0,2406,78,27,0.405,157.413,27,True
+S3,sensing,smt-factorised,51840,0,2188,85,27,0.488,168.624,27,True

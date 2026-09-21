@@ -11,7 +11,7 @@ meeting; at the per-design-point costs reported for industrial trace-driven
 exploration\cite{saadatmand2025compdse} the projection is two to three orders of
 magnitude of wall-clock time.
 
-The reason this works is narrower than "pruning works" and should be stated precisely.
+The reason this works is narrower than ``pruning works'' and should be stated precisely.
 Safe pruning of partial designs is an established idea in embedded system
 synthesis\cite{neubauer2018exact,lukasiewycz2008symbolic} and in multi-objective search
 more generally\cite{mandow2010namoa,paretopruning2022}. Its usual precondition ---
@@ -20,7 +20,14 @@ latency-sensitive distributed cyber-physical systems, because latency depends on
 utilisation and utilisation is fixed jointly by several decisions. The contribution here
 is a way to keep exactness without that precondition: relax each additive term separately
 over the domains still reachable, and order the decisions so that the contention term
-stops being relaxed as early as possible. The mechanism is not specific to the template
+stops being relaxed as early as possible. Three classes of objective term can be distinguished.
+Terms that accumulate with each decision, such as deployment cost or transferred volume,
+admit the usual bounds. Terms that depend on contention, such as queueing delay or
+utilisation-dependent energy, admit exact bounds once the decisions that determine the
+contention are fixed, and the traversal order is chosen so that this happens early. Terms
+without a provable relaxation --- a black-box simulator output, for instance --- cannot be
+bounded; they can still be evaluated on the survivors, but they cannot drive pruning.
+The mechanism is not specific to the template
 studied here. Formally, it applies whenever admissible term-wise relaxations can be constructed and a
 subset of the architectural decisions determines the load-dependent terms. Empirical
 transfer to a structurally different architecture template has not been demonstrated
@@ -36,12 +43,24 @@ exact with respect to its own model and still inherit every error of that model.
 why the deployment round matters more than the correlation coefficient it produces: with
 $25\%$ absolute error, the model is not a substitute for a simulator or a measurement,
 but it orders clearly separated architectures the same way the hardware does in roughly
-nine cases out of ten, which is what a screening stage requires. The productive
+nine cases out of ten, and in \ReliabilityFifty{} cases once the predicted advantage exceeds
+$50\%$. That monotone relation between predicted separation and decision reliability is
+what a screening stage requires: it tells the engineer which comparisons can be settled on
+the model and which must be sent to a simulator or a test bench. The productive
 arrangement is therefore two-level. Analytical bounds remove the bulk of the space
 exactly and cheaply; the few dozen survivors are where a high-fidelity simulator or a
 physical deployment should spend its time. Nothing in the method requires the analytical
 model to be the final word, and an evaluator-centric methodology plugged in behind it
-would be strictly better than either component alone.
+would be strictly better than either component alone: trace-driven methodologies such as
+CompDSE\cite{saadatmand2025compdse} supply the high-fidelity evaluator and leave the search
+open, design-time tools for the computing continuum such as
+SPACE4AI-D\cite{sedghani2024space4aid} search heuristically, and the method here supplies
+the missing piece, a search that spends the evaluator only where optimality is still
+possible and certifies what it skipped. The compact symbolic baseline makes the same point
+from the other side. When the entire model is available in closed form, a factorised
+constraint encoding also recovers the exact front, without calling any evaluator; the
+reason to prune rather than solve is that the model which matters most is usually the one
+that is not available in closed form.
 
 Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
 space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
@@ -54,6 +73,11 @@ not be used, because an inadmissible bound silently converts an exact method int
 approximate one with no signal in the output. Third, near saturation the design-time
 prediction breaks down and so does the deployment, as six of our measured configurations
 show; architectures in that regime should be treated as unresolved rather than ranked.
+Fourth, the deployment measured latency only. Energy and network volume are computed by
+the model, and cost is a normalised relative tariff; the front is exact for all four
+objectives of the model, but only its latency ordering has been checked against hardware.
 Extending the guarantee to objectives that resist closed-form bounds, for example through
 surrogate bounds that remain provably admissible, is the most valuable open direction we
-see.
+see. More broadly, the results change what an analytical model is for in architecture
+design: it need not replace a high-fidelity evaluator to be useful, because it can
+certify which regions of a design space do not deserve one.

@@ -21,7 +21,8 @@ proj=[r for r in read('e2_costsweep.csv') if abs(float(r['C_E'])-des)<1e-12]
 means=[r for r in read('e9_summary_mean.csv') if r['subset']=='all'];pooled=next(r for r in means if r['workload']=='ALL');within=[r for r in means if r['workload']!='ALL']
 big=[r for r in e3 if r['method']=='nsga2' and int(r['budget'])==1000]
 recalls=[st.median(float(r['recall']) for r in big if r['scale']==sc and r['workload']==w) for sc in ['S2','S3'] for w in wl]
-macros={'EvalRange':ran(int(r['evals']) for r in e1+e5),'SthreeEvalRange':ran(int(r['evals']) for r in s3),'SfourEvalRange':ran(int(r['evals']) for r in s4),'DesCostMs':f'{des*1000:.1f}','ProjectionMax':f'{max(float(r["speedup"]) for r in proj):.0f}','BaselineRecallRange':ran(recalls,2),'WithinAgreementRange':ran((100*float(r['agree_25pct']) for r in within),1),'PooledAgreement':f'{100*float(pooled["agree_25pct"]):.1f}','MaxStates':f"{max(int(r['nodes']) for r in e5):,}".replace(',','\\,'),'AnalyticalSpeedup':ran((float(r['speedup']) for r in e1 if r['scale'] in ['S2','S3']),2)}
+macros={'EvalRange':ran(int(r['evals']) for r in e1+e5),'SthreeEvalRange':ran(int(r['evals']) for r in s3),'SfourEvalRange':ran(int(r['evals']) for r in s4),'DesCostMs':f'{des*1000:.1f}','ProjectionMax':f'{max(float(r["speedup"]) for r in proj):.0f}','BaselineRecallRange':ran(recalls,2),'WithinAgreementRange':ran((100*float(r['agree_25pct']) for r in within),1),'PooledAgreement':f'{100*float(pooled["agree_25pct"]):.1f}','MaxStates':f"{max(int(r['nodes']) for r in e5):,}".replace(',','\\,'),'ReliabilityFifty':(lambda r: f"{r['agree']} of {r['pairs']}")(next(q for q in read('e13_reliability.csv') if q['subset']=='all' and q['workload']=='pooled' and float(q['threshold'])==0.5)),
+'AnalyticalSpeedup':ran((float(r['speedup']) for r in e1 if r['scale'] in ['S2','S3']),2)}
 Path('manuscript/generated_numbers.tex').write_text('\n'.join('\\newcommand{\\'+k+'}{'+v+'}' for k,v in macros.items())+'\n')
 write('rq1',r'The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing '+ran((100*(1-int(r['evals'])/int(r['raw'])) for r in s3),2)+r'\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of '+ran((100*(1-int(r['evals'])/int(r['raw'])) for r in s4),2)+r'\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.')
 lines=[]
@@ -69,14 +70,34 @@ head=r'scale & workload & order & queue & states & checks & evals & active & pru
 table('order',head,[row for row in rows if row[0]=='S3'],'lll lrrrrrr'.replace(' ',''));table('order_full',head,rows,'llllrrrrrr')
 d=[r for r in e10 if r['scale']=='S3' and r['queue']=='True']
 write('order',r'\RefOrderTab{} crosses traversal order and queue-bound activation on S3 (all scales in the supplement). The canonical determinants-early order assigns node counts, node classes, replication and placement policy before the remaining variables; the determinants-late order assigns replication and policy last, so the waiting term stays relaxed to zero on every incomplete design. With the queue bound enabled, the canonical order performs $'+ran(int(r['evals']) for r in d if r['order']=='determinants-early')+r'$ full evaluations against $'+ran(int(r['evals']) for r in d if r['order']=='determinants-late')+r'$ for the determinants-late order, while expanding $'+ran(int(r['nodes']) for r in d if r['order']=='determinants-early')+r'$ partial designs against $'+ran(int(r['nodes']) for r in d if r['order']=='determinants-late')+r'$. Under the canonical order $'+ran(int(r['partial_queue_active']) for r in d if r['order']=='determinants-early')+r'$ checked incomplete designs carry a positive queueing contribution, of which $'+ran(int(r['partial_queue_pruned']) for r in d if r['order']=='determinants-early')+r'$ are discarded only because that term is present, against the same archive; under the determinants-late order the count is zero by construction. All 36 scale/workload/order/queue combinations preserve the unrounded exhaustive objective-vector set. Changing the order also changes the archive discovery sequence, so only the within-order on/off comparison isolates the bound toggle.')
-table('solver',r'scale & workload & calls & feasible & table [s] & solver [s] & total [s] & front',[[r['scale'],r['workload'],r['full_evaluator_calls'],r['feasible_rows'],f'{float(r["table_seconds"]):.3f}',f'{float(r["solver_and_encoding_seconds"]):.3f}',f'{float(r["total_seconds"]):.3f}',r['pareto']] for r in e11],'llrrrrrr')
-write('solver',r'The finite-table Z3 baseline recovers the same unrounded analytical front in all six S1/S2 cases (\RefSolverTab{}). It consumes 1080 evaluator calls on S1 and 3888 on S2, because the whole structurally valid relation must be built before solving. Total observed runtime is $'+ran((float(r['total_seconds']) for r in e11),3)+r'$\,s, including table construction. This establishes an executable exact solver comparison, but does not compare HCA-DSE with a compact symbolic formulation that can avoid evaluator calls.')
+_sym={(r['scale'],r['workload']):r for r in read('e12_symbolic.csv')}
+_fin={(r['scale'],r['workload']):r for r in e11}
+_hca={(r['scale'],r['workload']):r for r in e1}
+_rows=[]
+for _sc in ('S1','S2','S3'):
+ for _w in wl:
+  h=_hca[(_sc,_w)];_rows.append([_sc,_w,'HCA-DSE',h['evals'],'--','--',f"{float(h['t_hca']):.3f}",h['pareto']])
+  if (_sc,_w) in _fin:
+   r=_fin[(_sc,_w)];_rows.append(['','','finite-table SMT',r['full_evaluator_calls'],r['full_evaluator_calls'],r['solver_checks'],f"{float(r['total_seconds']):.3f}",r['pareto']])
+  r=_sym[(_sc,_w)];_rows.append(['','','factorised SMT','0',r['table_entries'],r['solver_checks'],f"{float(r['total_s']):.3f}",r['pareto']])
+table('solver',r'scale & workload & method & evaluator calls & tabulated entries & solver checks & total [s] & front',_rows,'lllrrrrr')
+e12=read('e12_symbolic.csv')
+assert len(e12)==9 and all(r['exact']=='True' and r['full_evaluator_calls']=='0' for r in e12), 'symbolic baseline must be exact on all nine cases'
+hca_ms=[1000*float(r['t_hca']) for r in e1 if r['scale'] in ('S1','S2','S3')]
+s3sym=[r for r in e12 if r['scale']=='S3']
+write('solver',r'Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $'+ran((float(r['total_seconds']) for r in e11),3)+r'$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($'+ran((int(r['table_entries']) for r in s3sym),0)+r'$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $'+ran((float(r['total_s']) for r in e12 if r['scale']!='S3'),1)+r'$\,s on S1/S2 and $'+ran((float(r['total_s']) for r in s3sym),0)+r'$\,s on S3, against $'+ran(hca_ms,1)+r'$\,ms for HCA-DSE with the closed-form evaluator. Its precondition is that the entire model is available in closed form, so its candidates cannot be handed to a simulator or a deployment; HCA-DSE needs closed-form bounds only and leaves the expensive evaluation to whichever evaluator the engineer trusts.')
 rows=[]
 for w in wl:
  d=[r for r in read('e6_simvalidation.csv') if r['workload']==w];a=[float(r['L_analytical']) for r in d];b=[float(r['L_sim']) for r in d]
  rows.append([w,len(d),f'{100*st.mean(abs(x-y)/y for x,y in zip(a,b)):.1f}',f'{spearmanr(a,b).statistic:.3f}'])
 table('des_validation',r'workload & designs & MAPE [\%] & Spearman $\rho$',rows,'lrrr')
 unstable=sum(float(r['spread'])>=1.5 for r in read('e9_per_design_mean.csv'))
+rel={(r['subset'],float(r['threshold'])):r for r in read('e13_reliability.csv') if r['workload']=='pooled'}
+def _pct(k,n): return f"{100*k/n:.0f}"
+r0,r25,r50,r100=(rel[('all',t)] for t in (0.0,0.25,0.5,1.0))
+rel_sentence=(f"{_pct(int(r0['agree']),int(r0['pairs']))}\\% of all {r0['pairs']} within-workload pairs are ordered as predicted, "
+ f"{_pct(int(r25['agree']),int(r25['pairs']))}\\% of the {r25['pairs']} pairs the model separates by more than $25\\%$, "
+ f"{r50['agree']} of {r50['pairs']} pairs separated by more than $50\\%$ and {r100['agree']} of {r100['pairs']} separated by more than $100\\%$")
 write('validation',r'''\RefDesTab{} reports analytical mean-latency predictions against the revised
 DES model. The independent Docker round retains the same 36 configurations and all 108
 runs with the analytical model frozen. \RefTestbedTab{} compares predictions with
@@ -84,5 +105,6 @@ the median of three measured run means. Pooled MAPE is $'''+pooled['MAPE']+r'\%$
 a substitute for within-workload validation. '''+str(unstable)+r''' configurations have a ratio of largest to smallest repeated mean latency of at least
 $1.5$; all remain in the main summary. Supplementary Table S4 separately reports the
 $p_{50}$ comparison and its utilisation/repeat subsets. Differences between predicted
-means and measured medians must not be interpreted as direct mean-prediction error.''')
+means and measured medians must not be interpreted as direct mean-prediction error.
+Agreement grows with the separation the model predicts (\RefReliabilityFig{}): '''+rel_sentence+'.')
 print('Generated numerical claims from',R)

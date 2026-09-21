@@ -315,6 +315,19 @@
   \textbf{\bibinfo{volume}{292}}, \bibinfo{pages}{397--422}
   (\bibinfo{year}{2021}).
 
+\bibitem{varga2008omnet}
+\bibinfo{author}{Varga, A.} \& \bibinfo{author}{Hornig, R.}
+  \emph{\bibinfo{title}{An overview of the {OMNeT++} simulation environment}}.
+\newblock \emph{\bibinfo{booktitle}{1st International Conference on Simulation
+  Tools and Techniques for Communications, Networks and Systems (SIMUTools)}},
+  \bibinfo{pages}{1--10} (\bibinfo{year}{2008}).
+
+\bibitem{hemminger2005netem}
+\bibinfo{author}{Hemminger, S.} \emph{\bibinfo{title}{Network emulation with
+  {NetEm}}}.
+\newblock \emph{\bibinfo{booktitle}{Linux Conference Australia
+  (linux.conf.au)}} (\bibinfo{year}{2005}).
+
 \bibitem{mann1947whitney}
 \bibinfo{author}{Mann, H.~B.} \& \bibinfo{author}{Whitney, D.~R.}
 \newblock \bibinfo{title}{On a test of whether one of two random variables is
@@ -330,18 +343,5 @@
 \newblock \emph{\bibinfo{journal}{Psychological Bulletin}}
   \textbf{\bibinfo{volume}{114}}, \bibinfo{pages}{494--509}
   (\bibinfo{year}{1993}).
-
-\bibitem{varga2008omnet}
-\bibinfo{author}{Varga, A.} \& \bibinfo{author}{Hornig, R.}
-  \emph{\bibinfo{title}{An overview of the {OMNeT++} simulation environment}}.
-\newblock \emph{\bibinfo{booktitle}{1st International Conference on Simulation
-  Tools and Techniques for Communications, Networks and Systems (SIMUTools)}},
-  \bibinfo{pages}{1--10} (\bibinfo{year}{2008}).
-
-\bibitem{hemminger2005netem}
-\bibinfo{author}{Hemminger, S.} \emph{\bibinfo{title}{Network emulation with
-  {NetEm}}}.
-\newblock \emph{\bibinfo{booktitle}{Linux Conference Australia
-  (linux.conf.au)}} (\bibinfo{year}{2005}).
 
 \end{thebibliography}

@@ -26,7 +26,7 @@
 \begin{document}
 
 \title[Supplementary Information]{Supplementary Information:\\
-Exact architecture exploration for heterogeneous edge--cloud cyber-physical systems}
+Exact architecture exploration for heterogeneous edge and cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
 \author[1]{\fnm{Roman} \sur{Zinko}}\email{roman.v.zinko@lpnu.ua}
@@ -240,9 +240,11 @@ pairs) are shown as --.}\label{tabS4}
 \end{table}
 
 \begin{table}[!htbp]\centering
-\caption{Exact finite-table SMT baseline. Solver time includes encoding; total time also
-includes full table evaluation. ``Calls'' counts full evaluator
-invocations.}\label{tabS5}
+\caption{Exact solver baselines against HCA-DSE on S1--S3. Finite-table SMT evaluates
+every structurally valid design and then solves; factorised SMT tabulates each model term
+over its own decisions only and calls no evaluator. ``Evaluator calls'' counts full
+design-point evaluations; ``tabulated entries'' counts table rows built before solving;
+total time includes table construction. All rows return the exhaustive front.}\label{tabS5}
 {\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\input{tables/solver}}
 \end{table}
 

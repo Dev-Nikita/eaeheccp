@@ -35,6 +35,7 @@
 \newcommand{\WithinAgreementRange}{88.6\text{--}91.3}
 \newcommand{\PooledAgreement}{97.8}
 \newcommand{\MaxStates}{18\,082}
+\newcommand{\ReliabilityFifty}{53 of 54}
 \newcommand{\AnalyticalSpeedup}{2.58\text{--}4.96}
 
 \raggedbottom
@@ -55,11 +56,12 @@
 \newcommand{\RefSolverTab}{Supplementary Table~S5}
 \newcommand{\RefDesTab}{Supplementary Table~S13}
 \newcommand{\RefTestbedTab}{Table~\ref{tab:ce:testbed}}
+\newcommand{\RefReliabilityFig}{Fig.~\ref{fig:ce:testbed}b}
 
 \begin{document}
 
-\title[Exact architecture exploration for edge--cloud CPS]{Exact architecture
-exploration for heterogeneous edge--cloud cyber-physical systems}
+\title[Exact architecture exploration for edge and cloud systems]{Exact architecture
+exploration for heterogeneous edge and cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
 \author[1]{\fnm{Roman} \sur{Zinko}}\email{roman.v.zinko@lpnu.ua}
@@ -72,23 +74,23 @@ exploration for heterogeneous edge--cloud cyber-physical systems}
 \abstract{Deciding how many edge nodes and gateways a distributed cyber-physical system
 should have, which hardware and network classes to use, where each processing stage runs
 and how far it is replicated determines whether the system meets its deadline and what it
-costs to run. The number of candidate architectures grows into the millions, while a
-single candidate is evaluated by simulation that can take up to a minute, so the
-practical budget is the number of expensive evaluations an engineer can afford.
-Exhaustive search pays for every candidate; evolutionary search fits a budget but cannot
-say which trade-offs it missed; and the exact methods closest to this
-problem commonly exploit objectives that accumulate monotonically with each decision,
-which end-to-end latency does not, because it depends on the utilisation of a tier that
-several decisions fix jointly. Here we show
-that exact exploration remains achievable for such objectives. Bounds obtained by
-relaxing each term of an objective separately, combined with a decision order that makes
-the queueing term exactly computable on incomplete designs, allow provably safe
-elimination of infeasible and dominated regions before any evaluation. On spaces of up to
-8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the expensive
-evaluator \EvalRange{} times and returns the exact set of optimal trade-offs wherever
-exhaustive enumeration can confirm it. In an independent containerised deployment with the
-model frozen beforehand, the predicted ordering matches the measured ordering for
-\WithinAgreementRange\% of clearly separated architecture pairs.}
+costs. Candidate architectures number in the millions and simulating one can take up to a
+minute, so the practical budget is the number of expensive evaluations an engineer can
+afford. Evolutionary search fits such a
+budget but cannot say which trade-offs it missed, and exact partial-design pruning relies
+on objectives that grow monotonically as decisions are fixed. End-to-end latency does not,
+because it depends on the utilisation of a tier that several decisions fix jointly. We
+show that exact pruning remains possible for such contention-dependent objectives.
+Bounds obtained by relaxing each term of an objective separately, combined with a decision
+order that makes the queueing term exactly computable on incomplete designs, allow
+provably safe elimination of infeasible and dominated regions before any evaluation. On
+spaces of up to 8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the
+expensive evaluator \EvalRange{} times and returns the exact set of optimal trade-offs
+wherever exhaustive enumeration can confirm it. In an independent containerised deployment
+with the model frozen beforehand, predicted and measured orders of two architectures
+agreed for \WithinAgreementRange\% of pairs separated by more than 25\% and for
+\ReliabilityFifty{} pairs separated by more than 50\%. Analytical models can thus
+certify which architectures need no high-fidelity evaluation.}
 
 \keywords{architecture exploration, cyber-physical systems, edge computing,
 multi-objective optimisation, design automation}
@@ -117,8 +119,8 @@ but the price of one answer: for distributed cyber-physical systems a single des
 simulation, and an industrial methodology built on execution traces of a lithography
 machine reports up to a minute per design point while explicitly leaving the search
 strategy out of scope\cite{saadatmand2025compdse}. A survey of the area concludes that
-scalable exploration technology for such systems is "more or less
-non-existing"\cite{herget2022dse}, even though the workload and platform models it needs
+scalable exploration technology for such systems is ``more or less
+non-existing''\cite{herget2022dse}, even though the workload and platform models it needs
 can now be derived automatically from execution traces\cite{saadatmand2024workload}. The
 engineering context is active in the opposite direction: orchestration, placement and
 scaling across the edge--cloud continuum are the subject of a steady stream of recent
@@ -155,7 +157,10 @@ lowers it. There is therefore no monotone accumulation to bound, and the guarant
 makes exact pruning attractive does not transfer.
 
 Here we show that exact exploration is nevertheless achievable for these objectives, and
-that it makes expensive architecture evaluation tractable rather than merely faster. We
+that it makes expensive architecture evaluation tractable rather than merely faster. The
+contribution is not partial-design pruning as such, which is established, but a way to
+keep it exact for objectives that are not monotone under incremental assignment because
+they depend on resource contention fixed jointly by several decisions. We
 construct admissible bounds for contention-dependent objectives by relaxing each additive
 term of an objective independently over the domains still reachable, and by ordering the
 decisions so that the determinants of tier utilisation are fixed early --- at which point
@@ -171,7 +176,10 @@ returns wherever exhaustive enumeration is still feasible. An independent contai
 edge--gateway--cloud deployment, run with the analytical model frozen beforehand, shows
 that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
-within a workload. We report equally clearly where the gains shrink or the method does not apply: the
+within a workload, and for \ReliabilityFifty{} pairs it separates by more than $50\%$:
+the larger the predicted advantage, the more the design decision can be trusted. The
+method is therefore best read as a certified screening stage that decides which
+architectures need never reach a simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
 advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
 bounded by the overhead of the search itself; no admissible bound may be available at
 all; and near saturation neither the model nor the deployment is stable.
@@ -306,7 +314,7 @@ identical to the exhaustive Pareto front, with recall and precision of $1.0$
 partial designs against all their completions --- and for every pruned partial design all
 completions were enumerated and checked against the claim of the rule that discarded it.
 %
-The finite-table Z3 baseline recovers the same unrounded analytical front in all six S1/S2 cases (\RefSolverTab{}). It consumes 1080 evaluator calls on S1 and 3888 on S2, because the whole structurally valid relation must be built before solving. Total observed runtime is $0.217\text{--}4.696$\,s, including table construction. This establishes an executable exact solver comparison, but does not compare HCA-DSE with a compact symbolic formulation that can avoid evaluator calls.
+Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $0.217\text{--}4.696$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($2188\text{--}2406$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $1.4\text{--}13.8$\,s on S1/S2 and $157\text{--}170$\,s on S3, against $5.9\text{--}104.1$\,ms for HCA-DSE with the closed-form evaluator. Its precondition is that the entire model is available in closed form, so its candidates cannot be handed to a simulator or a deployment; HCA-DSE needs closed-form bounds only and leaves the expensive evaluation to whichever evaluator the engineer trusts.
 
 \subsection{The saving converts into time when evaluation is expensive}
 Whether fewer evaluations translate into less time depends on what an evaluation costs.
@@ -370,6 +378,7 @@ a substitute for within-workload validation. 6 configurations have a ratio of la
 $1.5$; all remain in the main summary. Supplementary Table S4 separately reports the
 $p_{50}$ comparison and its utilisation/repeat subsets. Differences between predicted
 means and measured medians must not be interpreted as direct mean-prediction error.
+Agreement grows with the separation the model predicts (\RefReliabilityFig{}): 86\% of all 196 within-workload pairs are ordered as predicted, 90\% of the 105 pairs the model separates by more than $25\%$, 53 of 54 pairs separated by more than $50\%$ and 20 of 20 separated by more than $100\%$.
 Absolute prediction error is therefore substantial, while the decision-relevant quantity
 --- the ordering of architectures that the model separates clearly --- transfers. Six
 configurations were not reproducible across repeats; they are retained in the summary
@@ -490,10 +499,16 @@ ALL & 36 & 25.4 & 0.967 & 0.978 & 498 \\
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.62\linewidth]{figures/testbed.pdf}
-\caption{\textbf{Predicted against measured latency.} Analytical latency versus the
-median of three measured mean latencies on the independent containerised deployment. Open
-markers denote architectures whose repeated means differ by a factor of $1.5$ or more.}
+\includegraphics[width=\linewidth]{figures/testbed.pdf}
+\caption{\textbf{How far a model-based design decision can be trusted.} \textbf{a},
+Analytical latency versus the median of three measured mean latencies for the $36$
+architectures of the independent containerised deployment; open markers denote
+architectures whose repeated means differ by a factor of $1.5$ or more. \textbf{b}, Share
+of within-workload architecture pairs whose measured order matches the order predicted by
+the frozen model, as a function of the relative separation the model predicts between the
+two architectures. Solid line: all architectures, with the number of pairs $n$ and a
+$95\%$ Wilson interval; dashed line: only architectures whose repeats agree within a
+factor of $1.5$.}
 \label{fig:ce:testbed}
 \end{figure}
 \section{Discussion}
@@ -509,7 +524,7 @@ meeting; at the per-design-point costs reported for industrial trace-driven
 exploration\cite{saadatmand2025compdse} the projection is two to three orders of
 magnitude of wall-clock time.
 
-The reason this works is narrower than "pruning works" and should be stated precisely.
+The reason this works is narrower than ``pruning works'' and should be stated precisely.
 Safe pruning of partial designs is an established idea in embedded system
 synthesis\cite{neubauer2018exact,lukasiewycz2008symbolic} and in multi-objective search
 more generally\cite{mandow2010namoa,paretopruning2022}. Its usual precondition ---
@@ -518,7 +533,14 @@ latency-sensitive distributed cyber-physical systems, because latency depends on
 utilisation and utilisation is fixed jointly by several decisions. The contribution here
 is a way to keep exactness without that precondition: relax each additive term separately
 over the domains still reachable, and order the decisions so that the contention term
-stops being relaxed as early as possible. The mechanism is not specific to the template
+stops being relaxed as early as possible. Three classes of objective term can be distinguished.
+Terms that accumulate with each decision, such as deployment cost or transferred volume,
+admit the usual bounds. Terms that depend on contention, such as queueing delay or
+utilisation-dependent energy, admit exact bounds once the decisions that determine the
+contention are fixed, and the traversal order is chosen so that this happens early. Terms
+without a provable relaxation --- a black-box simulator output, for instance --- cannot be
+bounded; they can still be evaluated on the survivors, but they cannot drive pruning.
+The mechanism is not specific to the template
 studied here. Formally, it applies whenever admissible term-wise relaxations can be constructed and a
 subset of the architectural decisions determines the load-dependent terms. Empirical
 transfer to a structurally different architecture template has not been demonstrated
@@ -534,12 +556,24 @@ exact with respect to its own model and still inherit every error of that model.
 why the deployment round matters more than the correlation coefficient it produces: with
 $25\%$ absolute error, the model is not a substitute for a simulator or a measurement,
 but it orders clearly separated architectures the same way the hardware does in roughly
-nine cases out of ten, which is what a screening stage requires. The productive
+nine cases out of ten, and in \ReliabilityFifty{} cases once the predicted advantage exceeds
+$50\%$. That monotone relation between predicted separation and decision reliability is
+what a screening stage requires: it tells the engineer which comparisons can be settled on
+the model and which must be sent to a simulator or a test bench. The productive
 arrangement is therefore two-level. Analytical bounds remove the bulk of the space
 exactly and cheaply; the few dozen survivors are where a high-fidelity simulator or a
 physical deployment should spend its time. Nothing in the method requires the analytical
 model to be the final word, and an evaluator-centric methodology plugged in behind it
-would be strictly better than either component alone.
+would be strictly better than either component alone: trace-driven methodologies such as
+CompDSE\cite{saadatmand2025compdse} supply the high-fidelity evaluator and leave the search
+open, design-time tools for the computing continuum such as
+SPACE4AI-D\cite{sedghani2024space4aid} search heuristically, and the method here supplies
+the missing piece, a search that spends the evaluator only where optimality is still
+possible and certifies what it skipped. The compact symbolic baseline makes the same point
+from the other side. When the entire model is available in closed form, a factorised
+constraint encoding also recovers the exact front, without calling any evaluator; the
+reason to prune rather than solve is that the model which matters most is usually the one
+that is not available in closed form.
 
 Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
 space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
@@ -552,9 +586,14 @@ not be used, because an inadmissible bound silently converts an exact method int
 approximate one with no signal in the output. Third, near saturation the design-time
 prediction breaks down and so does the deployment, as six of our measured configurations
 show; architectures in that regime should be treated as unresolved rather than ranked.
+Fourth, the deployment measured latency only. Energy and network volume are computed by
+the model, and cost is a normalised relative tariff; the front is exact for all four
+objectives of the model, but only its latency ordering has been checked against hardware.
 Extending the guarantee to objectives that resist closed-form bounds, for example through
 surrogate bounds that remain provably admissible, is the most valuable open direction we
-see.
+see. More broadly, the results change what an analytical model is for in architecture
+design: it need not replace a high-fidelity evaluator to be useful, because it can
+certify which regions of a design space do not deserve one.
 \section{Methods}
 \label{sec:sn:methods}
 
@@ -660,13 +699,22 @@ $1000$ full evaluations with $20$ seeds each; budgets are charged to actual eval
 calls, including infeasible ones. An independent exact baseline encodes the finite
 evaluated relation and solves for the non-dominated set with an SMT
 solver\cite{demoura2008z3}; it requires the full table to be built first and therefore
-consumes one evaluator call per structurally valid candidate. Recall and precision are
+consumes one evaluator call per structurally valid candidate. A second, compact exact
+baseline avoids evaluator calls. Every decision becomes a one-hot group of Booleans, and
+every additive term of the model is tabulated as exact rationals over the decisions it
+depends on only --- edge utilisation, for example, over node count, node class,
+replication and placement --- so that constraints and objectives are linear in the
+Booleans. The non-dominated set is enumerated with the guided-improvement algorithm: find
+a feasible design, add the constraint that a solution must dominate it until the system
+becomes unsatisfiable, record the last vector and exclude everything it weakly dominates.
+A direct polynomial encoding with utilisations and waiting terms as real unknowns was
+tried first and did not complete the smallest space within five minutes, which is why the
+factorised form is used. Designs returned by either solver are re-evaluated with the
+ordinary evaluator only to compare binary64 objective vectors with the exhaustive front.
+Recall and precision are
 computed on sets of objective vectors, hypervolume\cite{zitzler1999hv} is normalised by
 the exhaustive front, and IGD$^{+}$\cite{ishibuchi2015igdplus} uses that front as
 reference, following the guidance on indicator choice in ref.~\citenum{audet2021indicators}.
-Stochastic baselines are compared with the one-sided Mann--Whitney
-$U$ test\cite{mann1947whitney} and Cliff's $\delta$\cite{cliff1993delta}, reported
-unadjusted and treated as exploratory.
 
 \subsection{Discrete-event evaluator}
 A higher-fidelity evaluator simulates each design with multi-server tiers, explicit link
@@ -692,6 +740,24 @@ produces Poisson arrivals, $900$ requests per run of which $150$ are discarded a
 Thirty-six architectures --- Pareto-optimal, dominated and near-boundary --- were selected
 subject to fitting on one machine ($\le4$ edge nodes, $\le2$ gateways), and each was run
 three times. The analytical model was frozen before this round.
+
+\subsection{Statistical analyses}
+Stochastic baselines are run with $20$ independent seeds per scale, workload and budget,
+and are summarised by medians. Differences between NSGA-II and random search are tested
+with the one-sided Mann--Whitney $U$ test\cite{mann1947whitney} on the per-seed
+hypervolume ratios, with Cliff's $\delta$\cite{cliff1993delta} as effect size;
+$p$-values are reported unadjusted and treated as exploratory. HCA-DSE, exhaustive
+enumeration and both solver baselines are deterministic, so their counts are reported
+from one run; runtimes in the cost and traversal-order experiments are medians of three
+repetitions, and other runtimes are single measurements. In the deployment, each architecture
+is run three times and summarised by the median of its run means. Accuracy is reported as
+mean absolute percentage error and median absolute error, rank agreement as Spearman's
+$\rho$, and decision agreement as the share of within-workload architecture pairs whose
+measured order matches the predicted order, among pairs the model separates by more than
+a given relative margin. Intervals on these shares are $95\%$ Wilson score intervals;
+pairs share architectures and are not independent, so the intervals are indicative. No
+observation is excluded; configurations whose repeated means differ by a factor of $1.5$
+or more are flagged and retained.
 
 \subsection{Reproducibility}
 The implementation is Python 3 with NumPy, SciPy and pymoo; the deployment services are

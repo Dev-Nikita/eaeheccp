@@ -103,13 +103,22 @@ $1000$ full evaluations with $20$ seeds each; budgets are charged to actual eval
 calls, including infeasible ones. An independent exact baseline encodes the finite
 evaluated relation and solves for the non-dominated set with an SMT
 solver\cite{demoura2008z3}; it requires the full table to be built first and therefore
-consumes one evaluator call per structurally valid candidate. Recall and precision are
+consumes one evaluator call per structurally valid candidate. A second, compact exact
+baseline avoids evaluator calls. Every decision becomes a one-hot group of Booleans, and
+every additive term of the model is tabulated as exact rationals over the decisions it
+depends on only --- edge utilisation, for example, over node count, node class,
+replication and placement --- so that constraints and objectives are linear in the
+Booleans. The non-dominated set is enumerated with the guided-improvement algorithm: find
+a feasible design, add the constraint that a solution must dominate it until the system
+becomes unsatisfiable, record the last vector and exclude everything it weakly dominates.
+A direct polynomial encoding with utilisations and waiting terms as real unknowns was
+tried first and did not complete the smallest space within five minutes, which is why the
+factorised form is used. Designs returned by either solver are re-evaluated with the
+ordinary evaluator only to compare binary64 objective vectors with the exhaustive front.
+Recall and precision are
 computed on sets of objective vectors, hypervolume\cite{zitzler1999hv} is normalised by
 the exhaustive front, and IGD$^{+}$\cite{ishibuchi2015igdplus} uses that front as
 reference, following the guidance on indicator choice in ref.~\citenum{audet2021indicators}.
-Stochastic baselines are compared with the one-sided Mann--Whitney
-$U$ test\cite{mann1947whitney} and Cliff's $\delta$\cite{cliff1993delta}, reported
-unadjusted and treated as exploratory.
 
 \subsection{Discrete-event evaluator}
 A higher-fidelity evaluator simulates each design with multi-server tiers, explicit link
@@ -135,6 +144,24 @@ produces Poisson arrivals, $900$ requests per run of which $150$ are discarded a
 Thirty-six architectures --- Pareto-optimal, dominated and near-boundary --- were selected
 subject to fitting on one machine ($\le4$ edge nodes, $\le2$ gateways), and each was run
 three times. The analytical model was frozen before this round.
+
+\subsection{Statistical analyses}
+Stochastic baselines are run with $20$ independent seeds per scale, workload and budget,
+and are summarised by medians. Differences between NSGA-II and random search are tested
+with the one-sided Mann--Whitney $U$ test\cite{mann1947whitney} on the per-seed
+hypervolume ratios, with Cliff's $\delta$\cite{cliff1993delta} as effect size;
+$p$-values are reported unadjusted and treated as exploratory. HCA-DSE, exhaustive
+enumeration and both solver baselines are deterministic, so their counts are reported
+from one run; runtimes in the cost and traversal-order experiments are medians of three
+repetitions, and other runtimes are single measurements. In the deployment, each architecture
+is run three times and summarised by the median of its run means. Accuracy is reported as
+mean absolute percentage error and median absolute error, rank agreement as Spearman's
+$\rho$, and decision agreement as the share of within-workload architecture pairs whose
+measured order matches the predicted order, among pairs the model separates by more than
+a given relative margin. Intervals on these shares are $95\%$ Wilson score intervals;
+pairs share architectures and are not independent, so the intervals are indicative. No
+observation is excluded; configurations whose repeated means differ by a factor of $1.5$
+or more are flagged and retained.
 
 \subsection{Reproducibility}
 The implementation is Python 3 with NumPy, SciPy and pymoo; the deployment services are

@@ -67,9 +67,15 @@ predicted order among pairs separated by more than $25\%$. ALL pools workloads.}
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.62\linewidth]{figures/testbed.pdf}
-\caption{\textbf{Predicted against measured latency.} Analytical latency versus the
-median of three measured mean latencies on the independent containerised deployment. Open
-markers denote architectures whose repeated means differ by a factor of $1.5$ or more.}
+\includegraphics[width=\linewidth]{figures/testbed.pdf}
+\caption{\textbf{How far a model-based design decision can be trusted.} \textbf{a},
+Analytical latency versus the median of three measured mean latencies for the $36$
+architectures of the independent containerised deployment; open markers denote
+architectures whose repeated means differ by a factor of $1.5$ or more. \textbf{b}, Share
+of within-workload architecture pairs whose measured order matches the order predicted by
+the frozen model, as a function of the relative separation the model predicts between the
+two architectures. Solid line: all architectures, with the number of pairs $n$ and a
+$95\%$ Wilson interval; dashed line: only architectures whose repeats agree within a
+factor of $1.5$.}
 \label{fig:ce:testbed}
 \end{figure}

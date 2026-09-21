@@ -26,7 +26,7 @@
 \begin{document}
 
 \title[Supplementary Information]{Supplementary Information:\\
-Exact architecture exploration for heterogeneous edge--cloud cyber-physical systems}
+Exact architecture exploration for heterogeneous edge and cloud cyber-physical systems}
 
 \author*[1]{\fnm{Nikita} \sur{Tarasov}}\email{dev.nikita@outlook.com}
 \author[1]{\fnm{Roman} \sur{Zinko}}\email{roman.v.zinko@lpnu.ua}
@@ -355,20 +355,40 @@ sensing (reproducible) & 8 & 41.7 & 18.77 & 0.994 & 0.982 & 1.0 & -- & 1.49 \\
 \end{table}
 
 \begin{table}[!htbp]\centering
-\caption{Exact finite-table SMT baseline. Solver time includes encoding; total time also
-includes full table evaluation. ``Calls'' counts full evaluator
-invocations.}\label{tabS5}
+\caption{Exact solver baselines against HCA-DSE on S1--S3. Finite-table SMT evaluates
+every structurally valid design and then solves; factorised SMT tabulates each model term
+over its own decisions only and calls no evaluator. ``Evaluator calls'' counts full
+design-point evaluations; ``tabulated entries'' counts table rows built before solving;
+total time includes table construction. All rows return the exhaustive front.}\label{tabS5}
 {\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
-\begin{tabular}{llrrrrrr}
+\begin{tabular}{lllrrrrr}
 \toprule
-scale & workload & calls & feasible & table [s] & solver [s] & total [s] & front \\
+scale & workload & method & evaluator calls & tabulated entries & solver checks & total [s] & front \\
 \midrule
-S1 & telemetry & 1080 & 494 & 0.008 & 0.444 & 0.452 & 17 \\
-S1 & control & 1080 & 520 & 0.008 & 0.461 & 0.468 & 18 \\
-S1 & sensing & 1080 & 228 & 0.008 & 0.209 & 0.217 & 11 \\
-S2 & telemetry & 3888 & 1743 & 0.029 & 4.667 & 4.696 & 27 \\
-S2 & control & 3888 & 1753 & 0.030 & 3.831 & 3.861 & 25 \\
-S2 & sensing & 3888 & 910 & 0.029 & 1.250 & 1.279 & 16 \\
+S1 & telemetry & HCA-DSE & 34 & -- & -- & 0.008 & 17 \\
+ &  & finite-table SMT & 1080 & 1080 & 44 & 0.452 & 17 \\
+ &  & factorised SMT & 0 & 221 & 51 & 2.698 & 17 \\
+S1 & control & HCA-DSE & 28 & -- & -- & 0.008 & 18 \\
+ &  & finite-table SMT & 1080 & 1080 & 48 & 0.468 & 18 \\
+ &  & factorised SMT & 0 & 225 & 52 & 3.186 & 18 \\
+S1 & sensing & HCA-DSE & 16 & -- & -- & 0.006 & 11 \\
+ &  & finite-table SMT & 1080 & 1080 & 31 & 0.217 & 11 \\
+ &  & factorised SMT & 0 & 199 & 37 & 1.409 & 11 \\
+S2 & telemetry & HCA-DSE & 50 & -- & -- & 0.020 & 27 \\
+ &  & finite-table SMT & 3888 & 3888 & 69 & 4.696 & 27 \\
+ &  & factorised SMT & 0 & 529 & 76 & 10.634 & 27 \\
+S2 & control & HCA-DSE & 39 & -- & -- & 0.018 & 25 \\
+ &  & finite-table SMT & 3888 & 3888 & 71 & 3.861 & 25 \\
+ &  & factorised SMT & 0 & 537 & 76 & 13.812 & 25 \\
+S2 & sensing & HCA-DSE & 26 & -- & -- & 0.015 & 16 \\
+ &  & finite-table SMT & 3888 & 3888 & 55 & 1.279 & 16 \\
+ &  & factorised SMT & 0 & 469 & 54 & 6.757 & 16 \\
+S3 & telemetry & HCA-DSE & 56 & -- & -- & 0.084 & 31 \\
+ &  & factorised SMT & 0 & 2384 & 93 & 170.184 & 31 \\
+S3 & control & HCA-DSE & 43 & -- & -- & 0.088 & 27 \\
+ &  & factorised SMT & 0 & 2406 & 78 & 157.413 & 27 \\
+S3 & sensing & HCA-DSE & 43 & -- & -- & 0.104 & 27 \\
+ &  & factorised SMT & 0 & 2188 & 85 & 168.624 & 27 \\
 \bottomrule
 \end{tabular}}
 \end{table}
