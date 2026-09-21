@@ -1,0 +1,264 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{saadatmand2025compdse}
+F.~S. Saadatmand, T.~Stefanov, I.~Gonz\'alez~Alonso, A.~D. Pimentel,
+  B.~Akesson, {CompDSE}: A methodology for design space exploration of
+  computing subsystems within complex cyber-physical systems, IET
+  Cyber-Physical Systems: Theory \& Applications 10~(1) (2025) e70019.
+\newblock \href {https://doi.org/10.1049/cps2.70019}
+  {\path{doi:10.1049/cps2.70019}}.
+
+\bibitem{herget2022dse}
+M.~Herget, F.~S. Saadatmand, M.~Bor, I.~Gonz\'alez~Alonso, T.~Stefanov,
+  B.~Akesson, A.~D. Pimentel, Design space exploration for distributed
+  cyber-physical systems: State-of-the-art, challenges, and directions, in:
+  25th Euromicro Conference on Digital System Design (DSD), 2022, pp. 632--640.
+\newblock \href {https://doi.org/10.1109/DSD57027.2022.00090}
+  {\path{doi:10.1109/DSD57027.2022.00090}}.
+
+\bibitem{deb2002nsga2}
+K.~Deb, A.~Pratap, S.~Agarwal, T.~Meyarivan, A fast and elitist multiobjective
+  genetic algorithm: {NSGA-II}, IEEE Transactions on Evolutionary Computation
+  6~(2) (2002) 182--197.
+\newblock \href {https://doi.org/10.1109/4235.996017}
+  {\path{doi:10.1109/4235.996017}}.
+
+\bibitem{neubauer2018exact}
+K.~Neubauer, P.~Wanko, T.~Schaub, C.~Haubelt, Exact multi-objective design
+  space exploration using {ASPmT}, in: Design, Automation \& Test in Europe
+  Conference (DATE), 2018, pp. 257--260.
+\newblock \href {https://doi.org/10.23919/DATE.2018.8342014}
+  {\path{doi:10.23919/DATE.2018.8342014}}.
+
+\bibitem{haubelt2018asp}
+C.~Haubelt, K.~Neubauer, T.~Schaub, P.~Wanko, Design space exploration with
+  answer set programming, KI - K\"unstliche Intelligenz 32 (2018) 205--206.
+\newblock \href {https://doi.org/10.1007/s13218-018-0530-3}
+  {\path{doi:10.1007/s13218-018-0530-3}}.
+
+\bibitem{paretopruning2022}
+S.~Petchrompo, D.~W. Coit, A.~Brintrup, A.~Wannakrairot, A.~K. Parlikad, A
+  review of {Pareto} pruning methods for multi-objective optimization,
+  Computers \& Industrial Engineering 167 (2022) 108022.
+\newblock \href {https://doi.org/10.1016/j.cie.2022.108022}
+  {\path{doi:10.1016/j.cie.2022.108022}}.
+
+\bibitem{mandow2010namoa}
+L.~Mandow, J.~L. P\'erez-de-la Cruz, Multiobjective {A*} search with consistent
+  heuristics, Journal of the ACM 57~(5) (2010) 1--25.
+\newblock \href {https://doi.org/10.1145/1754399.1754400}
+  {\path{doi:10.1145/1754399.1754400}}.
+
+\bibitem{neubauer2020consistent}
+K.~Neubauer, B.~Beichler, C.~Haubelt, Exact design space exploration based on
+  consistent approximations, Electronics 9~(7) (2020) 1057.
+\newblock \href {https://doi.org/10.3390/electronics9071057}
+  {\path{doi:10.3390/electronics9071057}}.
+
+\bibitem{stewart1991moa}
+B.~S. Stewart, C.~C. White, Multiobjective {A*}, Journal of the ACM 38~(4)
+  (1991) 775--814.
+\newblock \href {https://doi.org/10.1145/115234.115368}
+  {\path{doi:10.1145/115234.115368}}.
+
+\bibitem{kienhuis2002ychart}
+B.~Kienhuis, E.~F. Deprettere, P.~van~der Wolf, K.~Vissers, A methodology to
+  design programmable embedded systems: The {Y}-chart approach, in: Embedded
+  Processor Design Challenges, Springer, 2002, pp. 18--37.
+\newblock \href {https://doi.org/10.1007/3-540-45874-3_2}
+  {\path{doi:10.1007/3-540-45874-3_2}}.
+
+\bibitem{varga2008omnet}
+A.~Varga, R.~Hornig, An overview of the {OMNeT++} simulation environment, in:
+  1st International Conference on Simulation Tools and Techniques for
+  Communications, Networks and Systems (SIMUTools), 2008, pp. 1--10.
+\newblock \href {https://doi.org/10.4108/ICST.SIMUTOOLS2008.3027}
+  {\path{doi:10.4108/ICST.SIMUTOOLS2008.3027}}.
+
+\bibitem{xiao2024contrarc}
+Y.~Xiao, C.~Oh, M.~Lora, P.~Nuzzo, Efficient exploration of cyber-physical
+  system architectures using contracts and subgraph isomorphism, in: Design,
+  Automation \& Test in Europe Conference (DATE), 2024, pp. 1--6.
+\newblock \href {https://doi.org/10.23919/DATE58400.2024.10546764}
+  {\path{doi:10.23919/DATE58400.2024.10546764}}.
+
+\bibitem{amir2020pareto}
+M.~Amir, T.~Givargis, {Pareto optimal design space exploration of
+  cyber-physical systems}, Internet of Things 12 (2020) 100308.
+\newblock \href {https://doi.org/10.1016/j.iot.2020.100308}
+  {\path{doi:10.1016/j.iot.2020.100308}}.
+
+\bibitem{saadatmand2024workload}
+F.~S. Saadatmand, T.~Stefanov, I.~G. Alonso, A.~D. Pimentel, B.~Akesson,
+  M.~Herget, M.~Bor, {Automated Derivation of Application Workload Models for
+  Design Space Exploration of Industrial Distributed Cyber-Physical Systems},
+  in: 2024 IEEE 7th International Conference on Industrial Cyber-Physical
+  Systems (ICPS), 2024, pp. 1--8.
+\newblock \href {https://doi.org/10.1109/icps59941.2024.10639941}
+  {\path{doi:10.1109/icps59941.2024.10639941}}.
+
+\bibitem{guo2023}
+X.~Guo, A.~D. Pimentel, T.~Stefanov, {Automated Exploration and Implementation
+  of Distributed CNN Inference at the Edge}, IEEE Internet of Things Journal
+  10~(7) (2023) 5843--5858.
+\newblock \href {https://doi.org/10.1109/jiot.2023.3237572}
+  {\path{doi:10.1109/jiot.2023.3237572}}.
+
+\bibitem{guo2025}
+X.~Guo, Q.~Jiang, A.~D. Pimentel, T.~Stefanov, {Model and system robustness in
+  distributed CNN inference at the edge}, Integration 100 (2025) 102299.
+\newblock \href {https://doi.org/10.1016/j.vlsi.2024.102299}
+  {\path{doi:10.1016/j.vlsi.2024.102299}}.
+
+\bibitem{kouloumpris2024optimization}
+A.~Kouloumpris, G.~L. Stavrinides, M.~K. Michael, T.~Theocharides, An
+  optimization framework for task allocation in the edge/hub/cloud paradigm,
+  Future Generation Computer Systems 155 (2024) 354--366.
+\newblock \href {https://doi.org/10.1016/j.future.2024.02.005}
+  {\path{doi:10.1016/j.future.2024.02.005}}.
+
+\bibitem{kouloumpris2026reliability}
+A.~Kouloumpris, G.~L. Stavrinides, M.~K. Michael, T.~Theocharides, A
+  reliability- and latency-driven task allocation framework for workflow
+  applications in the edge--hub--cloud continuum, Future Generation Computer
+  Systems 180 (2026) 108414.
+\newblock \href {https://doi.org/10.1016/j.future.2026.108414}
+  {\path{doi:10.1016/j.future.2026.108414}}.
+
+\bibitem{sedghani2024space4aid}
+H.~Sedghani, F.~Filippini, D.~Ardagna, {SPACE4AI-D}: A design-time tool for
+  {AI} applications resource selection in computing continua, IEEE Transactions
+  on Services Computing 17~(6) (2024) 4324--4339.
+\newblock \href {https://doi.org/10.1109/TSC.2024.3479935}
+  {\path{doi:10.1109/TSC.2024.3479935}}.
+
+\bibitem{casini2025edge}
+D.~Casini, P.~Pazzaglia, M.~Becker, {Managing real-time constraints through
+  monitoring and analysis-driven edge orchestration}, Journal of Systems
+  Architecture 163 (2025) 103403.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2025.103403}
+  {\path{doi:10.1016/j.sysarc.2025.103403}}.
+
+\bibitem{gene2024}
+L.~Ma, Y.~Zhang, J.~Zhou, G.~Zhang, {A gene-inspired metaheuristic for
+  scheduling workflow tasks in mobile edge computing-supported cyber--physical
+  systems}, Journal of Systems Architecture 151 (2024) 103136.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2024.103136}
+  {\path{doi:10.1016/j.sysarc.2024.103136}}.
+
+\bibitem{ali2026icn}
+M.~N. Ali, I.~Ullah, M.~Imran, M.~Salah~ud din, B.-S. Kim, {Dependency-aware
+  microservices offloading in ICN-based edge computing testbed}, Journal of
+  Systems Architecture 171 (2026) 103663.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2025.103663}
+  {\path{doi:10.1016/j.sysarc.2025.103663}}.
+
+\bibitem{cloud2026coopt}
+J.~Wang, M.~Zhang, H.~Duan, K.~Mei, D.~Wang, M.~Qiu, {A co-optimization
+  framework toward energy-efficient cloud--edge inference with stochastic
+  computing and precision-compensating NAS}, Journal of Systems Architecture
+  172 (2026) 103693.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2026.103693}
+  {\path{doi:10.1016/j.sysarc.2026.103693}}.
+
+\bibitem{filippini2026replica}
+F.~Filippini, M.~Lujak, M.~Ciavotta, {Distributed replica allocation and load
+  balancing for Edge--Cloud FaaS}, Journal of Systems Architecture 176 (2026)
+  103787.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2026.103787}
+  {\path{doi:10.1016/j.sysarc.2026.103787}}.
+
+\bibitem{predictive2026}
+P.~Rodr{\'i}guez, J.~Mateos-Bravo, S.~Laso, J.~L. Herrera, J.~Berrocal,
+  {Predictively controlling the computing continuum with distributed
+  energy-aware orchestration}, Journal of Systems Architecture 175 (2026)
+  103752.
+\newblock \href {https://doi.org/10.1016/j.sysarc.2026.103752}
+  {\path{doi:10.1016/j.sysarc.2026.103752}}.
+
+\bibitem{blank2020pymoo}
+J.~Blank, K.~Deb, pymoo: Multi-objective optimization in {Python}, IEEE Access
+  8 (2020) 89497--89509.
+\newblock \href {https://doi.org/10.1109/ACCESS.2020.2990567}
+  {\path{doi:10.1109/ACCESS.2020.2990567}}.
+
+\bibitem{zitzler1999hv}
+E.~Zitzler, L.~Thiele, Multiobjective evolutionary algorithms: a comparative
+  case study and the strength {Pareto} approach, IEEE Transactions on
+  Evolutionary Computation 3~(4) (1999) 257--271.
+\newblock \href {https://doi.org/10.1109/4235.797969}
+  {\path{doi:10.1109/4235.797969}}.
+
+\bibitem{ishibuchi2015igdplus}
+H.~Ishibuchi, H.~Masuda, Y.~Tanigaki, Y.~Nojima, Modified distance calculation
+  in generational distance and inverted generational distance, in: Evolutionary
+  Multi-Criterion Optimization, Springer, 2015, pp. 110--125.
+\newblock \href {https://doi.org/10.1007/978-3-319-15892-1_8}
+  {\path{doi:10.1007/978-3-319-15892-1_8}}.
+
+\bibitem{audet2021indicators}
+C.~Audet, J.~Bigeon, D.~Cartier, S.~Le~Digabel, L.~Salomon, Performance
+  indicators in multiobjective optimization, European Journal of Operational
+  Research 292~(2) (2021) 397--422.
+\newblock \href {https://doi.org/10.1016/j.ejor.2020.11.016}
+  {\path{doi:10.1016/j.ejor.2020.11.016}}.
+
+\bibitem{blickle1998system}
+T.~Blickle, J.~Teich, L.~Thiele, System-level synthesis using evolutionary
+  algorithms, Design Automation for Embedded Systems 3~(1) (1998) 23--58.
+\newblock \href {https://doi.org/10.1023/A:1008899229802}
+  {\path{doi:10.1023/A:1008899229802}}.
+
+\bibitem{haubelt2003pareto}
+C.~Haubelt, J.~Teich, Accelerating design space exploration using
+  {Pareto}-front arithmetics, in: Asia and South Pacific Design Automation
+  Conference (ASP-DAC), 2003, pp. 525--531.
+\newblock \href {https://doi.org/10.1145/1119772.1119882}
+  {\path{doi:10.1145/1119772.1119882}}.
+
+\bibitem{lukasiewycz2008symbolic}
+M.~Lukasiewycz, M.~Gla{\ss}, C.~Haubelt, J.~Teich, Efficient symbolic
+  multi-objective design space exploration, in: Asia and South Pacific Design
+  Automation Conference (ASP-DAC), 2008, pp. 691--696.
+\newblock \href {https://doi.org/10.1109/ASPDAC.2008.4484040}
+  {\path{doi:10.1109/ASPDAC.2008.4484040}}.
+
+\bibitem{kleinrock1975queueing}
+L.~Kleinrock, Queueing Systems, Volume 1: Theory, Wiley, New York, 1975.
+
+\bibitem{harchol2013performance}
+M.~Harchol-Balter, Performance Modeling and Design of Computer Systems:
+  Queueing Theory in Action, Cambridge University Press, 2013.
+\newblock \href {https://doi.org/10.1017/CBO9781139226424}
+  {\path{doi:10.1017/CBO9781139226424}}.
+
+\bibitem{mann1947whitney}
+H.~B. Mann, D.~R. Whitney, On a test of whether one of two random variables is
+  stochastically larger than the other, The Annals of Mathematical Statistics
+  18~(1) (1947) 50--60.
+\newblock \href {https://doi.org/10.1214/aoms/1177730491}
+  {\path{doi:10.1214/aoms/1177730491}}.
+
+\bibitem{cliff1993delta}
+N.~Cliff, Dominance statistics: Ordinal analyses to answer ordinal questions,
+  Psychological Bulletin 114~(3) (1993) 494--509.
+\newblock \href {https://doi.org/10.1037/0033-2909.114.3.494}
+  {\path{doi:10.1037/0033-2909.114.3.494}}.
+
+\bibitem{demoura2008z3}
+L.~de~Moura, N.~Bj{\o}rner, {Z3: An Efficient SMT Solver}, in: Tools and
+  Algorithms for the Construction and Analysis of Systems, Vol. 4963, 2008, pp.
+  337--340.
+\newblock \href {https://doi.org/10.1007/978-3-540-78800-3_24}
+  {\path{doi:10.1007/978-3-540-78800-3_24}}.
+
+\bibitem{hemminger2005netem}
+S.~Hemminger, Network emulation with {NetEm}, in: Linux Conference Australia
+  (linux.conf.au), 2005.
+
+\end{thebibliography}

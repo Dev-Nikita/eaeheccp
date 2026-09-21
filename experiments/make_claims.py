@@ -42,7 +42,7 @@ lines.insert(0,'No positive break-even evaluation cost was observed on either sc
  'gains that grow with evaluator cost rather than gains that start at one.')
 write('rq3','\n'.join(lines)+r''' The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
-neither exploration strategy was executed end to end with DES in the inner loop.
+neither exploration strategy was executed end to end with DES in the inner loop. With DES as the leaf evaluator, the returned front would be exact with respect to the DES objective only if the analytical bounds were also admissible for it, which is not established here; the projection quantifies the evaluation budget, not a DES-level guarantee.
 The measured analytical-evaluator speed-up across S2/S3 is $'''+ran((float(r['speedup']) for r in e1 if r['scale'] in ['S2','S3']),2)+r'''\times$. These hardware- and implementation-specific values do not establish
 simulator-level Pareto exactness or a universal crossover cost.''')
 lines=[]
@@ -85,7 +85,7 @@ e12=read('e12_symbolic.csv')
 assert len(e12)==9 and all(r['exact']=='True' and r['full_evaluator_calls']=='0' for r in e12), 'symbolic baseline must be exact on all nine cases'
 hca_ms=[1000*float(r['t_hca']) for r in e1 if r['scale'] in ('S1','S2','S3')]
 s3sym=[r for r in e12 if r['scale']=='S3']
-write('solver',r'Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $'+ran((float(r['total_seconds']) for r in e11),3)+r'$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($'+ran((int(r['table_entries']) for r in s3sym),0)+r'$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $'+ran((float(r['total_s']) for r in e12 if r['scale']!='S3'),1)+r'$\,s on S1/S2 and $'+ran((float(r['total_s']) for r in s3sym),0)+r'$\,s on S3, against $'+ran(hca_ms,1)+r'$\,ms for HCA-DSE with the closed-form evaluator. Its precondition is that the entire model is available in closed form, so its candidates cannot be handed to a simulator or a deployment; HCA-DSE needs closed-form bounds only and leaves the expensive evaluation to whichever evaluator the engineer trusts.')
+write('solver',r'Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $'+ran((float(r['total_seconds']) for r in e11),3)+r'$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($'+ran((int(r['table_entries']) for r in s3sym),0)+r'$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $'+ran((float(r['total_s']) for r in e12 if r['scale']!='S3'),1)+r'$\,s on S1/S2 and $'+ran((float(r['total_s']) for r in s3sym),0)+r'$\,s on S3, against $'+ran(hca_ms,1)+r'$\,ms for HCA-DSE with the closed-form evaluator. Solver times depend on the encoding and are indicative. The factorised encoding requires the entire objective and constraint model to be representable by its tables; HCA-DSE requires only admissible bounds on partial designs, and the front it returns is exact for the objective those bounds are admissible for --- in this study, the analytical model.')
 rows=[]
 for w in wl:
  d=[r for r in read('e6_simvalidation.csv') if r['workload']==w];a=[float(r['L_analytical']) for r in d];b=[float(r['L_sim']) for r in d]
@@ -95,8 +95,10 @@ unstable=sum(float(r['spread'])>=1.5 for r in read('e9_per_design_mean.csv'))
 rel={(r['subset'],float(r['threshold'])):r for r in read('e13_reliability.csv') if r['workload']=='pooled'}
 def _pct(k,n): return f"{100*k/n:.0f}"
 r0,r25,r50,r100=(rel[('all',t)] for t in (0.0,0.25,0.5,1.0))
-rel_sentence=(f"{_pct(int(r0['agree']),int(r0['pairs']))}\\% of all {r0['pairs']} within-workload pairs are ordered as predicted, "
- f"{_pct(int(r25['agree']),int(r25['pairs']))}\\% of the {r25['pairs']} pairs the model separates by more than $25\\%$, "
+_ci=lambda r: f"{100*float(r['ci_low']):.0f}\\text{{--}}{100*float(r['ci_high']):.0f}"
+rel_sentence=(f"{_pct(int(r0['agree']),int(r0['pairs']))}\\% of all {r0['pairs']} within-workload pairs are ordered as predicted "
+ f"(95\\% architecture-level bootstrap interval ${_ci(r0)}\\%$), "
+ f"{_pct(int(r25['agree']),int(r25['pairs']))}\\% of the {r25['pairs']} pairs the model separates by more than $25\\%$ (${_ci(r25)}\\%$), "
  f"{r50['agree']} of {r50['pairs']} pairs separated by more than $50\\%$ and {r100['agree']} of {r100['pairs']} separated by more than $100\\%$")
 write('validation',r'''\RefDesTab{} reports analytical mean-latency predictions against the revised
 DES model. The independent Docker round retains the same 36 configurations and all 108

@@ -1,0 +1,189 @@
+\documentclass[preprint,11pt,3p]{elsarticle}
+\usepackage{booktabs,multirow,amsmath,graphicx}
+\usepackage[hidelinks]{hyperref}
+\renewcommand{\thetable}{S\arabic{table}}
+\begin{document}
+\section*{Supplementary material: HCA-DSE}
+Full budget sweeps and validation subsets accompanying the main manuscript.
+All values are generated from the same result CSVs as the main-text summaries.
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S2. Medians over 20 seeds.}
+\scriptsize
+\begin{tabular}{lllrrrrr}
+\toprule
+scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.060 \\
+ & & random ($B$=100) & 100 & 0.037 & 0.692 & 0.1496 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.037 & 0.794 & 0.1018 & 0.004 \\
+ & & random ($B$=500) & 500 & 0.074 & 0.880 & 0.0713 & 0.008 \\
+ & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.017 \\
+ & & NSGA-II ($B$=100) & 100 & 0.037 & 0.703 & 0.1537 & 0.014 \\
+ & & NSGA-II ($B$=250) & 250 & 0.259 & 0.886 & 0.0447 & 0.037 \\
+ & & NSGA-II ($B$=500) & 500 & 0.759 & 0.995 & 0.0063 & 0.084 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.184 \\
+ & & \textbf{HCA-DSE} & 50 & 1.000 & 1.000 & 0.0000 & 0.017 \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.050 \\
+ & & random ($B$=100) & 100 & 0.040 & 0.691 & 0.1460 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.040 & 0.792 & 0.0940 & 0.004 \\
+ & & random ($B$=500) & 500 & 0.080 & 0.879 & 0.0566 & 0.007 \\
+ & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.017 \\
+ & & NSGA-II ($B$=100) & 100 & 0.040 & 0.627 & 0.1592 & 0.014 \\
+ & & NSGA-II ($B$=250) & 250 & 0.300 & 0.910 & 0.0348 & 0.039 \\
+ & & NSGA-II ($B$=500) & 500 & 0.800 & 0.991 & 0.0041 & 0.091 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.197 \\
+ & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.015 \\
+\midrule
+\multirow{10}{*}{S2} & \multirow{10}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.035 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.469 & 0.2629 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.062 & 0.686 & 0.1521 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.062 & 0.804 & 0.0808 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.012 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.404 & 0.3482 & 0.014 \\
+ & & NSGA-II ($B$=250) & 250 & 0.312 & 0.793 & 0.0782 & 0.041 \\
+ & & NSGA-II ($B$=500) & 500 & 0.719 & 0.965 & 0.0224 & 0.102 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.235 \\
+ & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.012 \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full budget-matched comparison on S3. Medians over 20 seeds.}
+\scriptsize
+\begin{tabular}{lllrrrrr}
+\toprule
+scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.354 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.259 & 0.3903 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.487 & 0.2574 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.563 & 0.1671 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.013 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.151 & 0.4919 & 0.012 \\
+ & & NSGA-II ($B$=250) & 250 & 0.000 & 0.687 & 0.1732 & 0.033 \\
+ & & NSGA-II ($B$=500) & 500 & 0.355 & 0.915 & 0.0558 & 0.078 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.199 \\
+ & & \textbf{HCA-DSE} & 56 & 1.000 & 1.000 & 0.0000 & 0.063 \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.323 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.262 & 0.4192 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.492 & 0.2537 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.564 & 0.1746 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.012 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.286 & 0.4405 & 0.015 \\
+ & & NSGA-II ($B$=250) & 250 & 0.037 & 0.748 & 0.1009 & 0.038 \\
+ & & NSGA-II ($B$=500) & 500 & 0.278 & 0.933 & 0.0387 & 0.086 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.209 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.065 \\
+\midrule
+\multirow{10}{*}{S3} & \multirow{10}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.356 \\
+ & & random ($B$=100) & 100 & 0.000 & 0.037 & 0.6082 & 0.001 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.231 & 0.3843 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.556 & 0.2543 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.012 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.050 & 0.5191 & 0.014 \\
+ & & NSGA-II ($B$=250) & 250 & 0.037 & 0.279 & 0.2833 & 0.035 \\
+ & & NSGA-II ($B$=500) & 500 & 0.370 & 0.750 & 0.1996 & 0.082 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.218 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.074 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full S3 statistical comparison: one-sided Mann--Whitney test for larger NSGA-II hypervolume and Cliff's $\delta$. Unadjusted $p$-values.}
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\
+ & & HV med. & HV med. & & $\delta$ & recall & evals \\
+\midrule
+telemetry & 100 & 0.1509 & 0.259 & 0.951 & -0.302 & 0.0 & 56 \\
+telemetry & 250 & 0.6868 & 0.4871 & 0.021 & 0.38 & 0.0 & 56 \\
+telemetry & 500 & 0.9154 & 0.5633 & $<$0.001 & 0.7 & 0.355 & 56 \\
+telemetry & 1000 & 0.9874 & 0.6993 & $<$0.001 & 0.7 & 0.645 & 56 \\
+control & 100 & 0.2859 & 0.2616 & 0.484 & 0.01 & 0.0 & 43 \\
+control & 250 & 0.7481 & 0.4916 & $<$0.001 & 0.62 & 0.037 & 43 \\
+control & 500 & 0.9331 & 0.5644 & $<$0.001 & 0.8 & 0.278 & 43 \\
+control & 1000 & 0.9906 & 0.6913 & $<$0.001 & 0.8 & 0.648 & 43 \\
+sensing & 100 & 0.0497 & 0.0367 & 0.261 & 0.12 & 0.0 & 43 \\
+sensing & 250 & 0.2787 & 0.2308 & 0.672 & -0.08 & 0.037 & 43 \\
+sensing & 500 & 0.7504 & 0.5561 & 0.168 & 0.18 & 0.37 & 43 \\
+sensing & 1000 & 0.9689 & 0.5998 & 0.054 & 0.3 & 0.741 & 43 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[!htbp]\centering
+\caption{Testbed validation against measured $p_{50}$, including utilisation and reproducibility subsets. Pair agreement is a fraction; undefined values (no eligible pairs) are shown as --.}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+subset & $n$ & MAPE & med.\ AE & Spearman & Kendall & pair & pair & repeat \\
+ & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & IQR [ms] \\
+\midrule
+telemetry (all) & 12 & 20.3 & 7.54 & 0.839 & 0.727 & 0.852 & 0.895 & 0.23 \\
+telemetry ($\rho\le0.75$) & 6 & 16.2 & 2.91 & 0.829 & 0.733 & 0.818 & 1.0 & 0.18 \\
+control (all) & 12 & 15.7 & 2.56 & 0.872 & 0.779 & 0.917 & 0.909 & 0.27 \\
+control ($\rho\le0.75$) & 10 & 9.5 & 2.4 & 0.778 & 0.674 & 0.852 & 0.833 & 0.17 \\
+sensing (all) & 12 & 50.0 & 20.0 & 0.949 & 0.87 & 0.957 & 0.957 & 2.17 \\
+sensing ($\rho\le0.75$) & 10 & 49.7 & 19.28 & 0.985 & 0.944 & 1.0 & 1.0 & 1.86 \\
+sensing (reproducible) & 8 & 41.7 & 18.77 & 0.994 & 0.982 & 1.0 & -- & 1.49 \\
+\textbf{all workloads} (all) & 36 & 28.7 & 7.54 & 0.97 & 0.893 & 0.968 & 0.982 & 0.49 \\
+\textbf{all workloads} ($\rho\le0.75$) & 26 & 26.5 & 3.91 & 0.948 & 0.861 & 0.962 & 0.982 & 0.4 \\
+\textbf{all workloads} (reproducible) & 32 & 23.9 & 4.54 & 0.96 & 0.881 & 0.963 & 0.979 & 0.38 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+\begin{table}[!htbp]\centering
+\caption{Full order/queue ablation on S1--S3. All configurations preserve the unrounded exhaustive front.}
+\scriptsize
+\begin{tabular}{llllrrrrrr}
+\toprule
+scale & workload & order & queue & states & checks & evals & active & pruned & ms \\
+\midrule
+S1 & telemetry & determinants-early & off & 447 & 746 & 136 & 0 & 0 & 10.0 \\
+S1 & telemetry & determinants-early & on & 251 & 516 & 34 & 306 & 46 & 7.9 \\
+S1 & telemetry & determinants-late & off & 695 & 1299 & 136 & 0 & 0 & 15.8 \\
+S1 & telemetry & determinants-late & on & 591 & 1299 & 32 & 0 & 0 & 17.3 \\
+S1 & control & determinants-early & off & 391 & 669 & 113 & 0 & 0 & 9.1 \\
+S1 & control & determinants-early & on & 242 & 512 & 28 & 312 & 35 & 8.0 \\
+S1 & control & determinants-late & off & 679 & 1317 & 112 & 0 & 0 & 15.5 \\
+S1 & control & determinants-late & on & 593 & 1317 & 26 & 0 & 0 & 17.7 \\
+S1 & sensing & determinants-early & off & 481 & 810 & 147 & 0 & 0 & 9.5 \\
+S1 & sensing & determinants-early & on & 226 & 503 & 16 & 309 & 72 & 6.1 \\
+S1 & sensing & determinants-late & off & 497 & 819 & 148 & 0 & 0 & 10.1 \\
+S1 & sensing & determinants-late & on & 365 & 819 & 16 & 0 & 0 & 8.6 \\
+S2 & telemetry & determinants-early & off & 939 & 1815 & 208 & 0 & 0 & 25.4 \\
+S2 & telemetry & determinants-early & on & 608 & 1383 & 50 & 839 & 99 & 22.0 \\
+S2 & telemetry & determinants-late & off & 1816 & 3940 & 208 & 0 & 0 & 50.7 \\
+S2 & telemetry & determinants-late & on & 1656 & 3940 & 48 & 0 & 0 & 57.5 \\
+S2 & control & determinants-early & off & 835 & 1674 & 165 & 0 & 0 & 22.3 \\
+S2 & control & determinants-early & on & 587 & 1364 & 39 & 842 & 80 & 20.7 \\
+S2 & control & determinants-late & off & 1780 & 3960 & 164 & 0 & 0 & 49.1 \\
+S2 & control & determinants-late & on & 1653 & 3960 & 37 & 0 & 0 & 55.4 \\
+S2 & sensing & determinants-early & off & 1161 & 2184 & 289 & 0 & 0 & 26.9 \\
+S2 & sensing & determinants-early & on & 600 & 1427 & 26 & 879 & 177 & 17.4 \\
+S2 & sensing & determinants-late & off & 1268 & 2421 & 290 & 0 & 0 & 28.8 \\
+S2 & sensing & determinants-late & on & 1004 & 2421 & 26 & 0 & 0 & 26.8 \\
+S3 & telemetry & determinants-early & off & 2871 & 6806 & 251 & 0 & 0 & 73.3 \\
+S3 & telemetry & determinants-early & on & 2401 & 6100 & 56 & 3777 & 188 & 71.8 \\
+S3 & telemetry & determinants-late & off & 6029 & 14794 & 251 & 0 & 0 & 169.5 \\
+S3 & telemetry & determinants-late & on & 5832 & 14794 & 54 & 0 & 0 & 205.1 \\
+S3 & control & determinants-early & off & 2755 & 6636 & 206 & 0 & 0 & 65.9 \\
+S3 & control & determinants-early & on & 2375 & 6074 & 43 & 3777 & 163 & 78.6 \\
+S3 & control & determinants-late & off & 5990 & 14812 & 205 & 0 & 0 & 155.6 \\
+S3 & control & determinants-late & on & 5826 & 14812 & 41 & 0 & 0 & 174.0 \\
+S3 & sensing & determinants-early & off & 4351 & 9905 & 537 & 0 & 0 & 107.9 \\
+S3 & sensing & determinants-early & on & 3221 & 8281 & 43 & 5139 & 419 & 86.2 \\
+S3 & sensing & determinants-late & off & 4888 & 11367 & 538 & 0 & 0 & 103.4 \\
+S3 & sensing & determinants-late & on & 4393 & 11367 & 43 & 0 & 0 & 109.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}

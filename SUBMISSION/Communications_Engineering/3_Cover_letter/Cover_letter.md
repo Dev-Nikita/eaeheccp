@@ -29,9 +29,10 @@ architectures matched the measured order for 88.6–91.3% of pairs separated by 
 25%, and for 53 of 54 pairs separated by more than 50%.
 
 We believe the work fits Communications Engineering because it adds an engineering
-capability rather than a faster heuristic: certified elimination before expensive
-evaluation, so that a simulator or a test bench is spent only where an optimal
-architecture can still be. We keep the claims to what was measured. The front is exact
+capability rather than a faster heuristic: elimination before expensive evaluation that
+is certified with respect to the design model, so that a simulator or a test bench is
+spent only where an optimal architecture can still be, together with a measured account
+of how often those model-based decisions hold on hardware. We keep the claims to what was measured. The front is exact
 with respect to the analytical model; the deployment validates latency ordering, not
 energy or cost; and the study covers one architecture template, with the conditions
 under which the bounds apply to others stated in the Discussion. The regimes in which

@@ -16,4 +16,6 @@ results/*.log
 *.out
 *.spl
 *.synctex.gz
-!manuscript/sn-manuscript/main.bbl
+!SUBMISSION/**/main.bbl
+
+Claude outputs/

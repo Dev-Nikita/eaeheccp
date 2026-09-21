@@ -74,23 +74,24 @@ exploration for heterogeneous edge and cloud cyber-physical systems}
 \abstract{Deciding how many edge nodes and gateways a distributed cyber-physical system
 should have, which hardware and network classes to use, where each processing stage runs
 and how far it is replicated determines whether the system meets its deadline and what it
-costs. Candidate architectures number in the millions and simulating one can take up to a
+costs. Candidate architectures number in the millions and simulating one can take a
 minute, so the practical budget is the number of expensive evaluations an engineer can
 afford. Evolutionary search fits such a
 budget but cannot say which trade-offs it missed, and exact partial-design pruning relies
-on objectives that grow monotonically as decisions are fixed. End-to-end latency does not,
-because it depends on the utilisation of a tier that several decisions fix jointly. We
+on objectives that grow monotonically as decisions are fixed. End-to-end latency does not: it
+depends on tier utilisation, which several decisions fix jointly. We
 show that exact pruning remains possible for such contention-dependent objectives.
 Bounds obtained by relaxing each term of an objective separately, combined with a decision
 order that makes the queueing term exactly computable on incomplete designs, allow
-provably safe elimination of infeasible and dominated regions before any evaluation. On
+provably safe elimination of infeasible and dominated regions before evaluation. On
 spaces of up to 8.3\,\texttimes\,10\textsuperscript{7} architectures, the method calls the
 expensive evaluator \EvalRange{} times and returns the exact set of optimal trade-offs
 wherever exhaustive enumeration can confirm it. In an independent containerised deployment
-with the model frozen beforehand, predicted and measured orders of two architectures
-agreed for \WithinAgreementRange\% of pairs separated by more than 25\% and for
-\ReliabilityFifty{} pairs separated by more than 50\%. Analytical models can thus
-certify which architectures need no high-fidelity evaluation.}
+with the model frozen beforehand, predicted and measured orders agreed for
+\WithinAgreementRange\% of architecture pairs separated by more than 25\% and for
+\ReliabilityFifty{} pairs separated by more than 50\%. Eliminations are
+certified with respect to the design model, so high-fidelity evaluation can be reserved
+for the few architectures that remain competitive.}
 
 \keywords{architecture exploration, cyber-physical systems, edge computing,
 multi-objective optimisation, design automation}
@@ -178,8 +179,9 @@ that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
 within a workload, and for \ReliabilityFifty{} pairs it separates by more than $50\%$:
 the larger the predicted advantage, the more the design decision can be trusted. The
-method is therefore best read as a certified screening stage that decides which
-architectures need never reach a simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
+method is therefore best read as a screening stage whose eliminations are certified with
+respect to the design model, which decides which architectures need never reach a
+simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
 advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
 bounded by the overhead of the search itself; no admissible bound may be available at
 all; and near saturation neither the model nor the deployment is stable.
@@ -314,7 +316,7 @@ identical to the exhaustive Pareto front, with recall and precision of $1.0$
 partial designs against all their completions --- and for every pruned partial design all
 completions were enumerated and checked against the claim of the rule that discarded it.
 %
-Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $0.217\text{--}4.696$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($2188\text{--}2406$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $1.4\text{--}13.8$\,s on S1/S2 and $157\text{--}170$\,s on S3, against $5.9\text{--}104.1$\,ms for HCA-DSE with the closed-form evaluator. Its precondition is that the entire model is available in closed form, so its candidates cannot be handed to a simulator or a deployment; HCA-DSE needs closed-form bounds only and leaves the expensive evaluation to whichever evaluator the engineer trusts.
+Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $0.217\text{--}4.696$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($2188\text{--}2406$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $1.4\text{--}13.8$\,s on S1/S2 and $157\text{--}170$\,s on S3, against $5.9\text{--}104.1$\,ms for HCA-DSE with the closed-form evaluator. Solver times depend on the encoding and are indicative. The factorised encoding requires the entire objective and constraint model to be representable by its tables; HCA-DSE requires only admissible bounds on partial designs, and the front it returns is exact for the objective those bounds are admissible for --- in this study, the analytical model.
 
 \subsection{The saving converts into time when evaluation is expensive}
 Whether fewer evaluations translate into less time depends on what an evaluation costs.
@@ -326,7 +328,7 @@ No positive break-even evaluation cost was observed on either scale: with the cl
 S2: projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
 S3: projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
-neither exploration strategy was executed end to end with DES in the inner loop.
+neither exploration strategy was executed end to end with DES in the inner loop. With DES as the leaf evaluator, the returned front would be exact with respect to the DES objective only if the analytical bounds were also admissible for it, which is not established here; the projection quantifies the evaluation budget, not a DES-level guarantee.
 The measured analytical-evaluator speed-up across S2/S3 is $2.58\text{--}4.96\times$. These hardware- and implementation-specific values do not establish
 simulator-level Pareto exactness or a universal crossover cost.
 
@@ -378,7 +380,7 @@ a substitute for within-workload validation. 6 configurations have a ratio of la
 $1.5$; all remain in the main summary. Supplementary Table S4 separately reports the
 $p_{50}$ comparison and its utilisation/repeat subsets. Differences between predicted
 means and measured medians must not be interpreted as direct mean-prediction error.
-Agreement grows with the separation the model predicts (\RefReliabilityFig{}): 86\% of all 196 within-workload pairs are ordered as predicted, 90\% of the 105 pairs the model separates by more than $25\%$, 53 of 54 pairs separated by more than $50\%$ and 20 of 20 separated by more than $100\%$.
+Agreement grows with the separation the model predicts (\RefReliabilityFig{}): 86\% of all 196 within-workload pairs are ordered as predicted (95\% architecture-level bootstrap interval $77\text{--}94\%$), 90\% of the 105 pairs the model separates by more than $25\%$ ($77\text{--}98\%$), 53 of 54 pairs separated by more than $50\%$ and 20 of 20 separated by more than $100\%$.
 Absolute prediction error is therefore substantial, while the decision-relevant quantity
 --- the ordering of architectures that the model separates clearly --- transfers. Six
 configurations were not reproducible across repeats; they are retained in the summary
@@ -507,8 +509,8 @@ architectures whose repeated means differ by a factor of $1.5$ or more. \textbf{
 of within-workload architecture pairs whose measured order matches the order predicted by
 the frozen model, as a function of the relative separation the model predicts between the
 two architectures. Solid line: all architectures, with the number of pairs $n$ and a
-$95\%$ Wilson interval; dashed line: only architectures whose repeats agree within a
-factor of $1.5$.}
+$95\%$ architecture-level cluster-bootstrap interval (Methods); dashed line: only
+architectures whose repeats agree within a factor of $1.5$.}
 \label{fig:ce:testbed}
 \end{figure}
 \section{Discussion}
@@ -569,11 +571,16 @@ CompDSE\cite{saadatmand2025compdse} supply the high-fidelity evaluator and leave
 open, design-time tools for the computing continuum such as
 SPACE4AI-D\cite{sedghani2024space4aid} search heuristically, and the method here supplies
 the missing piece, a search that spends the evaluator only where optimality is still
-possible and certifies what it skipped. The compact symbolic baseline makes the same point
+possible under the design model and certifies, with respect to that model, what it
+skipped. Carrying the certificate over to a high-fidelity evaluator requires one more
+condition: the bounds must be admissible for that evaluator as well, for instance
+because they are derived from a relaxation that provably under-estimates it. Our
+deployment does not establish this; it shows instead how often the model's decisions
+survive contact with hardware. The compact symbolic baseline makes the same point
 from the other side. When the entire model is available in closed form, a factorised
 constraint encoding also recovers the exact front, without calling any evaluator; the
-reason to prune rather than solve is that the model which matters most is usually the one
-that is not available in closed form.
+reason to prune rather than solve is that the model which matters most is usually not
+available in closed form, while admissible bounds on it can be.
 
 Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
 space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
@@ -593,7 +600,8 @@ Extending the guarantee to objectives that resist closed-form bounds, for exampl
 surrogate bounds that remain provably admissible, is the most valuable open direction we
 see. More broadly, the results change what an analytical model is for in architecture
 design: it need not replace a high-fidelity evaluator to be useful, because it can
-certify which regions of a design space do not deserve one.
+certify, with respect to itself, which regions of a design space do not deserve one, and
+the deployment shows how far such certificates can be trusted in practice.
 \section{Methods}
 \label{sec:sn:methods}
 
@@ -754,8 +762,12 @@ is run three times and summarised by the median of its run means. Accuracy is re
 mean absolute percentage error and median absolute error, rank agreement as Spearman's
 $\rho$, and decision agreement as the share of within-workload architecture pairs whose
 measured order matches the predicted order, among pairs the model separates by more than
-a given relative margin. Intervals on these shares are $95\%$ Wilson score intervals;
-pairs share architectures and are not independent, so the intervals are indicative. No
+a given relative margin. Because pairs share architectures and are not independent, intervals on these shares
+come from a cluster bootstrap at architecture level: within each workload the
+architectures are resampled with replacement, eligible pairs are rebuilt from the
+resample and the pooled share is recomputed ($10\,000$ replicates, $95\%$ percentile
+intervals). Where every pair agrees, the percentile interval degenerates to a point and
+should not be read as certainty. No
 observation is excluded; configurations whose repeated means differ by a factor of $1.5$
 or more are flagged and retained.
 

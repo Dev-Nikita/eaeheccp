@@ -158,8 +158,12 @@ is run three times and summarised by the median of its run means. Accuracy is re
 mean absolute percentage error and median absolute error, rank agreement as Spearman's
 $\rho$, and decision agreement as the share of within-workload architecture pairs whose
 measured order matches the predicted order, among pairs the model separates by more than
-a given relative margin. Intervals on these shares are $95\%$ Wilson score intervals;
-pairs share architectures and are not independent, so the intervals are indicative. No
+a given relative margin. Because pairs share architectures and are not independent, intervals on these shares
+come from a cluster bootstrap at architecture level: within each workload the
+architectures are resampled with replacement, eligible pairs are rebuilt from the
+resample and the pooled share is recomputed ($10\,000$ replicates, $95\%$ percentile
+intervals). Where every pair agrees, the percentile interval degenerates to a point and
+should not be read as certainty. No
 observation is excluded; configurations whose repeated means differ by a factor of $1.5$
 or more are flagged and retained.
 

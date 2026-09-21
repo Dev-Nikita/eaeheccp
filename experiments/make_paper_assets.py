@@ -376,7 +376,7 @@ for subset, ls, lab in (("all", "-", "all 36 architectures"), ("reproducible", "
 ax.set_xlabel("predicted separation of the pair [%]")
 ax.set_ylabel("pairs ordered as predicted [%]")
 ax.set_ylim(60, 104); ax.set_xlim(-4, 104)
-ax.set_title("(b) n: architecture pairs; band: 95% Wilson interval", fontsize=6.5)
+ax.set_title("(b) n: architecture pairs; band: 95% architecture-level bootstrap", fontsize=6.5)
 ax.legend(fontsize=6, loc="lower right")
 f.tight_layout()
 fig("testbed", f)

@@ -359,7 +359,9 @@ sensing (reproducible) & 8 & 41.7 & 18.77 & 0.994 & 0.982 & 1.0 & -- & 1.49 \\
 every structurally valid design and then solves; factorised SMT tabulates each model term
 over its own decisions only and calls no evaluator. ``Evaluator calls'' counts full
 design-point evaluations; ``tabulated entries'' counts table rows built before solving;
-total time includes table construction. All rows return the exhaustive front.}\label{tabS5}
+total time includes table construction. All rows return the exhaustive front.
+Factorised SMT requires the complete analytical objective and constraint model to be
+representable by the factor tables; solver times depend on the encoding.}\label{tabS5}
 {\let\scriptsize\tiny\setlength{\tabcolsep}{2pt}\scriptsize
 \begin{tabular}{lllrrrrr}
 \toprule

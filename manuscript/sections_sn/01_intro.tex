@@ -79,8 +79,9 @@ that the ordering the model produces is the ordering the hardware produces for
 $\WithinAgreementRange\%$ of the architecture pairs it separates by more than $25\%$
 within a workload, and for \ReliabilityFifty{} pairs it separates by more than $50\%$:
 the larger the predicted advantage, the more the design decision can be trusted. The
-method is therefore best read as a certified screening stage that decides which
-architectures need never reach a simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
+method is therefore best read as a screening stage whose eliminations are certified with
+respect to the design model, which decides which architectures need never reach a
+simulator or a test bench. We report equally clearly where the gains shrink or the method does not apply: the
 advantage grows with the cost of one evaluation, so with a very cheap evaluator it is
 bounded by the overhead of the search itself; no admissible bound may be available at
 all; and near saturation neither the model nor the deployment is stable.

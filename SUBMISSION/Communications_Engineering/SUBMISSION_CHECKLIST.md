@@ -11,7 +11,7 @@
       Competing interests;
 - [x] SI и main говорят одно и то же про минимумы термов (конечные домены -> точный
       предподсчёт; endpoint только для упорядоченных скалярных доменов);
-- [x] PDF в `sn-manuscript/` собран из финальных исходников и проверен поиском: нет
+- [x] PDF в `SUBMISSION/Communications_Engineering/` собран из финальных исходников и проверен поиском: нет
       строк 16-61, 41-50, 51-55, старой декларации ИИ и отрицательных break-even;
       есть 16-63, 43-56, 52-62, 2.58-4.96x, ChatGPT-декларация, p < 0.001;
 - [x] требования CE сверены (guide to authors, сентябрь 2026): title без пунктуации и
@@ -42,7 +42,7 @@
       и на рисунках: весь набор e1-e8, e10, e11 пересчитан заново (determinants-early),
       Table 2 = 43-56 на S3, ablation и funnel из того же прогона;
 - [x] дискретные счётчики воспроизвелись в двух средах (Python 3.10 и 3.11) бит-в-бит;
-- [x] чистая папка подачи `manuscript/sn-manuscript/`: main.tex, supplement.tex,
+- [x] папка подачи `SUBMISSION/Communications_Engineering/` (1_Manuscript, 2_Supplementary_Information, 3_Cover_letter): main.tex, supplement.tex,
       refs.bib, sn-jnl.cls, sn-nature.bst, figures/ — все \input развёрнуты,
       генерируется `python3 experiments/make_submission_package.py`;
 - [x] cover letter переписан под CE (~400 слов, без bold-заголовков, с абзацем про fit и

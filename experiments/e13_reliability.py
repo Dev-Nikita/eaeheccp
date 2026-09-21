@@ -6,25 +6,23 @@ measured order (mean latency over three runs, the main-text metric) matches the 
 order, as a function of how far apart the model places the two architectures. No model
 parameter is fitted here: predictions come from the model frozen before deployment.
 Pairs are counted within workloads only; the pooled figure sums within-workload pairs.
-Intervals are Wilson 95% score intervals on the pair counts; pairs share designs and are
-therefore not independent, so the intervals are indicative rather than exact.
+Pairs share architectures and are not independent, so intervals come from a cluster
+bootstrap at architecture level: within each workload the architectures are resampled
+with replacement, the eligible pairs are rebuilt from the resample (two copies of the
+same architecture never form a pair), and the pooled agreement is recomputed; 95%
+percentile intervals over 10,000 replicates, fixed seed.
 """
-import csv, math, os, sys
+import csv, math, os, sys, random
 THRESHOLDS = [0.0, 0.05, 0.10, 0.15, 0.25, 0.50, 1.00]
 SRC = os.environ.get('HCADSE_RESULTS', 'results') + '/e9_per_design_mean.csv'
-
-def wilson(k, n, z=1.96):
-    if n == 0:
-        return float('nan'), float('nan')
-    p = k / n; d = 1 + z * z / n
-    c = (p + z * z / (2 * n)) / d; h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
-    return c - h, c + h
 
 def counts(sub, thr):
     ok = tot = 0
     for i in range(len(sub)):
         for j in range(i + 1, len(sub)):
             a, b = sub[i], sub[j]
+            if a is b:
+                continue
             la, lb = float(a['L_analytical']), float(b['L_analytical'])
             if abs(la - lb) / min(la, lb) <= thr:
                 continue
@@ -34,20 +32,33 @@ def counts(sub, thr):
 
 rows = list(csv.DictReader(open(SRC)))
 wls = sorted({r['workload'] for r in rows})
+B = 10000
+rng = random.Random(20260921)
 out = []
 for subset, keep in (('all', lambda r: True), ('reproducible', lambda r: float(r['spread']) < 1.5)):
+    groups = {w: [r for r in rows if r['workload'] == w and keep(r)] for w in wls}
     for thr in THRESHOLDS:
         pooled_ok = pooled_tot = 0
-        for w in wls + ['pooled']:
-            if w == 'pooled':
-                ok, tot = pooled_ok, pooled_tot
-            else:
-                ok, tot = counts([r for r in rows if r['workload'] == w and keep(r)], thr)
-                pooled_ok += ok; pooled_tot += tot
-            lo, hi = wilson(ok, tot)
+        for w in wls:
+            ok, tot = counts(groups[w], thr)
+            pooled_ok += ok; pooled_tot += tot
             out.append(dict(subset=subset, threshold=thr, workload=w, agree=ok, pairs=tot,
-                            agreement=round(ok / tot, 4) if tot else '',
-                            ci_low=round(lo, 4) if tot else '', ci_high=round(hi, 4) if tot else ''))
+                            agreement=round(ok / tot, 4) if tot else '', ci_low='', ci_high=''))
+        boots = []
+        for _ in range(B):
+            k = n = 0
+            for w in wls:
+                g = groups[w]
+                sample = [g[rng.randrange(len(g))] for _ in g]
+                a, t = counts(sample, thr)
+                k += a; n += t
+            if n:
+                boots.append(k / n)
+        boots.sort()
+        lo = boots[int(0.025 * len(boots))]; hi = boots[int(0.975 * len(boots)) - 1]
+        out.append(dict(subset=subset, threshold=thr, workload='pooled', agree=pooled_ok, pairs=pooled_tot,
+                        agreement=round(pooled_ok / pooled_tot, 4) if pooled_tot else '',
+                        ci_low=round(lo, 4), ci_high=round(hi, 4)))
 with open('results/e13_reliability.csv', 'w', newline='') as f:
     w_ = csv.DictWriter(f, list(out[0])); w_.writeheader(); w_.writerows(out)
 for r in out:

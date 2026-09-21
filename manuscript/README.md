@@ -1,21 +1,15 @@
-# Manuscript
+# LaTeX sources
 
-Сборка (нужен texlive с elsarticle, algorithm2e/algorithmicx, tikz, booktabs):
+Two versions share one set of generated figures, tables and numbers.
 
-```bash
-cd manuscript
-pdflatex main && bibtex main && pdflatex main && pdflatex main
-```
+| Version | Main file | Sections | Supplement |
+|---|---|---|---|
+| Communications Engineering (active) | `sn_main.tex` | `sections_sn/` | `supplement_sn.tex` |
+| JSA (fallback) | `main.tex` | `sections/` | `supplement.tex` |
 
-Все рисунки (`figures/*.pdf`) и все числовые таблицы (`tables/*.tex`) генерируются
-из результатов одной командой из корня проекта:
+Generated, do not edit by hand: `figures/`, `tables/`, `generated/`, `generated_numbers.tex`.
+Cross-reference macros used by the generated prose: `generated/refdefs.tex` (JSA defaults)
+and `generated/refdefs_sn.tex` (Communications Engineering).
 
-```bash
-python3 experiments/make_paper_assets.py
-```
-
-Ни одно число в статье не набрано вручную. Таблица 1 (related work) и текст —
-единственное, что редактируется руками.
-
-Структура: `main.tex` (преамбула, титул, abstract) + `sections/01..09` +
-`refs.bib`. Текущая сборка: 24 страницы, 7 рисунков, 9 таблиц, 21 ссылка.
+The submission-ready copies are written to `../SUBMISSION/` by
+`python3 experiments/make_submission_package.py`.

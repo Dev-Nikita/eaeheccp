@@ -56,11 +56,16 @@ CompDSE\cite{saadatmand2025compdse} supply the high-fidelity evaluator and leave
 open, design-time tools for the computing continuum such as
 SPACE4AI-D\cite{sedghani2024space4aid} search heuristically, and the method here supplies
 the missing piece, a search that spends the evaluator only where optimality is still
-possible and certifies what it skipped. The compact symbolic baseline makes the same point
+possible under the design model and certifies, with respect to that model, what it
+skipped. Carrying the certificate over to a high-fidelity evaluator requires one more
+condition: the bounds must be admissible for that evaluator as well, for instance
+because they are derived from a relaxation that provably under-estimates it. Our
+deployment does not establish this; it shows instead how often the model's decisions
+survive contact with hardware. The compact symbolic baseline makes the same point
 from the other side. When the entire model is available in closed form, a factorised
 constraint encoding also recovers the exact front, without calling any evaluator; the
-reason to prune rather than solve is that the model which matters most is usually the one
-that is not available in closed form.
+reason to prune rather than solve is that the model which matters most is usually not
+available in closed form, while admissible bounds on it can be.
 
 Three limits apply to the results reported here. First, the size of the gain is set by the cost of one evaluation, not by the size of the
 space. With the closed-form evaluator, which costs microseconds, the measured speed-up is
@@ -80,4 +85,5 @@ Extending the guarantee to objectives that resist closed-form bounds, for exampl
 surrogate bounds that remain provably admissible, is the most valuable open direction we
 see. More broadly, the results change what an analytical model is for in architecture
 design: it need not replace a high-fidelity evaluator to be useful, because it can
-certify which regions of a design space do not deserve one.
+certify, with respect to itself, which regions of a design space do not deserve one, and
+the deployment shows how far such certificates can be trusted in practice.
