@@ -50,7 +50,7 @@
 
 ## Осталось сделать вам
 - [ ] **ORCID** обоих авторов ввести в самой системе подачи (в тексте они уже стоят);
-- [ ] **опечатать новый релиз результатов на Mac** (там есть z3 и Python 3.12):
+- [x] **релиз v1.2-canonical-order опечатан на Mac** (Python 3.12, SHA-256 манифест), verify_run и verify_manuscript_numbers: PASS; все числа статьи взяты из него;
       `python3 experiments/reproduce.py --release v1.2-canonical-order --testbed results/e9_testbed_round2.csv`,
       затем `python3 experiments/verify_manuscript_numbers.py`. Сейчас числа в рукописи
       взяты из живой папки `results/`, а запечатанный релиз `v1.1-submission-results`

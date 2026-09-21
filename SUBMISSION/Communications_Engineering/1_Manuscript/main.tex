@@ -26,17 +26,17 @@
 \newcommand{\PS}{\mathcal{P}^{\star}}
 \newcommand{\LB}{\mathit{LB}}
 
-\newcommand{\EvalRange}{16\text{--}63}
-\newcommand{\SthreeEvalRange}{43\text{--}56}
-\newcommand{\SfourEvalRange}{52\text{--}62}
-\newcommand{\DesCostMs}{33.6}
-\newcommand{\ProjectionMax}{758}
+\newcommand{\EvalRange}{16\text{--}61}
+\newcommand{\SthreeEvalRange}{43\text{--}52}
+\newcommand{\SfourEvalRange}{52\text{--}57}
+\newcommand{\DesCostMs}{33.3}
+\newcommand{\ProjectionMax}{775}
 \newcommand{\BaselineRecallRange}{0.65\text{--}0.94}
 \newcommand{\WithinAgreementRange}{88.6\text{--}91.3}
 \newcommand{\PooledAgreement}{97.8}
 \newcommand{\MaxStates}{18\,082}
 \newcommand{\ReliabilityFifty}{53 of 54}
-\newcommand{\AnalyticalSpeedup}{2.58\text{--}4.96}
+\newcommand{\AnalyticalSpeedup}{2.80\text{--}5.98}
 
 \raggedbottom
 
@@ -304,7 +304,7 @@ from this property; the statements and proofs are in Methods and Supplementary N
 
 \subsection{Expensive evaluations become the scarce resource that is actually spent}
 %
-The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing 99.89\text{--}99.92\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of 99.98\text{--}99.98\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.
+The exploration funnel is reported in \RefFunnelSite{}. On S3 ($51\,840$ candidates), HCA-DSE performs $\SthreeEvalRange$ full evaluations, removing 99.90\text{--}99.92\% of the raw space before evaluation. On S4 ($345\,600$ candidates), it performs $\SfourEvalRange$ evaluations, a reduction of 99.98\text{--}99.98\%. Raw-space reductions include structural rejection; \RefFunnelTab{} separately reports the smaller number of actual exhaustive evaluator calls.
 The composition of the funnel differs by workload: for data-intensive sensing the
 feasibility bounds remove the largest share, whereas for telemetry dominance pruning does
 most of the work, reflecting which constraint binds in each regime.
@@ -316,7 +316,7 @@ identical to the exhaustive Pareto front, with recall and precision of $1.0$
 partial designs against all their completions --- and for every pruned partial design all
 completions were enumerated and checked against the claim of the rule that discarded it.
 %
-Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $0.217\text{--}4.696$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($2188\text{--}2406$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $1.4\text{--}13.8$\,s on S1/S2 and $157\text{--}170$\,s on S3, against $5.9\text{--}104.1$\,ms for HCA-DSE with the closed-form evaluator. Solver times depend on the encoding and are indicative. The factorised encoding requires the entire objective and constraint model to be representable by its tables; HCA-DSE requires only admissible bounds on partial designs, and the front it returns is exact for the objective those bounds are admissible for --- in this study, the analytical model.
+Two exact solver baselines bracket the method (\RefSolverTab{}). The finite-table Z3 baseline builds the whole structurally valid relation before solving, so it spends 1080 evaluator calls on S1 and 3888 on S2, with a total runtime of $0.155\text{--}3.305$\,s. A compact factorised SMT encoding avoids evaluator calls altogether: each term of the model is tabulated only over the decisions it depends on ($2188\text{--}2406$ table entries for the $51\,840$ candidates of S3), objectives and constraints become linear, and the exact Pareto set is enumerated by guided improvement. It recovers the exhaustive front in all nine S1--S3 cases with no full-design evaluation, in $0.8\text{--}12.4$\,s on S1/S2 and $71\text{--}94$\,s on S3, against $4.2\text{--}66.6$\,ms for HCA-DSE with the closed-form evaluator. Solver times depend on the encoding and are indicative. The factorised encoding requires the entire objective and constraint model to be representable by its tables; HCA-DSE requires only admissible bounds on partial designs, and the front it returns is exact for the objective those bounds are admissible for --- in this study, the analytical model.
 
 \subsection{The saving converts into time when evaluation is expensive}
 Whether fewer evaluations translate into less time depends on what an evaluation costs.
@@ -325,11 +325,11 @@ evaluation for two evaluators, and projected the resulting speed-up
 (Fig.~\ref{fig:ce:crossover}).
 %
 No positive break-even evaluation cost was observed on either scale: with the closed-form evaluator HCA-DSE is already faster than exhaustive enumeration, so the linear crossover model places the threshold below zero and the projections below are gains that grow with evaluator cost rather than gains that start at one.
-S2: projected speed-up at the measured DES cost is $77.0\text{--}147.1\times$, with asymptotic evaluation-count ratios of $77.8\text{--}149.5\times$.
-S3: projected speed-up at the measured DES cost is $589.4\text{--}758.2\times$, with asymptotic evaluation-count ratios of $617.1\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
+S2: projected speed-up at the measured DES cost is $83.8\text{--}147.9\times$, with asymptotic evaluation-count ratios of $84.5\text{--}149.5\times$.
+S3: projected speed-up at the measured DES cost is $645.0\text{--}775.4\times$, with asymptotic evaluation-count ratios of $664.6\text{--}803.7\times$. The DES anchor is $\DesCostMs$\,ms, averaged over 40 designs. The curve in
 \RefCrossoverFig{} is a cost projection from measured counts and median overheads;
 neither exploration strategy was executed end to end with DES in the inner loop. With DES as the leaf evaluator, the returned front would be exact with respect to the DES objective only if the analytical bounds were also admissible for it, which is not established here; the projection quantifies the evaluation budget, not a DES-level guarantee.
-The measured analytical-evaluator speed-up across S2/S3 is $2.58\text{--}4.96\times$. These hardware- and implementation-specific values do not establish
+The measured analytical-evaluator speed-up across S2/S3 is $2.80\text{--}5.98\times$. These hardware- and implementation-specific values do not establish
 simulator-level Pareto exactness or a universal crossover cost.
 
 \subsection{Guarantees at a fraction of a stochastic search budget}
@@ -350,18 +350,18 @@ bounds exist.
 
 \subsection{The mechanism scales because the space is never built}
 %
-The scalability sweep (\RefScalSite{}) covers raw spaces from $1.3\times10^3$ to $8.3\times10^7$ candidates. Across the sweep, expanded partial states never exceed $18082$; full evaluations range from $18\text{--}63$. The largest observed runtime is $5.52$\,s, measured with Python memory tracing enabled, and peak traced allocations are $75.3$\,KiB. This is traced Python memory during search, not process RSS or total interpreter memory.
+The scalability sweep (\RefScalSite{}) covers raw spaces from $1.3\times10^3$ to $8.3\times10^7$ candidates. Across the sweep, expanded partial states never exceed $18082$; full evaluations range from $18\text{--}61$. The largest observed runtime is $3.96$\,s, measured with Python memory tracing enabled, and peak traced allocations are $73.7$\,KiB. This is traced Python memory during search, not process RSS or total interpreter memory.
 Exhaustive front equality cannot be checked at these sizes and is not claimed there.
 
 Two internal ablations show where the reduction comes from.
 %
-The layer ablation on S3 (\RefAblationSite{}) separates the contributions of the three pruning layers. Structural pruning alone leaves $34\,560$ full evaluations. Structural plus feasibility bounds leave $7025\text{--}12700$, while structural plus dominance bounds leave $328\text{--}412$. Combining all layers leaves $\SthreeEvalRange$. Every variant preserves the exhaustive analytical front; the separate layers contribute complementary reductions on these spaces.
+The layer ablation on S3 (\RefAblationSite{}) separates the contributions of the three pruning layers. Structural pruning alone leaves $34\,560$ full evaluations. Structural plus feasibility bounds leave $7025\text{--}12700$, while structural plus dominance bounds leave $323\text{--}412$. Combining all layers leaves $\SthreeEvalRange$. Every variant preserves the exhaustive analytical front; the separate layers contribute complementary reductions on these spaces.
 The layers are complementary, because feasibility pruning removes exactly the sub-trees in
 which the dominance test would otherwise be repeated (Supplementary Table~S6). Toggling
 the contention-aware term of the bound while holding the traversal order fixed isolates
 its contribution.
 %
-\RefOrderTab{} crosses traversal order and queue-bound activation on S3 (all scales in the supplement). The canonical determinants-early order assigns node counts, node classes, replication and placement policy before the remaining variables; the determinants-late order assigns replication and policy last, so the waiting term stays relaxed to zero on every incomplete design. With the queue bound enabled, the canonical order performs $43\text{--}56$ full evaluations against $41\text{--}54$ for the determinants-late order, while expanding $2375\text{--}3221$ partial designs against $4393\text{--}5832$. Under the canonical order $3777\text{--}5139$ checked incomplete designs carry a positive queueing contribution, of which $163\text{--}419$ are discarded only because that term is present, against the same archive; under the determinants-late order the count is zero by construction. All 36 scale/workload/order/queue combinations preserve the unrounded exhaustive objective-vector set. Changing the order also changes the archive discovery sequence, so only the within-order on/off comparison isolates the bound toggle.
+\RefOrderTab{} crosses traversal order and queue-bound activation on S3 (all scales in the supplement). The canonical determinants-early order assigns node counts, node classes, replication and placement policy before the remaining variables; the determinants-late order assigns replication and policy last, so the waiting term stays relaxed to zero on every incomplete design. With the queue bound enabled, the canonical order performs $43\text{--}52$ full evaluations against $41\text{--}50$ for the determinants-late order, while expanding $2375\text{--}3221$ partial designs against $4393\text{--}5828$. Under the canonical order $3777\text{--}5139$ checked incomplete designs carry a positive queueing contribution, of which $163\text{--}419$ are discarded only because that term is present, against the same archive; under the determinants-late order the count is zero by construction. All 36 scale/workload/order/queue combinations preserve the unrounded exhaustive objective-vector set. Changing the order also changes the archive discovery sequence, so only the within-order on/off comparison isolates the bound toggle.
 The full order and toggle sweep is in Supplementary Table~S7.
 
 \subsection{The ordering transfers to a real deployment}
@@ -437,35 +437,35 @@ full evaluations; the full budget sweep is in Supplementary Tables~S1--S3.}
 scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \midrule
 
-\multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.060 \\
- & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.017 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.184 \\
- & & \textbf{HCA-DSE} & 50 & 1.000 & 1.000 & 0.0000 & 0.017 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.045 \\
+ & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.014 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.148 \\
+ & & \textbf{HCA-DSE} & 46 & 1.000 & 1.000 & 0.0000 & 0.013 \\
 \midrule
-\multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.050 \\
- & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.017 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.197 \\
- & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.015 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.049 \\
+ & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.014 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.161 \\
+ & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.014 \\
 \midrule
-\multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.035 \\
- & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.012 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.235 \\
- & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.012 \\
+\multirow{4}{*}{S2} & \multirow{4}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.029 \\
+ & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.186 \\
+ & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.010 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.354 \\
- & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.013 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.199 \\
- & & \textbf{HCA-DSE} & 56 & 1.000 & 1.000 & 0.0000 & 0.063 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.320 \\
+ & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.011 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.146 \\
+ & & \textbf{HCA-DSE} & 52 & 1.000 & 1.000 & 0.0000 & 0.055 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.323 \\
- & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.012 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.209 \\
- & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.065 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.276 \\
+ & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.147 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.053 \\
 \midrule
-\multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.356 \\
- & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.012 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.218 \\
- & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.074 \\
+\multirow{4}{*}{S3} & \multirow{4}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.282 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.010 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.165 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.071 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -775,7 +775,13 @@ or more are flagged and retained.
 The implementation is Python 3 with NumPy, SciPy and pymoo; the deployment services are
 Go under Docker Compose. Every figure and every numeric table in this paper, main and
 supplementary, is generated from the raw result files by a single script, so no number is
-transcribed by hand.
+transcribed by hand. All reported results come from one sealed run (Python 3.12, macOS,
+arm64) whose source and data files are fixed by SHA-256 checksums. Repeating the
+computational experiments under Python 3.10 and 3.11 on Linux returns identical fronts,
+identical counts for the control and sensing workloads, and two to five more full
+evaluations for the telemetry workload; Python 3.12 sums floating-point sequences with
+compensated summation, which moves some bounds by the last binary digit and changes
+which exact ties the dominance test resolves before evaluation.
 
 \backmatter
 

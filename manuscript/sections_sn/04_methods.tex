@@ -171,4 +171,10 @@ or more are flagged and retained.
 The implementation is Python 3 with NumPy, SciPy and pymoo; the deployment services are
 Go under Docker Compose. Every figure and every numeric table in this paper, main and
 supplementary, is generated from the raw result files by a single script, so no number is
-transcribed by hand.
+transcribed by hand. All reported results come from one sealed run (Python 3.12, macOS,
+arm64) whose source and data files are fixed by SHA-256 checksums. Repeating the
+computational experiments under Python 3.10 and 3.11 on Linux returns identical fronts,
+identical counts for the control and sensing workloads, and two to five more full
+evaluations for the telemetry workload; Python 3.12 sums floating-point sequences with
+compensated summation, which moves some bounds by the last binary digit and changes
+which exact ties the dominance test resolves before evaluation.

@@ -10,7 +10,8 @@ SOURCES = sorted(glob.glob(f"{M}/generated/*.tex") + glob.glob(f"{M}/tables/*.te
 
 # numbers that are structural rather than empirical
 WHITELIST = {"1", "2", "3", "4", "5", "8", "10", "20", "36", "40", "100", "108", "150",
-             "250", "500", "900", "1000", "0.85", "200", "0", "9", "6", "12", "16", "24"}
+             "250", "500", "900", "1000", "0.85", "200", "0", "9", "6", "12", "16", "24",
+             "3.10", "3.11", "3.12"}   # Python versions named in the reproducibility note
 
 blob = "".join(open(f, errors="ignore").read() for f in SOURCES).replace(",", "").replace("\\,", "")
 num = re.compile(r"(?<![A-Za-z0-9_.^{])(\d+(?:\.\d+)?)(?![A-Za-z0-9_}])")

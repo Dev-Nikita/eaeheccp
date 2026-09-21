@@ -16,7 +16,7 @@ The manuscript makes exact screening possible for this non-monotone case. Bounds
 by relaxing each term of an objective separately, combined with a decision order that
 makes the queueing term exactly computable on an incomplete design, allow provably safe
 elimination of infeasible and dominated architectures before any expensive evaluation. On
-spaces of up to 83 million candidates the method calls the expensive evaluator 16–63
+spaces of up to 83 million candidates the method calls the expensive evaluator 16–61
 times and reproduces the exhaustive Pareto front wherever exhaustive verification is
 tractable.
 

@@ -219,38 +219,38 @@ measurements.
 \toprule
 scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \midrule
-\multirow{10}{*}{S2} & \multirow{10}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.060 \\
+\multirow{10}{*}{S2} & \multirow{10}{*}{telemetry} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.045 \\
  & & random ($B$=100) & 100 & 0.037 & 0.692 & 0.1496 & 0.001 \\
- & & random ($B$=250) & 250 & 0.037 & 0.794 & 0.1018 & 0.004 \\
- & & random ($B$=500) & 500 & 0.074 & 0.880 & 0.0713 & 0.008 \\
- & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.017 \\
- & & NSGA-II ($B$=100) & 100 & 0.037 & 0.703 & 0.1537 & 0.014 \\
- & & NSGA-II ($B$=250) & 250 & 0.259 & 0.886 & 0.0447 & 0.037 \\
- & & NSGA-II ($B$=500) & 500 & 0.759 & 0.995 & 0.0063 & 0.084 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.184 \\
- & & \textbf{HCA-DSE} & 50 & 1.000 & 1.000 & 0.0000 & 0.017 \\
+ & & random ($B$=250) & 250 & 0.037 & 0.794 & 0.1018 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.074 & 0.880 & 0.0713 & 0.007 \\
+ & & random ($B$=1000) & 1000 & 0.185 & 0.923 & 0.0451 & 0.014 \\
+ & & NSGA-II ($B$=100) & 100 & 0.037 & 0.703 & 0.1537 & 0.011 \\
+ & & NSGA-II ($B$=250) & 250 & 0.259 & 0.886 & 0.0447 & 0.029 \\
+ & & NSGA-II ($B$=500) & 500 & 0.759 & 0.995 & 0.0063 & 0.072 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.944 & 0.999 & 0.0003 & 0.148 \\
+ & & \textbf{HCA-DSE} & 46 & 1.000 & 1.000 & 0.0000 & 0.013 \\
 \midrule
-\multirow{10}{*}{S2} & \multirow{10}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.050 \\
+\multirow{10}{*}{S2} & \multirow{10}{*}{control} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.049 \\
  & & random ($B$=100) & 100 & 0.040 & 0.691 & 0.1460 & 0.001 \\
- & & random ($B$=250) & 250 & 0.040 & 0.792 & 0.0940 & 0.004 \\
- & & random ($B$=500) & 500 & 0.080 & 0.879 & 0.0566 & 0.007 \\
- & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.017 \\
- & & NSGA-II ($B$=100) & 100 & 0.040 & 0.627 & 0.1592 & 0.014 \\
- & & NSGA-II ($B$=250) & 250 & 0.300 & 0.910 & 0.0348 & 0.039 \\
- & & NSGA-II ($B$=500) & 500 & 0.800 & 0.991 & 0.0041 & 0.091 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.197 \\
- & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.015 \\
+ & & random ($B$=250) & 250 & 0.040 & 0.792 & 0.0940 & 0.003 \\
+ & & random ($B$=500) & 500 & 0.080 & 0.879 & 0.0566 & 0.006 \\
+ & & random ($B$=1000) & 1000 & 0.160 & 0.923 & 0.0379 & 0.014 \\
+ & & NSGA-II ($B$=100) & 100 & 0.040 & 0.627 & 0.1592 & 0.011 \\
+ & & NSGA-II ($B$=250) & 250 & 0.300 & 0.910 & 0.0348 & 0.030 \\
+ & & NSGA-II ($B$=500) & 500 & 0.800 & 0.991 & 0.0041 & 0.072 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.900 & 0.999 & 0.0007 & 0.161 \\
+ & & \textbf{HCA-DSE} & 39 & 1.000 & 1.000 & 0.0000 & 0.014 \\
 \midrule
-\multirow{10}{*}{S2} & \multirow{10}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.035 \\
+\multirow{10}{*}{S2} & \multirow{10}{*}{sensing} & exhaustive & 3\,888 & 1.000 & 1.000 & 0.0000 & 0.029 \\
  & & random ($B$=100) & 100 & 0.000 & 0.469 & 0.2629 & 0.001 \\
- & & random ($B$=250) & 250 & 0.062 & 0.686 & 0.1521 & 0.003 \\
- & & random ($B$=500) & 500 & 0.062 & 0.804 & 0.0808 & 0.006 \\
- & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.012 \\
- & & NSGA-II ($B$=100) & 100 & 0.000 & 0.404 & 0.3482 & 0.014 \\
- & & NSGA-II ($B$=250) & 250 & 0.312 & 0.793 & 0.0782 & 0.041 \\
- & & NSGA-II ($B$=500) & 500 & 0.719 & 0.965 & 0.0224 & 0.102 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.235 \\
- & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.012 \\
+ & & random ($B$=250) & 250 & 0.062 & 0.686 & 0.1521 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.062 & 0.804 & 0.0808 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.188 & 0.866 & 0.0622 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.404 & 0.3482 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.312 & 0.793 & 0.0782 & 0.031 \\
+ & & NSGA-II ($B$=500) & 500 & 0.719 & 0.965 & 0.0224 & 0.077 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.938 & 1.000 & 0.0009 & 0.186 \\
+ & & \textbf{HCA-DSE} & 26 & 1.000 & 1.000 & 0.0000 & 0.010 \\
 \midrule
 \bottomrule
 \end{tabular}}
@@ -263,38 +263,38 @@ scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \toprule
 scale & workload & method & evals & recall & HV ratio & IGD$^{+}$ & time [s] \\
 \midrule
-\multirow{10}{*}{S3} & \multirow{10}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.354 \\
+\multirow{10}{*}{S3} & \multirow{10}{*}{telemetry} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.320 \\
  & & random ($B$=100) & 100 & 0.000 & 0.259 & 0.3903 & 0.001 \\
- & & random ($B$=250) & 250 & 0.000 & 0.487 & 0.2574 & 0.003 \\
- & & random ($B$=500) & 500 & 0.000 & 0.563 & 0.1671 & 0.006 \\
- & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.013 \\
- & & NSGA-II ($B$=100) & 100 & 0.000 & 0.151 & 0.4919 & 0.012 \\
- & & NSGA-II ($B$=250) & 250 & 0.000 & 0.687 & 0.1732 & 0.033 \\
- & & NSGA-II ($B$=500) & 500 & 0.355 & 0.915 & 0.0558 & 0.078 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.199 \\
- & & \textbf{HCA-DSE} & 56 & 1.000 & 1.000 & 0.0000 & 0.063 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.487 & 0.2574 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.563 & 0.1671 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.016 & 0.699 & 0.1147 & 0.011 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.151 & 0.4919 & 0.009 \\
+ & & NSGA-II ($B$=250) & 250 & 0.000 & 0.687 & 0.1732 & 0.026 \\
+ & & NSGA-II ($B$=500) & 500 & 0.355 & 0.915 & 0.0558 & 0.061 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.645 & 0.987 & 0.0415 & 0.146 \\
+ & & \textbf{HCA-DSE} & 52 & 1.000 & 1.000 & 0.0000 & 0.055 \\
 \midrule
-\multirow{10}{*}{S3} & \multirow{10}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.323 \\
+\multirow{10}{*}{S3} & \multirow{10}{*}{control} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.276 \\
  & & random ($B$=100) & 100 & 0.000 & 0.262 & 0.4192 & 0.001 \\
- & & random ($B$=250) & 250 & 0.000 & 0.492 & 0.2537 & 0.003 \\
- & & random ($B$=500) & 500 & 0.000 & 0.564 & 0.1746 & 0.006 \\
- & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.012 \\
- & & NSGA-II ($B$=100) & 100 & 0.000 & 0.286 & 0.4405 & 0.015 \\
- & & NSGA-II ($B$=250) & 250 & 0.037 & 0.748 & 0.1009 & 0.038 \\
- & & NSGA-II ($B$=500) & 500 & 0.278 & 0.933 & 0.0387 & 0.086 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.209 \\
- & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.065 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.492 & 0.2537 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.564 & 0.1746 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.018 & 0.691 & 0.1248 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.286 & 0.4405 & 0.010 \\
+ & & NSGA-II ($B$=250) & 250 & 0.037 & 0.748 & 0.1009 & 0.025 \\
+ & & NSGA-II ($B$=500) & 500 & 0.278 & 0.933 & 0.0387 & 0.063 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.648 & 0.991 & 0.0244 & 0.147 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.053 \\
 \midrule
-\multirow{10}{*}{S3} & \multirow{10}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.356 \\
+\multirow{10}{*}{S3} & \multirow{10}{*}{sensing} & exhaustive & 34\,560 & 1.000 & 1.000 & 0.0000 & 0.282 \\
  & & random ($B$=100) & 100 & 0.000 & 0.037 & 0.6082 & 0.001 \\
- & & random ($B$=250) & 250 & 0.000 & 0.231 & 0.3843 & 0.003 \\
- & & random ($B$=500) & 500 & 0.000 & 0.556 & 0.2543 & 0.006 \\
- & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.012 \\
- & & NSGA-II ($B$=100) & 100 & 0.000 & 0.050 & 0.5191 & 0.014 \\
- & & NSGA-II ($B$=250) & 250 & 0.037 & 0.279 & 0.2833 & 0.035 \\
- & & NSGA-II ($B$=500) & 500 & 0.370 & 0.750 & 0.1996 & 0.082 \\
- & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.218 \\
- & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.074 \\
+ & & random ($B$=250) & 250 & 0.000 & 0.231 & 0.3843 & 0.002 \\
+ & & random ($B$=500) & 500 & 0.000 & 0.556 & 0.2543 & 0.005 \\
+ & & random ($B$=1000) & 1000 & 0.000 & 0.600 & 0.1747 & 0.010 \\
+ & & NSGA-II ($B$=100) & 100 & 0.000 & 0.050 & 0.5191 & 0.011 \\
+ & & NSGA-II ($B$=250) & 250 & 0.037 & 0.279 & 0.2833 & 0.025 \\
+ & & NSGA-II ($B$=500) & 500 & 0.370 & 0.750 & 0.1996 & 0.064 \\
+ & & NSGA-II ($B$=1000) & 1000 & 0.741 & 0.969 & 0.1670 & 0.165 \\
+ & & \textbf{HCA-DSE} & 43 & 1.000 & 1.000 & 0.0000 & 0.071 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -309,10 +309,10 @@ hypervolume and Cliff's $\delta$. Unadjusted $p$-values, exploratory.}\label{tab
 workload & budget & NSGA-II & random & $p$ & Cliff's & NSGA-II & HCA-DSE \\
  & & HV med. & HV med. & & $\delta$ & recall & evals \\
 \midrule
-telemetry & 100 & 0.1509 & 0.259 & 0.951 & -0.302 & 0.0 & 56 \\
-telemetry & 250 & 0.6868 & 0.4871 & 0.021 & 0.38 & 0.0 & 56 \\
-telemetry & 500 & 0.9154 & 0.5633 & $<$0.001 & 0.7 & 0.355 & 56 \\
-telemetry & 1000 & 0.9874 & 0.6993 & $<$0.001 & 0.7 & 0.645 & 56 \\
+telemetry & 100 & 0.1509 & 0.259 & 0.951 & -0.302 & 0.0 & 52 \\
+telemetry & 250 & 0.6868 & 0.4871 & 0.021 & 0.38 & 0.0 & 52 \\
+telemetry & 500 & 0.9154 & 0.5633 & $<$0.001 & 0.7 & 0.355 & 52 \\
+telemetry & 1000 & 0.9874 & 0.6993 & $<$0.001 & 0.7 & 0.645 & 52 \\
 control & 100 & 0.2859 & 0.2616 & 0.484 & 0.01 & 0.0 & 43 \\
 control & 250 & 0.7481 & 0.4916 & $<$0.001 & 0.62 & 0.037 & 43 \\
 control & 500 & 0.9331 & 0.5644 & $<$0.001 & 0.8 & 0.278 & 43 \\
@@ -340,16 +340,16 @@ pairs) are shown as --.}\label{tabS4}
 subset & $n$ & MAPE & med.\ AE & Spearman & Kendall & pair & pair & repeat \\
  & & [\%] & [ms] & $\rho$ & $\tau$ & $>10\%$ & $>25\%$ & IQR [ms] \\
 \midrule
-telemetry (all) & 12 & 20.3 & 7.54 & 0.839 & 0.727 & 0.852 & 0.895 & 0.23 \\
-telemetry ($\rho\le0.75$) & 6 & 16.2 & 2.91 & 0.829 & 0.733 & 0.818 & 1.0 & 0.18 \\
-control (all) & 12 & 15.7 & 2.56 & 0.872 & 0.779 & 0.917 & 0.909 & 0.27 \\
-control ($\rho\le0.75$) & 10 & 9.5 & 2.4 & 0.778 & 0.674 & 0.852 & 0.833 & 0.17 \\
-sensing (all) & 12 & 50.0 & 20.0 & 0.949 & 0.87 & 0.957 & 0.957 & 2.17 \\
-sensing ($\rho\le0.75$) & 10 & 49.7 & 19.28 & 0.985 & 0.944 & 1.0 & 1.0 & 1.86 \\
-sensing (reproducible) & 8 & 41.7 & 18.77 & 0.994 & 0.982 & 1.0 & -- & 1.49 \\
-\textbf{all workloads} (all) & 36 & 28.7 & 7.54 & 0.97 & 0.893 & 0.968 & 0.982 & 0.49 \\
-\textbf{all workloads} ($\rho\le0.75$) & 26 & 26.5 & 3.91 & 0.948 & 0.861 & 0.962 & 0.982 & 0.4 \\
-\textbf{all workloads} (reproducible) & 32 & 23.9 & 4.54 & 0.96 & 0.881 & 0.963 & 0.979 & 0.38 \\
+telemetry (all) & 12 & 19.9 & 7.43 & 0.811 & 0.697 & 0.815 & 0.895 & 0.23 \\
+telemetry ($\rho\le0.75$) & 6 & 15.4 & 2.85 & 0.829 & 0.733 & 0.818 & 1.0 & 0.2 \\
+control (all) & 12 & 14.4 & 2.49 & 0.865 & 0.748 & 0.896 & 0.909 & 0.11 \\
+control ($\rho\le0.75$) & 10 & 9.4 & 2.32 & 0.766 & 0.629 & 0.815 & 0.833 & 0.11 \\
+sensing (all) & 12 & 51.1 & 19.15 & 0.935 & 0.84 & 0.935 & 0.913 & 1.0 \\
+sensing ($\rho\le0.75$) & 10 & 51.0 & 18.82 & 0.985 & 0.944 & 1.0 & 1.0 & 0.75 \\
+sensing (reproducible) & 8 & 39.3 & 18.56 & 0.97 & 0.909 & 1.0 & -- & 0.67 \\
+\textbf{all workloads} (all) & 36 & 28.4 & 7.43 & 0.968 & 0.884 & 0.961 & 0.98 & 0.27 \\
+\textbf{all workloads} ($\rho\le0.75$) & 26 & 26.8 & 3.96 & 0.945 & 0.855 & 0.959 & 0.982 & 0.22 \\
+\textbf{all workloads} (reproducible) & 32 & 22.7 & 4.5 & 0.957 & 0.869 & 0.956 & 0.979 & 0.23 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -367,30 +367,30 @@ representable by the factor tables; solver times depend on the encoding.}\label{
 \toprule
 scale & workload & method & evaluator calls & tabulated entries & solver checks & total [s] & front \\
 \midrule
-S1 & telemetry & HCA-DSE & 34 & -- & -- & 0.008 & 17 \\
- &  & finite-table SMT & 1080 & 1080 & 44 & 0.452 & 17 \\
- &  & factorised SMT & 0 & 221 & 51 & 2.698 & 17 \\
-S1 & control & HCA-DSE & 28 & -- & -- & 0.008 & 18 \\
- &  & finite-table SMT & 1080 & 1080 & 48 & 0.468 & 18 \\
- &  & factorised SMT & 0 & 225 & 52 & 3.186 & 18 \\
-S1 & sensing & HCA-DSE & 16 & -- & -- & 0.006 & 11 \\
- &  & finite-table SMT & 1080 & 1080 & 31 & 0.217 & 11 \\
- &  & factorised SMT & 0 & 199 & 37 & 1.409 & 11 \\
-S2 & telemetry & HCA-DSE & 50 & -- & -- & 0.020 & 27 \\
- &  & finite-table SMT & 3888 & 3888 & 69 & 4.696 & 27 \\
- &  & factorised SMT & 0 & 529 & 76 & 10.634 & 27 \\
-S2 & control & HCA-DSE & 39 & -- & -- & 0.018 & 25 \\
- &  & finite-table SMT & 3888 & 3888 & 71 & 3.861 & 25 \\
- &  & factorised SMT & 0 & 537 & 76 & 13.812 & 25 \\
-S2 & sensing & HCA-DSE & 26 & -- & -- & 0.015 & 16 \\
- &  & finite-table SMT & 3888 & 3888 & 55 & 1.279 & 16 \\
- &  & factorised SMT & 0 & 469 & 54 & 6.757 & 16 \\
-S3 & telemetry & HCA-DSE & 56 & -- & -- & 0.084 & 31 \\
- &  & factorised SMT & 0 & 2384 & 93 & 170.184 & 31 \\
-S3 & control & HCA-DSE & 43 & -- & -- & 0.088 & 27 \\
- &  & factorised SMT & 0 & 2406 & 78 & 157.413 & 27 \\
-S3 & sensing & HCA-DSE & 43 & -- & -- & 0.104 & 27 \\
- &  & factorised SMT & 0 & 2188 & 85 & 168.624 & 27 \\
+S1 & telemetry & HCA-DSE & 32 & -- & -- & 0.005 & 17 \\
+ &  & finite-table SMT & 1080 & 1080 & 44 & 0.341 & 17 \\
+ &  & factorised SMT & 0 & 221 & 51 & 1.518 & 17 \\
+S1 & control & HCA-DSE & 28 & -- & -- & 0.005 & 18 \\
+ &  & finite-table SMT & 1080 & 1080 & 48 & 0.317 & 18 \\
+ &  & factorised SMT & 0 & 225 & 52 & 1.684 & 18 \\
+S1 & sensing & HCA-DSE & 16 & -- & -- & 0.004 & 11 \\
+ &  & finite-table SMT & 1080 & 1080 & 31 & 0.155 & 11 \\
+ &  & factorised SMT & 0 & 199 & 37 & 0.766 & 11 \\
+S2 & telemetry & HCA-DSE & 46 & -- & -- & 0.014 & 27 \\
+ &  & finite-table SMT & 3888 & 3888 & 71 & 3.305 & 27 \\
+ &  & factorised SMT & 0 & 529 & 81 & 10.613 & 27 \\
+S2 & control & HCA-DSE & 39 & -- & -- & 0.013 & 25 \\
+ &  & finite-table SMT & 3888 & 3888 & 61 & 2.180 & 25 \\
+ &  & factorised SMT & 0 & 537 & 83 & 12.447 & 25 \\
+S2 & sensing & HCA-DSE & 26 & -- & -- & 0.011 & 16 \\
+ &  & finite-table SMT & 3888 & 3888 & 48 & 0.937 & 16 \\
+ &  & factorised SMT & 0 & 469 & 50 & 7.373 & 16 \\
+S3 & telemetry & HCA-DSE & 52 & -- & -- & 0.058 & 31 \\
+ &  & factorised SMT & 0 & 2384 & 87 & 80.961 & 31 \\
+S3 & control & HCA-DSE & 43 & -- & -- & 0.055 & 27 \\
+ &  & factorised SMT & 0 & 2406 & 85 & 94.321 & 27 \\
+S3 & sensing & HCA-DSE & 43 & -- & -- & 0.067 & 27 \\
+ &  & factorised SMT & 0 & 2188 & 85 & 71.363 & 27 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -406,10 +406,10 @@ workload.}\label{tabS6}
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
 variant & states & evals & [ms] & states & evals & [ms] & states & evals & [ms] \\
 \midrule
-structural only & 61\,225 & 34\,560 & 482 & 61\,225 & 34\,560 & 415 & 61\,225 & 34\,560 & 404 \\
-structural + feasibility bounds & 24\,650 & 12\,700 & 613 & 15\,979 & 7\,025 & 458 & 23\,118 & 10\,956 & 537 \\
-structural + dominance bounds & 4\,622 & 328 & 174 & 4\,730 & 405 & 169 & 4\,804 & 412 & 153 \\
-\textbf{HCA-DSE (all layers)} & 2\,401 & 56 & 88 & 2\,375 & 43 & 87 & 3\,221 & 43 & 102 \\
+structural only & 61\,225 & 34\,560 & 369 & 61\,225 & 34\,560 & 284 & 61\,225 & 34\,560 & 284 \\
+structural + feasibility bounds & 24\,650 & 12\,700 & 359 & 15\,979 & 7\,025 & 262 & 23\,118 & 10\,956 & 315 \\
+structural + dominance bounds & 4\,617 & 323 & 105 & 4\,730 & 405 & 100 & 4\,804 & 412 & 89 \\
+\textbf{HCA-DSE (all layers)} & 2\,397 & 52 & 54 & 2\,375 & 43 & 51 & 3\,221 & 43 & 61 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -422,42 +422,42 @@ unrounded exhaustive front.}\label{tabS7}
 \toprule
 scale & workload & order & queue & states & checks & evals & active & pruned & ms \\
 \midrule
-S1 & telemetry & determinants-early & off & 447 & 746 & 136 & 0 & 0 & 10.0 \\
-S1 & telemetry & determinants-early & on & 251 & 516 & 34 & 306 & 46 & 7.9 \\
-S1 & telemetry & determinants-late & off & 695 & 1299 & 136 & 0 & 0 & 15.8 \\
-S1 & telemetry & determinants-late & on & 591 & 1299 & 32 & 0 & 0 & 17.3 \\
-S1 & control & determinants-early & off & 391 & 669 & 113 & 0 & 0 & 9.1 \\
-S1 & control & determinants-early & on & 242 & 512 & 28 & 312 & 35 & 8.0 \\
-S1 & control & determinants-late & off & 679 & 1317 & 112 & 0 & 0 & 15.5 \\
-S1 & control & determinants-late & on & 593 & 1317 & 26 & 0 & 0 & 17.7 \\
-S1 & sensing & determinants-early & off & 481 & 810 & 147 & 0 & 0 & 9.5 \\
-S1 & sensing & determinants-early & on & 226 & 503 & 16 & 309 & 72 & 6.1 \\
-S1 & sensing & determinants-late & off & 497 & 819 & 148 & 0 & 0 & 10.1 \\
-S1 & sensing & determinants-late & on & 365 & 819 & 16 & 0 & 0 & 8.6 \\
-S2 & telemetry & determinants-early & off & 939 & 1815 & 208 & 0 & 0 & 25.4 \\
-S2 & telemetry & determinants-early & on & 608 & 1383 & 50 & 839 & 99 & 22.0 \\
-S2 & telemetry & determinants-late & off & 1816 & 3940 & 208 & 0 & 0 & 50.7 \\
-S2 & telemetry & determinants-late & on & 1656 & 3940 & 48 & 0 & 0 & 57.5 \\
-S2 & control & determinants-early & off & 835 & 1674 & 165 & 0 & 0 & 22.3 \\
-S2 & control & determinants-early & on & 587 & 1364 & 39 & 842 & 80 & 20.7 \\
-S2 & control & determinants-late & off & 1780 & 3960 & 164 & 0 & 0 & 49.1 \\
-S2 & control & determinants-late & on & 1653 & 3960 & 37 & 0 & 0 & 55.4 \\
-S2 & sensing & determinants-early & off & 1161 & 2184 & 289 & 0 & 0 & 26.9 \\
-S2 & sensing & determinants-early & on & 600 & 1427 & 26 & 879 & 177 & 17.4 \\
-S2 & sensing & determinants-late & off & 1268 & 2421 & 290 & 0 & 0 & 28.8 \\
-S2 & sensing & determinants-late & on & 1004 & 2421 & 26 & 0 & 0 & 26.8 \\
-S3 & telemetry & determinants-early & off & 2871 & 6806 & 251 & 0 & 0 & 73.3 \\
-S3 & telemetry & determinants-early & on & 2401 & 6100 & 56 & 3777 & 188 & 71.8 \\
-S3 & telemetry & determinants-late & off & 6029 & 14794 & 251 & 0 & 0 & 169.5 \\
-S3 & telemetry & determinants-late & on & 5832 & 14794 & 54 & 0 & 0 & 205.1 \\
-S3 & control & determinants-early & off & 2755 & 6636 & 206 & 0 & 0 & 65.9 \\
-S3 & control & determinants-early & on & 2375 & 6074 & 43 & 3777 & 163 & 78.6 \\
-S3 & control & determinants-late & off & 5990 & 14812 & 205 & 0 & 0 & 155.6 \\
-S3 & control & determinants-late & on & 5826 & 14812 & 41 & 0 & 0 & 174.0 \\
-S3 & sensing & determinants-early & off & 4351 & 9905 & 537 & 0 & 0 & 107.9 \\
-S3 & sensing & determinants-early & on & 3221 & 8281 & 43 & 5139 & 419 & 86.2 \\
-S3 & sensing & determinants-late & off & 4888 & 11367 & 538 & 0 & 0 & 103.4 \\
-S3 & sensing & determinants-late & on & 4393 & 11367 & 43 & 0 & 0 & 109.4 \\
+S1 & telemetry & determinants-early & off & 447 & 746 & 136 & 0 & 0 & 6.7 \\
+S1 & telemetry & determinants-early & on & 249 & 516 & 32 & 306 & 46 & 5.2 \\
+S1 & telemetry & determinants-late & off & 695 & 1299 & 136 & 0 & 0 & 9.5 \\
+S1 & telemetry & determinants-late & on & 589 & 1299 & 30 & 0 & 0 & 10.3 \\
+S1 & control & determinants-early & off & 391 & 669 & 113 & 0 & 0 & 5.2 \\
+S1 & control & determinants-early & on & 242 & 512 & 28 & 312 & 35 & 4.6 \\
+S1 & control & determinants-late & off & 679 & 1317 & 112 & 0 & 0 & 9.6 \\
+S1 & control & determinants-late & on & 593 & 1317 & 26 & 0 & 0 & 10.5 \\
+S1 & sensing & determinants-early & off & 481 & 810 & 147 & 0 & 0 & 5.8 \\
+S1 & sensing & determinants-early & on & 226 & 503 & 16 & 309 & 72 & 4.1 \\
+S1 & sensing & determinants-late & off & 497 & 819 & 148 & 0 & 0 & 6.1 \\
+S1 & sensing & determinants-late & on & 365 & 819 & 16 & 0 & 0 & 5.8 \\
+S2 & telemetry & determinants-early & off & 939 & 1815 & 208 & 0 & 0 & 15.4 \\
+S2 & telemetry & determinants-early & on & 604 & 1383 & 46 & 839 & 99 & 13.9 \\
+S2 & telemetry & determinants-late & off & 1816 & 3940 & 208 & 0 & 0 & 30.7 \\
+S2 & telemetry & determinants-late & on & 1652 & 3940 & 44 & 0 & 0 & 35.8 \\
+S2 & control & determinants-early & off & 835 & 1674 & 165 & 0 & 0 & 13.9 \\
+S2 & control & determinants-early & on & 587 & 1364 & 39 & 842 & 80 & 12.0 \\
+S2 & control & determinants-late & off & 1780 & 3960 & 164 & 0 & 0 & 29.0 \\
+S2 & control & determinants-late & on & 1653 & 3960 & 37 & 0 & 0 & 32.9 \\
+S2 & sensing & determinants-early & off & 1161 & 2184 & 289 & 0 & 0 & 15.0 \\
+S2 & sensing & determinants-early & on & 600 & 1427 & 26 & 879 & 177 & 10.1 \\
+S2 & sensing & determinants-late & off & 1268 & 2421 & 290 & 0 & 0 & 16.8 \\
+S2 & sensing & determinants-late & on & 1004 & 2421 & 26 & 0 & 0 & 15.8 \\
+S3 & telemetry & determinants-early & off & 2871 & 6806 & 251 & 0 & 0 & 53.3 \\
+S3 & telemetry & determinants-early & on & 2397 & 6100 & 52 & 3777 & 188 & 54.4 \\
+S3 & telemetry & determinants-late & off & 6029 & 14794 & 251 & 0 & 0 & 117.9 \\
+S3 & telemetry & determinants-late & on & 5828 & 14794 & 50 & 0 & 0 & 131.9 \\
+S3 & control & determinants-early & off & 2755 & 6636 & 206 & 0 & 0 & 51.0 \\
+S3 & control & determinants-early & on & 2375 & 6074 & 43 & 3777 & 163 & 56.3 \\
+S3 & control & determinants-late & off & 5990 & 14812 & 205 & 0 & 0 & 106.7 \\
+S3 & control & determinants-late & on & 5826 & 14812 & 41 & 0 & 0 & 127.5 \\
+S3 & sensing & determinants-early & off & 4351 & 9905 & 537 & 0 & 0 & 72.9 \\
+S3 & sensing & determinants-early & on & 3221 & 8281 & 43 & 5139 & 419 & 60.9 \\
+S3 & sensing & determinants-late & off & 4888 & 11367 & 538 & 0 & 0 & 82.7 \\
+S3 & sensing & determinants-late & on & 4393 & 11367 & 43 & 0 & 0 & 82.3 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -531,16 +531,16 @@ fast & 1000 & 1 & 0.05 & 1.4 & -- \\
 scale & workload & $|\mathcal{X}|$ & structural & feasibility & dominance & full & feasible & $|\mathcal{P}|$ & full-eval & exhaustive & recall \\
  & & & pruned & pruned & pruned & evals & & & reduction [\%] & evals & \\
 \midrule
-S1 & telemetry & 1\,296 & 216 & 208 & 838 & 34 & 27 & 17 & 97.38 & 1\,080 & 1.0 \\
+S1 & telemetry & 1\,296 & 216 & 208 & 840 & 32 & 25 & 17 & 97.53 & 1\,080 & 1.0 \\
 S1 & control & 1\,296 & 216 & 226 & 826 & 28 & 25 & 18 & 97.84 & 1\,080 & 1.0 \\
 S1 & sensing & 1\,296 & 216 & 530 & 534 & 16 & 11 & 11 & 98.77 & 1\,080 & 1.0 \\
-S2 & telemetry & 5\,832 & 1\,860 & 965 & 2\,957 & 50 & 42 & 27 & 99.14 & 3\,888 & 1.0 \\
+S2 & telemetry & 5\,832 & 1\,860 & 965 & 2\,961 & 46 & 38 & 27 & 99.21 & 3\,888 & 1.0 \\
 S2 & control & 5\,832 & 1\,860 & 1\,017 & 2\,916 & 39 & 36 & 25 & 99.33 & 3\,888 & 1.0 \\
 S2 & sensing & 5\,832 & 1\,944 & 1\,534 & 2\,328 & 26 & 19 & 16 & 99.55 & 3\,888 & 1.0 \\
-S3 & telemetry & 51\,840 & 12\,240 & 21\,957 & 17\,587 & 56 & 48 & 31 & 99.89 & 34\,560 & 1.0 \\
+S3 & telemetry & 51\,840 & 12\,240 & 21\,957 & 17\,591 & 52 & 44 & 31 & 99.90 & 34\,560 & 1.0 \\
 S3 & control & 51\,840 & 12\,240 & 21\,924 & 17\,633 & 43 & 40 & 27 & 99.92 & 34\,560 & 1.0 \\
 S3 & sensing & 51\,840 & 14\,634 & 16\,230 & 20\,933 & 43 & 36 & 27 & 99.92 & 34\,560 & 1.0 \\
-S4 & telemetry & 345\,600 & 33\,924 & 276\,742 & 34\,872 & 62 & 54 & 32 & 99.98 & -- & -- \\
+S4 & telemetry & 345\,600 & 33\,924 & 276\,742 & 34\,877 & 57 & 49 & 32 & 99.98 & -- & -- \\
 S4 & control & 345\,600 & 33\,924 & 276\,811 & 34\,812 & 53 & 50 & 29 & 99.98 & -- & -- \\
 S4 & sensing & 345\,600 & 41\,250 & 230\,523 & 73\,775 & 52 & 45 & 28 & 99.98 & -- & -- \\
 \bottomrule
@@ -558,13 +558,13 @@ runtime.}\label{tabS12}
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
 $|\mathcal{X}|$ & states & evals & [s] & states & evals & [s] & states & evals & [s] \\
 \midrule
-${1.3\times 10^{3}}$ & 290 & 46 & 0.09 & 268 & 34 & 0.08 & 234 & 18 & 0.05 \\
-${5.8\times 10^{3}}$ & 701 & 59 & 0.23 & 682 & 54 & 0.21 & 649 & 30 & 0.16 \\
-${5.2\times 10^{4}}$ & 2\,751 & 62 & 1.00 & 2\,732 & 57 & 0.86 & 3\,495 & 53 & 1.08 \\
-${3.5\times 10^{5}}$ & 5\,097 & 63 & 1.95 & 5\,074 & 58 & 1.71 & 8\,228 & 59 & 2.26 \\
-${2.8\times 10^{6}}$ & 8\,030 & 63 & 2.40 & 8\,007 & 58 & 2.26 & 13\,986 & 61 & 3.97 \\
-${1.6\times 10^{7}}$ & 9\,257 & 63 & 2.92 & 9\,234 & 58 & 2.73 & 16\,345 & 61 & 5.17 \\
-${8.3\times 10^{7}}$ & 10\,338 & 63 & 3.07 & 10\,315 & 58 & 3.56 & 18\,082 & 61 & 5.52 \\
+${1.3\times 10^{3}}$ & 286 & 42 & 0.05 & 268 & 34 & 0.05 & 234 & 18 & 0.04 \\
+${5.8\times 10^{3}}$ & 696 & 54 & 0.14 & 682 & 54 & 0.13 & 649 & 30 & 0.10 \\
+${5.2\times 10^{4}}$ & 2\,746 & 57 & 0.60 & 2\,732 & 57 & 0.52 & 3\,495 & 53 & 0.65 \\
+${3.5\times 10^{5}}$ & 5\,092 & 58 & 1.14 & 5\,074 & 58 & 1.05 & 8\,228 & 59 & 1.63 \\
+${2.8\times 10^{6}}$ & 8\,025 & 58 & 1.88 & 8\,007 & 58 & 1.70 & 13\,986 & 61 & 3.01 \\
+${1.6\times 10^{7}}$ & 9\,252 & 58 & 2.22 & 9\,234 & 58 & 2.04 & 16\,345 & 61 & 3.67 \\
+${8.3\times 10^{7}}$ & 10\,333 & 58 & 2.13 & 10\,315 & 58 & 2.50 & 18\,082 & 61 & 3.96 \\
 \bottomrule
 \end{tabular}}
 \end{table}
