@@ -1,5 +1,0 @@
-Objective-specific bounds preserve the analytical Pareto front of a CPS model.
-Random and NSGA-II budgets count actual full evaluator calls.
-Order ablation separates early queue pruning from traversal effects.
-An exact finite-table SMT baseline includes all table evaluation costs.
-A frozen-model Docker validation repeats 36 architectures independently.
