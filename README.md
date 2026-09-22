@@ -13,7 +13,6 @@ python3 experiments/make_paper_assets.py          # figures and tables from resu
 python3 experiments/make_claims.py                # numbers used in the prose
 python3 experiments/check_claims.py               # every number in the prose is backed by a result
 python3 experiments/make_submission_package.py    # refresh SUBMISSION/*/1_Manuscript and 2_Supplementary*
-cd SUBMISSION/Communications_Engineering/1_Manuscript && pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
 Full reproduction from a clean state: see `RUN.md` and `experiments/reproduce.py`.
